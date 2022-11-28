@@ -11,5 +11,8 @@
         [Required]
         [MaxLength(Models.Town.PostCodeMaxLength)]
         public string PostCode { get; set; } = null!;
+
+        public int CountryId { get; set; }
+        public Country Country { get; set; } = null!;
     }
 }

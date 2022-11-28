@@ -17,12 +17,6 @@
         public int? HomeTownId { get; set; }
         public Town? HomeTown { get; set; }
 
-        public int? HomeCountryId { get; set; }
-        public Country? HomeCountry { get; set; }
-
-        public int? ResidenceCountryId { get; set; }
-        public Country? ResidenceCountry { get; set; }
-
         public ICollection<WorkingExperience> WorkingExpirianceLines { get; set; }
         public ICollection<Education> EducationLines { get; set; }
     }

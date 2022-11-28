@@ -2,6 +2,10 @@
 {
     public class Country
     {
+        public Country()
+        {
+            this.Towns = new HashSet<Town>();
+        }
         public int Id { get; set; }
 
         [Required]
@@ -15,5 +19,7 @@
         [Required]
         [MaxLength(Models.Country.IsoCodeMaxLength)]
         public string IsoCode { get; set; } = null!;
+
+        public ICollection<Town> Towns { get; set; }
     }
 }

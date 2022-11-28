@@ -5,6 +5,7 @@
         public StoryType()
         {
             this.Genres = new HashSet<Genre>();
+            this.Stories = new HashSet<Story>();
         }
         public int Id { get; set; }
 
@@ -13,5 +14,7 @@
         public string Name { get; set; } = null!;
 
         public ICollection<Genre> Genres { get; set; }
+
+        public ICollection<Story> Stories { get; set; }
     }
 }
