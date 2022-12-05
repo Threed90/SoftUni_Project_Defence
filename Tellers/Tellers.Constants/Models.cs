@@ -1,5 +1,8 @@
 ﻿namespace Tellers.Constants
 {
+    /// <summary>
+    /// Static class for data and view models constants.
+    /// </summary>
     public static class Models
     {
         public static class Profile

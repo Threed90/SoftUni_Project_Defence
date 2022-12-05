@@ -21,5 +21,17 @@
 
             return View();
         }
+
+        public IActionResult Terms()
+        {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                // do redirect logic here
+
+                // maybe add logger info
+            }
+
+            return View();
+        }
     }
 }
