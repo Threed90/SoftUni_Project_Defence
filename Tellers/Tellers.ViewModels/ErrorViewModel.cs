@@ -1,4 +1,4 @@
-namespace Tellers.App.Models
+namespace Tellers.ViewModels
 {
     public class ErrorViewModel
     {
