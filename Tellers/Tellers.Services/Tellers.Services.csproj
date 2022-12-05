@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tellers.DbContext\Tellers.DbContext.csproj" />
+    <ProjectReference Include="..\Tellers.Mapper\Tellers.Mapper.csproj" />
   </ItemGroup>
 
 </Project>
