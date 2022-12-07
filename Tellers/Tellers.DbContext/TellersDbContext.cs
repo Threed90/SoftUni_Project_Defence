@@ -48,13 +48,10 @@ namespace Tellers.DbContext
             builder.Entity<Profile>()
                 .HasMany(p => p.OtherSideFriends)
                 .WithMany(p => p.MySideFriends);
-            //builder.Entity<Profile>()
-            //    .HasMany(p => p.Friends)
-            //    .WithOne(pf => pf.FirstProfile)
 
-
-            //builder.Entity<ProfileFriends>()
-            //    .HasKey(pf => new { pf.FirstProfileId, pf.SecondProfileId });
+            builder.Entity<Profile>()
+                .HasMany(p => p.Followers)
+                .WithMany(p => p.Followings);
 
             base.OnModelCreating(builder);
         }
