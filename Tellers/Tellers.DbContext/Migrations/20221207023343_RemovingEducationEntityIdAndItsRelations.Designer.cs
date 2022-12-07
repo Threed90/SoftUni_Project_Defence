@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tellers.DbContext;
 
@@ -11,9 +12,10 @@ using Tellers.DbContext;
 namespace Tellers.DbContext.Migrations
 {
     [DbContext(typeof(TellersDbContext))]
-    partial class TellersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221207023343_RemovingEducationEntityIdAndItsRelations")]
+    partial class RemovingEducationEntityIdAndItsRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -361,16 +363,9 @@ namespace Tellers.DbContext.Migrations
 
             modelBuilder.Entity("Tellers.DataModels.Education", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("AdditionalDescription")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
-
-                    b.Property<Guid>("BioId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("EducationInstitutionName")
                         .IsRequired()
@@ -390,10 +385,6 @@ namespace Tellers.DbContext.Migrations
 
                     b.Property<int?>("TownId")
                         .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BioId");
 
                     b.HasIndex("TownId");
 
@@ -763,17 +754,9 @@ namespace Tellers.DbContext.Migrations
 
             modelBuilder.Entity("Tellers.DataModels.Education", b =>
                 {
-                    b.HasOne("Tellers.DataModels.Bio", "Bio")
-                        .WithMany("EducationLines")
-                        .HasForeignKey("BioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Tellers.DataModels.Town", "Town")
                         .WithMany()
                         .HasForeignKey("TownId");
-
-                    b.Navigation("Bio");
 
                     b.Navigation("Town");
                 });
@@ -856,8 +839,6 @@ namespace Tellers.DbContext.Migrations
 
             modelBuilder.Entity("Tellers.DataModels.Bio", b =>
                 {
-                    b.Navigation("EducationLines");
-
                     b.Navigation("Profile")
                         .IsRequired();
 
