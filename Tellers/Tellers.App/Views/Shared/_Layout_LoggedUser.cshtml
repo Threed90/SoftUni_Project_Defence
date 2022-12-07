@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-light fixed-top" style="background-color: lightblue">
+            <div class="container-fluid">
+                <button class="navbar-toggler rounded-1 border-2" style="border-color: whitesmoke" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBlueNavbar" aria-controls="offcanvasBlueNavbar">
+                    <span class="navbar-toggler-icon text-white"></span>
+                </button>
+                <a class="navbar-brand me-2" href="/">
+                    <img src="~/images/storyTelling.jpg"
+                         height="50"
+                         alt="Tellers Logo"
+                         loading="lazy"
+                         style="margin-top: -1px;"
+                         class="rounded-circle" />
+                </a>
+
+                <div class="offcanvas offcanvas-start " tabindex="-1" id="offcanvasBlueNavbar" aria-labelledby="offcanvasBlueNavbarLabel">
+                    <div class="offcanvas-header" style="background-color: lightblue">
+                        <h5 class="offcanvas-title" id="offcanvasBlueNavbarLabel">Wellcome@(User?.Identity?.Name == null ? "!" : $", {User.Identity.Name}")</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body " style="background-color: aliceblue">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">All stories</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Readed stories</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Library</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Account
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item text-dark" href="#">My Profile</a></li>
+                                    <li><a class="dropdown-item" href="#">My stories</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">My friends</a></li>
+                                    <li><a class="dropdown-item" href="#">My follows</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="d-flex mt-3" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-success" type="submit">Search</button>
+                        </form>
+
+                        @if (User?.IsInRole(RoleNames.AdminRoleName) ?? false)
+                        {
+                            <form method="post" style="margin-top: 3rem">
+                                <button class="btn btn-primary" asp-action="" asp-controller="">
+                                    Admin panel
+                                </button>
+                            </form>
+                        }
+                        <form method="post" style="margin-top: 3rem">
+                            <button class="btn btn-success" asp-action="Logout" asp-controller="User">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <partial name="FooterPartial" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

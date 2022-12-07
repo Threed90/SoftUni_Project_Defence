@@ -22,4 +22,12 @@
     <ProjectReference Include="..\Tellers.Services\Tellers.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Shared\FooterPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Shared\FooterPartial.cshtml" />
+  </ItemGroup>
+
 </Project>

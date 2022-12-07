@@ -14,5 +14,7 @@ namespace Tellers.Constants
         public const string NormalizedModeratorRoleName = "TELLERMODERATOR";
         public const string AdminRoleName = "TellerAdmin";
         public const string NormalizedAdminRoleName = "TELLERADMIN";
+        public const string MasterAdminRoleName = "TellerMasterAdmin";
+        public const string NormalizedMasterAdminRoleName = "TELLERMASTERADMIN";
     }
 }

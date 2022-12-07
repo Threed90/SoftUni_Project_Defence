@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="px-4 py-1 mt-5 text-center" style="background-color: aliceblue">
+<div class="px-4 py-1 text-center" style="background-color: aliceblue; margin-top: 10rem">
     <p class="display-2 fw-bold">Newest stories:</p>
 </div>
 
@@ -10,18 +10,34 @@
 
 <div class="px-4 py-5 my-5 text-center" style="background-color: aliceblue">
     <img class="d-block mx-auto mb-4 rounded-circle border-5" src="~/images/storytelling-icon-simple-element-vector-27270246.jpg" alt="" width="100">
-    <h1 class="display-5 fw-bold">We are Tellers</h1>
-    <p class="display-5 fw-bold">We share stories</p>
-    <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">Just login or sign up for free:</p>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <a asp-controller="User" asp-action="Register" type="button" class="btn btn-primary btn-lg px-4 gap-3">Sign up for free</a>
-            <a asp-controller="User" asp-action="Login" type="button" class="btn btn-outline-secondary btn-lg px-4">Sign in</a>
+
+    @if (User?.Identity?.IsAuthenticated ?? false)
+    {
+        <h1 class="fw-bold" style="font-size: 2rem">Hello, @(User.Identity.Name)!</h1>
+        <p class="fw-bold" style="font-size: 2.5rem">There are many stories of different types and genres.</p>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">Enjoy reading them or share your own story:</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a asp-controller="User" asp-action="Register" type="button" class="btn btn-outline-success btn-lg px-4 gap-3">Read new story</a>
+                <a asp-controller="User" asp-action="Login" type="button" class="btn btn-outline-warning btn-lg px-4">Share your story</a>
+            </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <h1 class="display-5 fw-bold">We are Tellers</h1>
+        <p class="display-5 fw-bold">We share stories</p>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">Just login or sign up for free:</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a asp-controller="User" asp-action="Register" type="button" class="btn btn-primary btn-lg px-4 gap-3">Sign up for free</a>
+                <a asp-controller="User" asp-action="Login" type="button" class="btn btn-outline-secondary btn-lg px-4">Sign in</a>
+            </div>
+        </div>
+    }
 </div>
 
-<div class="px-4 py-1 mt-5 text-center" style="background-color: aliceblue">
+<div class="px-4 py-1 text-center" style="background-color: aliceblue; margin-top: 5rem">
     <p class="display-2 fw-bold">Top stories:</p>
 </div>
 
