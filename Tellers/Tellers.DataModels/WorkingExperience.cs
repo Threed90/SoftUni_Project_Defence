@@ -2,7 +2,7 @@
 {
     public class WorkingExperience
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [MaxLength(Models.WorkingExperience.PositionMaxLength)]
