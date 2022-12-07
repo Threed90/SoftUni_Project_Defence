@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Tellers.Constants;
 using Tellers.DataModels;
 using Tellers.DbContext;
+using Tellers.Services;
+using Tellers.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,10 +14,27 @@ builder.Services.AddDbContext<TellersDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+        options.SignIn.RequireConfirmedPhoneNumber = false;
+        options.SignIn.RequireConfirmedEmail = false;
+        options.Password.RequireDigit = false;
+        options.Password.RequiredLength = Models.AppUser.PasswordMinLength;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireUppercase = false;
+    })
     .AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<TellersDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    opt.LoginPath = "/User/Login";
+});
+
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

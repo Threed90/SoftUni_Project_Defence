@@ -21,7 +21,7 @@
         [MaxLength(Models.Profile.FirstNameMaxLength)]
         public string FirstName { get; set; } = null!;
 
-        [Required]
+        //[Required]
         [MaxLength(Models.Profile.MiddleNameMaxLength)]
         public string? MiddleName { get; set; }
 
@@ -44,8 +44,8 @@
         public Guid? AdditionalInfoId { get; set; }
         public Bio? AdditionalInfo { get; set; }
 
-        public Guid UserId { get; set; }
-        public ApplicationUser User { get; set; } = null!;
+        public Guid? UserId { get; set; }
+        public ApplicationUser? User { get; set; } = null!;
 
         public ICollection<Profile> Friends { get; set; }
         public ICollection<Profile> Followers { get; set; }

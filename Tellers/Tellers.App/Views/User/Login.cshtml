@@ -1,26 +1,28 @@
-﻿
+﻿@model LoginViewModel
 
 <main class="form-signin text-center row mt-xxl-5 p-5" style="background-color: aliceblue">
 
-  <form class="col-2 offset-5" method="post">
-    <img class="mb-4 rounded-circle" src="~/images/storyTelling.jpg" alt="" width="250" >
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <form class="col-2 offset-5" method="post">
+        <img class="mb-4 rounded-circle" src="~/images/storyTelling.jpg" alt="" width="250">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-    <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
+        <div class="form-floating">
+            <input asp-for="UserName" type="text" class="form-control" id="floatingInput" placeholder="Type your username...">
+            <label for="floatingInput">User name</label>
+            <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+        </div>
+        <div class="form-floating">
+            <input asp-for="Password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+        </div>
 
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    
-  </form>
+        <div class="checkbox mb-3">
+            <label>
+                <input asp-for="RememberMe" type="checkbox" value="@true"> Remember me
+            </label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+
+    </form>
 </main>

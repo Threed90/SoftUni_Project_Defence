@@ -11,9 +11,9 @@
         /// <summary>
         /// User Profile Id.
         /// </summary>
-        public int? UserProfileId { get; set; }
+        public Guid? UserProfileId { get; set; }
 
-        public Profile? UserProfile { get; init; }
+        public Profile? UserProfile { get; set; }
 
         /// <summary>
         /// The date of user account creating.

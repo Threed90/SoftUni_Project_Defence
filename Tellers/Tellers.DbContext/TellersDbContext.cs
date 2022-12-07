@@ -22,5 +22,20 @@ namespace Tellers.DbContext
         public DbSet<StoryType> StoryTypes { get; set; } = null!;
         public DbSet<Town> Towns { get; set; } = null!;
         public DbSet<WorkingExperience> WorkingExperiences { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Profile>()
+                .HasOne(p => p.User)
+                .WithOne(u => u.UserProfile)
+                .HasForeignKey<ApplicationUser>(u => u.UserProfileId);
+
+            builder.Entity<ApplicationUser>()
+                .HasOne(a => a.UserProfile)
+                .WithOne(p => p.User)
+                .HasForeignKey<Profile>(p => p.UserId);
+
+            base.OnModelCreating(builder);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tellers.DbContext;
 
@@ -11,9 +12,10 @@ using Tellers.DbContext;
 namespace Tellers.DbContext.Migrations
 {
     [DbContext(typeof(TellersDbContext))]
-    partial class TellersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221207001349_RemovingProfileReferenceIntoAppUser")]
+    partial class RemovingProfileReferenceIntoAppUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,9 +263,6 @@ namespace Tellers.DbContext.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<Guid?>("UserProfileId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -432,9 +431,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasIndex("AdditionalInfoId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Profiles");
                 });
@@ -722,8 +719,8 @@ namespace Tellers.DbContext.Migrations
                         .HasForeignKey("AdditionalInfoId");
 
                     b.HasOne("Tellers.DataModels.ApplicationUser", "User")
-                        .WithOne("UserProfile")
-                        .HasForeignKey("Tellers.DataModels.Profile", "UserId");
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("AdditionalInfo");
 
@@ -784,11 +781,6 @@ namespace Tellers.DbContext.Migrations
                     b.Navigation("Bio");
 
                     b.Navigation("Town");
-                });
-
-            modelBuilder.Entity("Tellers.DataModels.ApplicationUser", b =>
-                {
-                    b.Navigation("UserProfile");
                 });
 
             modelBuilder.Entity("Tellers.DataModels.Bio", b =>

@@ -5,6 +5,18 @@
     /// </summary>
     public static class Models
     {
+        public static class AppUser
+        {
+            public const int UserNameMinLength = 5;
+            public const int UserNameMaxLength = 25;
+
+            public const int PasswordMinLength = 5;
+            public const int PasswordMaxLength = 50;
+
+            public const int EmailMinLength = 5;
+            public const int EmailMaxLength = 60;
+
+        }
         public static class Profile
         {
             public const int FirstNameMinLength = 2;

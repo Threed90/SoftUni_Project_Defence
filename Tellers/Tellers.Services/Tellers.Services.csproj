@@ -7,8 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Tellers.DbContext\Tellers.DbContext.csproj" />
     <ProjectReference Include="..\Tellers.Mapper\Tellers.Mapper.csproj" />
+    <ProjectReference Include="..\Tellers.Unilities\Tellers.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
