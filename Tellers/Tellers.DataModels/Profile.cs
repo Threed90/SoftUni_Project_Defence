@@ -4,7 +4,8 @@
     {
         public Profile()
         {
-            this.Friends = new HashSet<Profile>();
+            this.MySideFriends = new HashSet<Profile>();
+            this.OtherSideFriends = new HashSet<Profile>();
             this.Followers = new HashSet<Profile>();
             this.Followings = new HashSet<Profile>();
             this.MyStories = new HashSet<Story>();
@@ -47,7 +48,8 @@
         public Guid? UserId { get; set; }
         public ApplicationUser? User { get; set; } = null!;
 
-        public ICollection<Profile> Friends { get; set; }
+        public ICollection<Profile> MySideFriends { get; set; }
+        public ICollection<Profile> OtherSideFriends { get; set; }
         public ICollection<Profile> Followers { get; set; }
         public ICollection<Profile> Followings { get; set; }
 

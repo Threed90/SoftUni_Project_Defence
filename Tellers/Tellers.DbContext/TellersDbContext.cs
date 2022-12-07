@@ -45,6 +45,16 @@ namespace Tellers.DbContext
                 .WithOne(p => p.AdditionalInfo)
                 .HasForeignKey<Profile>(p => p.AdditionalInfoId);
 
+            builder.Entity<Profile>()
+                .HasMany(p => p.OtherSideFriends)
+                .WithMany(p => p.MySideFriends);
+            //builder.Entity<Profile>()
+            //    .HasMany(p => p.Friends)
+            //    .WithOne(pf => pf.FirstProfile)
+
+
+            //builder.Entity<ProfileFriends>()
+            //    .HasKey(pf => new { pf.FirstProfileId, pf.SecondProfileId });
 
             base.OnModelCreating(builder);
         }
