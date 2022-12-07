@@ -47,7 +47,6 @@
         <div class="checkbox mb-3">
             <label>
                 <input asp-for="AcceptedAgreement" type="checkbox" value="@true"> I agree all statements in <a asp-action="Terms" asp-controller="Home">Terms of service</a>
-                
             </label>
             <span asp-validation-for="@Model.AcceptedAgreement" class="text-danger"></span>
         </div>

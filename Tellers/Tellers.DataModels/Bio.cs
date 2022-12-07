@@ -21,6 +21,11 @@
         /// </summary>
         public Guid Id { get; set; }
 
+
+        public Guid ProfileId { get; set; }
+
+        public Profile Profile { get; set; }
+
         /// <summary>
         /// Reference to the residence town data model
         /// </summary>

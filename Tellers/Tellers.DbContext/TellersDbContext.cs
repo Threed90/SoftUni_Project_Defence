@@ -35,6 +35,17 @@ namespace Tellers.DbContext
                 .WithOne(p => p.User)
                 .HasForeignKey<Profile>(p => p.UserId);
 
+            builder.Entity<Profile>()
+                .HasOne(p => p.AdditionalInfo)
+                .WithOne(b => b.Profile)
+                .HasForeignKey<Bio>(b => b.ProfileId);
+
+            builder.Entity<Bio>()
+                .HasOne(b => b.Profile)
+                .WithOne(p => p.AdditionalInfo)
+                .HasForeignKey<Profile>(p => p.AdditionalInfoId);
+
+
             base.OnModelCreating(builder);
         }
     }
