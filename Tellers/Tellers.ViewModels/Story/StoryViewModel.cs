@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tellers.Mapper
+namespace Tellers.ViewModels.Story
 {
-    internal class MapExp
+    internal class StoryViewModel
     {
     }
 }

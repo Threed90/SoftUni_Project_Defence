@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tellers.DbContext;
 
@@ -11,9 +12,10 @@ using Tellers.DbContext;
 namespace Tellers.DbContext.Migrations
 {
     [DbContext(typeof(TellersDbContext))]
-    partial class TellersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221208211747_CreateRelationBetweenRevueAndProfileEntity")]
+    partial class CreateRelationBetweenRevueAndProfileEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -509,10 +511,6 @@ namespace Tellers.DbContext.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BookCoverPicture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -522,11 +520,6 @@ namespace Tellers.DbContext.Migrations
                     b.Property<string>("PdfFile")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("StorySummary")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("StoryText")
                         .HasColumnType("nvarchar(max)");

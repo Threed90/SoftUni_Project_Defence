@@ -1,26 +1,36 @@
-﻿namespace Tellers.App.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+using Tellers.Services.Interfaces;
+using Tellers.Utilities;
+using Tellers.ViewModels.Story;
+
+namespace Tellers.App.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IStoryServer storyServer;
+        public HomeController(
+            ILogger<HomeController> logger,
+            IStoryServer storyServer)
         {
             this.logger = logger;
+            this.storyServer = storyServer;
         }
 
-        public IActionResult Index()
-        {
-            if (User?.Identity?.IsAuthenticated ?? false)
+        public async Task<IActionResult> Index()
+            => View(new HomeStoryCardManagerViewModel()
             {
-                // do redirect logic here
-
-                // maybe add logger info
-            }
-
-            return View();
-        }
+                newestStories = new ViewModelInfoBox<List<StoryCardViewModel>>()
+                {
+                    ModelIndicator = "newest",
+                    ViewModel = (await storyServer.GetNewestStories()).ToList()
+                },
+                topStories = new ViewModelInfoBox<List<StoryCardViewModel>>()
+                {
+                    ModelIndicator = "top",
+                    ViewModel = (await storyServer.GetTopStories()).ToList()
+                }
+            });
 
         public IActionResult Terms()
         {

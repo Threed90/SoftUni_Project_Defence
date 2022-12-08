@@ -1,145 +1,75 @@
-﻿@*@model IEnumerable<>*@
+﻿@using Tellers.Utilities.Interfaces;
+@using Tellers.ViewModels.Story;
+@model IViewModelInfoBox<List<StoryCardViewModel>>
 
-<!-- Carousel wrapper -->
-@*dont forgot to att id here and to controls*@
-<div id="carouselMultiItemExample"
+@if(Model.ViewModel == null || Model.ViewModel.Count == 0)
+{
+    <div class="px-4 py-1 text-center" style="background-color: aliceblue; margin-top: 2rem">
+        <p class="display-4 fw-bold">No stories yet :(</p>
+    </div>
+}
+else
+{
+    <!-- Carousel wrapper -->
+
+    <div id="carouselMultiItemExample@(Model.ModelIndicator)"
      class="carousel slide carousel-dark text-center"
      data-bs-ride="carousel">
 
 
 
-    <!-- Inner -->
-    <div class="carousel-inner py-4">
-        <!-- Single item (contains 3 cards)-->
-        <div class="carousel-item active">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/181.webp"
+        <!-- Inner -->
+        <div class="carousel-inner py-4">
+            <!-- Single item (contains 3 cards)-->
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="carousel-item active">
+                    <div class="container">
+                        <div class="row">
+
+                            @for (int j = i * 3; j < (i * 3) + 3; j++)
+                            {
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <img src="@(Model?.ViewModel[j]?.BookCoverPicture ?? string.Empty)"
                                  class="card-img-top"
                                  alt="Waterfall" />
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                    Some quick example text to build on the card title and make up the bulk
-                                    of the card's content.
-                                </p>
-                                <a href="#!" class="btn btn-primary">Button</a>
-                            </div>
-                        </div>
-                    </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">@(Model?.ViewModel[j]?.Title ?? "No title")</h5>
+                                            <p class="card-text"></p>
+                                            @if (User?.Identity?.IsAuthenticated ?? false)
+                                            {
+                                                <a href="#!" class="btn btn-primary">Details</a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
 
-                    <div class="col-lg-4 d-none d-lg-block">
-                        <div class="card">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/182.webp"
-                                 class="card-img-top"
-                                 alt="Sunset Over the Sea" />
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                    Some quick example text to build on the card title and make up the bulk
-                                    of the card's content.
-                                </p>
-                                <a href="#!" class="btn btn-primary">Button</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 d-none d-lg-block">
-                        <div class="card">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/183.webp"
-                                 class="card-img-top"
-                                 alt="Sunset over the Sea" />
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                    Some quick example text to build on the card title and make up the bulk
-                                    of the card's content.
-                                </p>
-                                <a href="#!" class="btn btn-primary">Button</a>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
 
-        <!-- Single item -->
-        <div class="carousel-item">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/181.webp"
-                                 class="card-img-top"
-                                 alt="Waterfall" />
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                    Some quick example text to build on the card title and make up the bulk
-                                    of the card's content.
-                                </p>
-                                <a href="#!" class="btn btn-primary">Button</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 d-none d-lg-block">
-                        <div class="card">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/182.webp"
-                                 class="card-img-top"
-                                 alt="Sunset Over the Sea" />
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                    Some quick example text to build on the card title and make up the bulk
-                                    of the card's content.
-                                </p>
-                                <a href="#!" class="btn btn-primary">Button</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 d-none d-lg-block">
-                        <div class="card">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/183.webp"
-                                 class="card-img-top"
-                                 alt="Sunset over the Sea" />
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                    Some quick example text to build on the card title and make up the bulk
-                                    of the card's content.
-                                </p>
-                                <a href="#!" class="btn btn-primary">Button</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Inner -->
-
-    <!-- Controls -->
-    <div class="d-flex justify-content-center mb-4">
-        <button class="carousel-control-prev position-relative"
+        <!-- Inner -->
+        <!-- Controls -->
+        <div class="d-flex justify-content-center mb-4">
+            <button class="carousel-control-prev position-relative"
                 type="button"
-                @*dont forgot to att id here and to controls*@
-                data-bs-target="#carouselMultiItemExample"
+                data-bs-target="#carouselMultiItemExample@(Model.ModelIndicator)"
                 data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next position-relative"
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next position-relative"
                 type="button"
-                @*dont forgot to att id here and to controls*@
-                data-bs-target="#carouselMultiItemExample"
+                data-bs-target="#carouselMultiItemExample@(Model.ModelIndicator)"
                 data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
     </div>
-</div>
-<!-- Carousel wrapper -->
+    <!-- Carousel wrapper -->
+}

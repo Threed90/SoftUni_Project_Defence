@@ -9,6 +9,7 @@
             this.Followers = new HashSet<Profile>();
             this.Followings = new HashSet<Profile>();
             this.MyStories = new HashSet<Story>();
+            this.Revues = new HashSet<Revue>();
             this.MyCollectiveStories = new HashSet<Story>();
             this.MyReads = new HashSet<Story>();
             this.IsDeleted= false;
@@ -61,5 +62,7 @@
 
         [InverseProperty(nameof(Story.Readers))]
         public ICollection<Story> MyReads { get; set; }
+
+        public ICollection<Revue> Revues { get; set; }
     }
 }

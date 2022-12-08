@@ -86,6 +86,9 @@
             public const int PdfFileMinLength = 10;
             public const int PdfFileMaxLength = 256;
 
+            public const int StorySummaryMinLength = 10;
+            public const int StorySummaryMaxLength = 100;
+
         }
 
         public static class StoryType

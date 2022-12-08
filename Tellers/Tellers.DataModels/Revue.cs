@@ -11,5 +11,8 @@
 
         public Guid StoryId { get; set; }
         public Story Story { get; set; } = null!;
+
+        public Guid ProfileId { get; set; }
+        public Profile Profile { get; set; } = null!;
     }
 }

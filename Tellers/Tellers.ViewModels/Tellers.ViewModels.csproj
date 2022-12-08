@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tellers.Constants\Tellers.Constants.csproj" />
+    <ProjectReference Include="..\Tellers.Unilities\Tellers.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

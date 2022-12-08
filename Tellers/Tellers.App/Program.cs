@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Tellers.Constants;
 using Tellers.DataModels;
 using Tellers.DbContext;
+using Tellers.Mapper;
+using Tellers.Mapper.Interfaces;
 using Tellers.Services;
 using Tellers.Services.Interfaces;
 
@@ -35,6 +37,8 @@ builder.Services.ConfigureApplicationCookie(opt =>
 });
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IStoryServer, StoryServer>();
+builder.Services.AddScoped<IMapWrapper, MapWrapper>();
 
 var app = builder.Build();
 

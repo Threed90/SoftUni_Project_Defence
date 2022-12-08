@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tellers.DbContext;
 
@@ -11,9 +12,10 @@ using Tellers.DbContext;
 namespace Tellers.DbContext.Migrations
 {
     [DbContext(typeof(TellersDbContext))]
-    partial class TellersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221208211508_CreateColumnCreatedOnintoStoryEntity")]
+    partial class CreateColumnCreatedOnintoStoryEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -480,9 +482,6 @@ namespace Tellers.DbContext.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<Guid>("ProfileId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<double>("Rating")
                         .HasColumnType("float");
 
@@ -496,8 +495,6 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProfileId");
-
                     b.HasIndex("StoryId");
 
                     b.ToTable("Revues");
@@ -509,10 +506,6 @@ namespace Tellers.DbContext.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BookCoverPicture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -522,11 +515,6 @@ namespace Tellers.DbContext.Migrations
                     b.Property<string>("PdfFile")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("StorySummary")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("StoryText")
                         .HasColumnType("nvarchar(max)");
@@ -810,19 +798,11 @@ namespace Tellers.DbContext.Migrations
 
             modelBuilder.Entity("Tellers.DataModels.Revue", b =>
                 {
-                    b.HasOne("Tellers.DataModels.Profile", "Profile")
-                        .WithMany("Revues")
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Tellers.DataModels.Story", "Story")
                         .WithMany("Revues")
                         .HasForeignKey("StoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Profile");
 
                     b.Navigation("Story");
                 });
@@ -895,8 +875,6 @@ namespace Tellers.DbContext.Migrations
             modelBuilder.Entity("Tellers.DataModels.Profile", b =>
                 {
                     b.Navigation("MyStories");
-
-                    b.Navigation("Revues");
                 });
 
             modelBuilder.Entity("Tellers.DataModels.Story", b =>
