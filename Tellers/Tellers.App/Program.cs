@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using Tellers.Constants;
 using Tellers.DataModels;
 using Tellers.DbContext;
@@ -7,6 +8,9 @@ using Tellers.Mapper;
 using Tellers.Mapper.Interfaces;
 using Tellers.Services;
 using Tellers.Services.Interfaces;
+
+Process.Start("D:\\Repository\\SoftUni_Project_Defence\\Tellers\\Tellers.DataSeeder\\bin\\Debug\\net6.0\\Tellers.DataSeeder.exe");
+
 
 var builder = WebApplication.CreateBuilder(args);
 

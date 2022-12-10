@@ -53,6 +53,8 @@ namespace Tellers.DbContext
                 .HasMany(p => p.Followers)
                 .WithMany(p => p.Followings);
 
+            
+
             //builder.Entity<WorkingExperience>()
             //    .HasNoKey();
             base.OnModelCreating(builder);
