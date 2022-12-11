@@ -44,9 +44,6 @@
         }
 
         public async Task<IInfoBox> Register(
-            string firstName,
-            string? middleName,
-            string lastName,
             string email,
             string username, 
             string password, 
@@ -91,9 +88,9 @@
 
             var profile = new Profile()
             {
-                FirstName = firstName,
-                MiddleName = middleName,
-                LastName = lastName,
+                //FirstName = firstName,
+                //MiddleName = middleName,
+                //LastName = lastName,
                 User = registredUser
             };
 

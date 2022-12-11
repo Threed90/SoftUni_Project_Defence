@@ -5,20 +5,6 @@
     /// </summary>
     public class RegisterViewModel
     {
-        [Required]
-        [MinLength(Models.Profile.FirstNameMinLength)]
-        [MaxLength(Models.Profile.FirstNameMaxLength)]
-        public string FirstName { get; init; } = null!;
-
-        //[Required]
-        [MinLength(Models.Profile.FirstNameMinLength)]
-        [MaxLength(Models.Profile.FirstNameMaxLength)]
-        public string? MiddleName { get; init; }
-
-        [Required]
-        [MinLength(Models.Profile.FirstNameMinLength)]
-        [MaxLength(Models.Profile.FirstNameMaxLength)]
-        public string LastName { get; init; } = null!;
 
         [Required]
         [EmailAddress]

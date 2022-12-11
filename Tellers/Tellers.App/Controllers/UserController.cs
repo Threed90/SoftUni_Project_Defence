@@ -67,7 +67,8 @@ namespace Tellers.App.Controllers
                 return View(model);
             }
 
-            var result = await userService.Register(model.FirstName, model?.MiddleName, model.LastName, model.Email, model.UserName, model.Password, model.AcceptedAgreement);
+            var result = await userService.Register(model.Email, model.UserName, model.Password, model.AcceptedAgreement);
+
             if(result.IsSucceeded)
             {
                 return RedirectToAction(nameof(Login));
