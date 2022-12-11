@@ -19,17 +19,17 @@
         [Key]
         public Guid Id { get; set; }
 
-        [Required]
+        //[Required]
         [MaxLength(Models.Profile.FirstNameMaxLength)]
-        public string FirstName { get; set; } = null!;
+        public string? FirstName { get; set; } = null!;
 
         //[Required]
         [MaxLength(Models.Profile.MiddleNameMaxLength)]
         public string? MiddleName { get; set; }
 
-        [Required]
+        //[Required]
         [MaxLength(Models.Profile.LastNameMaxLength)]
-        public string LastName { get; set; } = null!;
+        public string? LastName { get; set; } = null!;
 
         [MaxLength(Models.Profile.PicturePathMaxLength)]
         public string? PicturePath { get; set; }

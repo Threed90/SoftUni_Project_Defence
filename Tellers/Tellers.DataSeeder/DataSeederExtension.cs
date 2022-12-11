@@ -17,7 +17,11 @@ namespace Tellers.DataSeeder
             IDataSeeder dataSeeder = seeder ?? new DataSeeder();
 
 
-            Console.WriteLine(seederMenu.StartMessage());
+            if(isExecuted == false)
+            {
+                Console.WriteLine(seederMenu.StartMessage());
+            }
+            
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
