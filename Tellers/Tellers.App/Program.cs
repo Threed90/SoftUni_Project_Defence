@@ -9,7 +9,7 @@ using Tellers.Mapper.Interfaces;
 using Tellers.Services;
 using Tellers.Services.Interfaces;
 
-Process.Start("D:\\Repository\\SoftUni_Project_Defence\\Tellers\\Tellers.DataSeeder\\bin\\Debug\\net6.0\\Tellers.DataSeeder.exe");
+
 
 
 var builder = WebApplication.CreateBuilder(args);

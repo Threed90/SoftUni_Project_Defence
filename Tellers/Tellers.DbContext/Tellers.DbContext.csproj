@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tellers.DataModels\Tellers.DataModels.csproj" />
+    <ProjectReference Include="..\Tellers.DataSeeder\Tellers.DataSeeder.csproj" />
   </ItemGroup>
 
   <ItemGroup>
