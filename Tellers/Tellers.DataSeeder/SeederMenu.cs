@@ -17,7 +17,7 @@ namespace Tellers.DataSeeder
         }
         public string StartMessage()
         {
-            string delimeter = new string('*', 31);
+            string delimeter = new string('*', 40);
             StringBuilder sb = new StringBuilder();
 
             sb
@@ -26,7 +26,7 @@ namespace Tellers.DataSeeder
              .AppendLine($"{delimeter}Hello, there!{delimeter}")
              .AppendLine("             This is a helper for data seeding into database");
 
-            string note = "NOTE: To get \"clean\" database just cancel the seeding process from the menu or wait 20 seconds for time out.";
+            string note = "NOTE: To get \"clean\" database just cancel the seeding process from the menu or wait 7 seconds for time out.";
             sb
              .AppendLine(note)
              .AppendLine(new string('*', note.Length))

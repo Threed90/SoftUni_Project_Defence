@@ -55,9 +55,10 @@ namespace Tellers.DataSeeder
                 {
                     if(isExecuted == false)
                     {
-                        Console.WriteLine("Time out! You does not press any key for more than 20 second...");
+                        Console.WriteLine("Time out! You does not press any key for more than 7 seconds...");
                         Console.WriteLine("Seeder data manager is closing...");
                         isExecuted = true;
+                        Thread.Sleep(1000);
                     }
                     
                     return;

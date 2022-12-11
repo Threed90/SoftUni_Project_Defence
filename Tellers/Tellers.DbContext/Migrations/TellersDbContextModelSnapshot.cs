@@ -34,7 +34,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasIndex("StoryTypesId");
 
-                    b.ToTable("GenreStoryType");
+                    b.ToTable("GenreStoryType", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -184,7 +184,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasIndex("OtherSideFriendsId");
 
-                    b.ToTable("ProfileProfile");
+                    b.ToTable("ProfileProfile", (string)null);
                 });
 
             modelBuilder.Entity("ProfileProfile1", b =>
@@ -199,7 +199,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasIndex("FollowingsId");
 
-                    b.ToTable("ProfileProfile1");
+                    b.ToTable("ProfileProfile1", (string)null);
                 });
 
             modelBuilder.Entity("ProfileStory", b =>
@@ -214,7 +214,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasIndex("MyCollectiveStoriesId");
 
-                    b.ToTable("ProfileStory");
+                    b.ToTable("ProfileStory", (string)null);
                 });
 
             modelBuilder.Entity("ProfileStory1", b =>
@@ -229,7 +229,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasIndex("ReadersId");
 
-                    b.ToTable("ProfileStory1");
+                    b.ToTable("ProfileStory1", (string)null);
                 });
 
             modelBuilder.Entity("Tellers.DataModels.ApplicationUser", b =>
@@ -328,7 +328,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasIndex("ResidenceCityId");
 
-                    b.ToTable("Bios");
+                    b.ToTable("Bios", (string)null);
                 });
 
             modelBuilder.Entity("Tellers.DataModels.Country", b =>
@@ -356,7 +356,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("Tellers.DataModels.Education", b =>
@@ -397,7 +397,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasIndex("TownId");
 
-                    b.ToTable("Educations");
+                    b.ToTable("Educations", (string)null);
                 });
 
             modelBuilder.Entity("Tellers.DataModels.Genre", b =>
@@ -415,7 +415,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
                 });
 
             modelBuilder.Entity("Tellers.DataModels.Profile", b =>
@@ -467,7 +467,7 @@ namespace Tellers.DbContext.Migrations
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL");
 
-                    b.ToTable("Profiles");
+                    b.ToTable("Profiles", (string)null);
                 });
 
             modelBuilder.Entity("Tellers.DataModels.Revue", b =>
@@ -498,7 +498,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasIndex("StoryId");
 
-                    b.ToTable("Revues");
+                    b.ToTable("Revues", (string)null);
                 });
 
             modelBuilder.Entity("Tellers.DataModels.Story", b =>
@@ -543,7 +543,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasIndex("StoryTypeId");
 
-                    b.ToTable("Stories");
+                    b.ToTable("Stories", (string)null);
                 });
 
             modelBuilder.Entity("Tellers.DataModels.StoryType", b =>
@@ -561,7 +561,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StoryTypes");
+                    b.ToTable("StoryTypes", (string)null);
                 });
 
             modelBuilder.Entity("Tellers.DataModels.Town", b =>
@@ -589,7 +589,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Towns");
+                    b.ToTable("Towns", (string)null);
                 });
 
             modelBuilder.Entity("Tellers.DataModels.WorkingExperience", b =>
@@ -630,7 +630,7 @@ namespace Tellers.DbContext.Migrations
 
                     b.HasIndex("TownId");
 
-                    b.ToTable("WorkingExperiences");
+                    b.ToTable("WorkingExperiences", (string)null);
                 });
 
             modelBuilder.Entity("GenreStoryType", b =>
