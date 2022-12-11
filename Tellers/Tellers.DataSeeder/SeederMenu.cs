@@ -11,7 +11,6 @@ namespace Tellers.DataSeeder
     {
         private string menuType;
         private string previousMenuType;
-
         public SeederMenu()
         {
             this.menuType = "main";
@@ -27,7 +26,7 @@ namespace Tellers.DataSeeder
              .AppendLine($"{delimeter}Hello, there!{delimeter}")
              .AppendLine("             This is a helper for data seeding into database");
 
-            string note = "NOTE: To get \"clean\" database just cancel the seeding process from the menu.";
+            string note = "NOTE: To get \"clean\" database just cancel the seeding process from the menu or wait 20 seconds for time out.";
             sb
              .AppendLine(note)
              .AppendLine(new string('*', note.Length))
@@ -44,59 +43,69 @@ namespace Tellers.DataSeeder
             bool isClosed = false;
             int executionState = 0;
 
+            if(Console.KeyAvailable)
+            {
+                
+                ConsoleKeyInfo key = Console.ReadKey();
 
-            ConsoleKeyInfo key = Console.ReadKey();
-
-            if (menuType == "main" && key.Key == ConsoleKey.Escape)
-            {
-                msg = "Press any key to close DataSeeder...";
-                isClosed = true;
-                executionState = 0;
-            }
-            else if (menuType == "main" && (key.Key == ConsoleKey.NumPad1 || key.Key == ConsoleKey.D1))
-            {
-                Console.Clear();
-                menuType = "sub";
-                msg = this.GetMenuContent();
-                isClosed = false;
-                executionState = 1;
-            }
-            else if (menuType == "main" && (key.Key == ConsoleKey.NumPad2 || key.Key == ConsoleKey.D2))
-            {
-                Console.Clear();
-                menuType = "sub";
-                msg = this.GetMenuContent();
-                isClosed = false;
-                executionState = 2;
-            }
-            else if(menuType == "sub" && key.Key == ConsoleKey.Enter)
-            {
-                Console.Clear();
-                menuType = "main";
-                msg = this.GetMenuContent();
-                isClosed = false;
-                executionState = 0;
-            }
-            else
-            {
-                previousMenuType = menuType;
-                menuType = "invalid";
-                msg = this.GetMenuContent();
-                executionState = -1;
-                isClosed = false;
-                menuType = previousMenuType;
-
-                if(menuType == "main")
+                if (menuType == "main" && key.Key == ConsoleKey.Escape)
                 {
-                    msg += Environment.NewLine;
-                    msg += this.GetMenuContent();
+                    msg = "Press any key to close DataSeeder...";
+                    isClosed = true;
+                    executionState = 0;
+                }
+                else if (menuType == "main" && (key.Key == ConsoleKey.NumPad1 || key.Key == ConsoleKey.D1))
+                {
+                    Console.Clear();
+                    menuType = "sub";
+                    msg = this.GetMenuContent();
+                    isClosed = false;
+                    executionState = 1;
+                }
+                else if (menuType == "main" && (key.Key == ConsoleKey.NumPad2 || key.Key == ConsoleKey.D2))
+                {
+                    Console.Clear();
+                    menuType = "sub";
+                    msg = this.GetMenuContent();
+                    isClosed = false;
+                    executionState = 2;
+                }
+                else if (menuType == "sub" && key.Key == ConsoleKey.Enter)
+                {
+                    Console.Clear();
+                    menuType = "main";
+                    msg = this.GetMenuContent();
+                    isClosed = false;
+                    executionState = 0;
                 }
                 else
                 {
-                    msg += this.GetMenuContent().Split(Environment.NewLine).Last() ?? ""; ;
+                    previousMenuType = menuType;
+                    menuType = "invalid";
+                    msg = this.GetMenuContent();
+                    executionState = -1;
+                    isClosed = false;
+                    menuType = previousMenuType;
+
+                    if (menuType == "main")
+                    {
+                        msg += Environment.NewLine;
+                        msg += this.GetMenuContent();
+                    }
+                    else
+                    {
+                        msg += this.GetMenuContent().Split(Environment.NewLine).Last() ?? ""; ;
+                    }
+
                 }
-                
             }
+            else
+            {
+                msg = "";
+                isClosed = false;
+                executionState = 99;
+            }
+            
 
 
             return (msg, isClosed, executionState);
