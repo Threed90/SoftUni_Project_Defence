@@ -4,7 +4,7 @@
     {
         public Genre()
         {
-            this.StoryTypes= new HashSet<StoryType>();
+            this.Stories = new HashSet<Story>();
         }
         public int Id { get; set; }
 
@@ -12,6 +12,6 @@
         [MaxLength(Models.Genre.NameMaxLength)]
         public string Name { get; set; } = null!;
 
-        public ICollection<StoryType> StoryTypes { get; set; }
+        public ICollection<Story> Stories { get; set; }
     }
 }

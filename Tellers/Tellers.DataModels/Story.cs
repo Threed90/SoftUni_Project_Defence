@@ -7,6 +7,7 @@
             this.Readers = new HashSet<Profile>();
             this.Authors = new HashSet<Profile>();
             this.Revues = new HashSet<Revue>();
+            this.Genres = new HashSet<Genre>();
             this.Id= Guid.NewGuid();
         }
 
@@ -20,11 +21,11 @@
         public string? PdfFile { get; set; }
 
         [Required]
-        public string BookCoverPicture { get; set; }
+        public string BookCoverPicture { get; set; } = null!;
 
         [Required]
         [MaxLength(Models.Story.StorySummaryMaxLength)]
-        public string StorySummary { get; set; }   
+        public string StorySummary { get; set; } = null!; 
 
         public string? StoryText { get; set; }
 
@@ -39,5 +40,7 @@
         public ICollection<Revue> Revues { get; set; }
         public ICollection<Profile> Authors { get; set; }
         public ICollection<Profile> Readers { get; set; }
+
+        public ICollection<Genre> Genres { get; set; }
     }
 }
