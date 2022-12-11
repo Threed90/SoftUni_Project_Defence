@@ -21,12 +21,12 @@
         [MaxLength(Models.Country.NameMaxLength)]
         public string Name { get; set; } = null!;
 
-        /// <summary>
-        /// The code of the country
-        /// </summary>
-        [Required]
-        [MaxLength(Models.Country.CountryCodeMaxLength)]
-        public string CountryCode { get; set; } = null!;
+        ///// <summary>
+        ///// The code of the country
+        ///// </summary>
+        //[Required]
+        //[MaxLength(Models.Country.CountryCodeMaxLength)]
+        //public string CountryCode { get; set; } = null!;
 
         /// <summary>
         /// The iso code of the country
