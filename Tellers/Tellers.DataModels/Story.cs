@@ -17,8 +17,9 @@
         [MaxLength(Models.Story.TitleMaxLength)]
         public string Title { get; set; } = null!;
 
-        [MaxLength(Models.Story.PdfFileMaxLength)]
-        public string? PdfFile { get; set; }
+        [Required]
+        [MaxLength(Models.Story.PdfFileUrlMaxLength)]
+        public string PdfFileUrl { get; set; }
 
         [Required]
         public string BookCoverPicture { get; set; } = null!;
@@ -27,7 +28,7 @@
         [MaxLength(Models.Story.StorySummaryMaxLength)]
         public string StorySummary { get; set; } = null!; 
 
-        public string? StoryText { get; set; }
+        //public string? StoryText { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

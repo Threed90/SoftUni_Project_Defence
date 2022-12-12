@@ -84,7 +84,7 @@
             public const int StoryTextMinLength = 50;
 
             public const int PdfFileMinLength = 10;
-            public const int PdfFileMaxLength = 256;
+            public const int PdfFileUrlMaxLength = 2048;
 
             public const int StorySummaryMinLength = 10;
             public const int StorySummaryMaxLength = 100;
