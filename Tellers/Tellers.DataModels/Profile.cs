@@ -8,9 +8,9 @@
             this.OtherSideFriends = new HashSet<Profile>();
             this.Followers = new HashSet<Profile>();
             this.Followings = new HashSet<Profile>();
-            this.MyStories = new HashSet<Story>();
+            this.Posts = new HashSet<Story>();
             this.Revues = new HashSet<Revue>();
-            this.MyCollectiveStories = new HashSet<Story>();
+            this.MyStories = new HashSet<Story>();
             this.MyReads = new HashSet<Story>();
             this.IsDeleted= false;
             this.Id = Guid.NewGuid();
@@ -52,10 +52,10 @@
         public ICollection<Profile> Followings { get; set; }
 
         [InverseProperty(nameof(Story.Creator))]
-        public ICollection<Story> MyStories { get; set; }
+        public ICollection<Story> Posts { get; set; }
 
         [InverseProperty(nameof(Story.Authors))]
-        public ICollection<Story> MyCollectiveStories { get; set; }
+        public ICollection<Story> MyStories { get; set; }
 
         [InverseProperty(nameof(Story.Readers))]
         public ICollection<Story> MyReads { get; set; }
