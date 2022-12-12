@@ -1,0 +1,198 @@
+[
+    {
+        "Id": 1,
+        "Name": "adventurous"
+    },
+    {
+        "Id": 2,
+        "Name": "fantasy"
+    },
+    {
+        "Id": 3,
+        "Name": "thriller"
+    },
+    {
+        "Id": 4,
+        "Name": "drama"
+    },
+    {
+        "Id": 5,
+        "Name": "comedy/satire"
+    },
+    {
+        "Id": 6,
+        "Name": "dark humor"
+    },
+    {
+        "Id": 7,
+        "Name": "romantic"
+    },
+    {
+        "Id": 8,
+        "Name": "action"
+    },
+    {
+        "Id": 9,
+        "Name": "historical"
+    },
+    {
+        "Id": 10,
+        "Name": "documentary"
+    },
+    {
+        "Id": 11,
+        "Name": "biographical"
+    },
+    {
+        "Id": 12,
+        "Name": "journalistic"
+    },
+    {
+        "Id": 13,
+        "Name": "scientific"
+    },
+    {
+        "Id": 14,
+        "Name": "educational"
+    },
+    {
+        "Id": 15,
+        "Name": "existential"
+    },
+    {
+        "Id": 16,
+        "Name": "philosophical"
+    },
+    {
+        "Id": 17,
+        "Name": "psychological"
+    },
+    {
+        "Id": 18,
+        "Name": "informative"
+    },
+    {
+        "Id": 19,
+        "Name": "realistic"
+    },
+    {
+        "Id": 20,
+        "Name": "art"
+    },
+    {
+        "Id": 21,
+        "Name": "descriptive"
+    },
+    {
+        "Id": 22,
+        "Name": "technically"
+    },
+    {
+        "Id": 23,
+        "Name": "programming"
+    },
+    {
+        "Id": 24,
+        "Name": "teenage"
+    },
+    {
+        "Id": 25,
+        "Name": "domestic"
+    },
+    {
+        "Id": 26,
+        "Name": "esoteric"
+    },
+    {
+        "Id": 27,
+        "Name": "legends and myths"
+    },
+    {
+        "Id": 28,
+        "Name": "dungeons and dragons"
+    },
+    {
+        "Id": 29,
+        "Name": "conspiratorial"
+    },
+    {
+        "Id": 30,
+        "Name": "folkloric"
+    },
+    {
+        "Id": 31,
+        "Name": "culinary"
+    },
+    {
+        "Id": 32,
+        "Name": "for health and beauty"
+    },
+    {
+        "Id": 33,
+        "Name": "folk"
+    },
+    {
+        "Id": 34,
+        "Name": "pop"
+    },
+    {
+        "Id": 35,
+        "Name": "rock"
+    },
+    {
+        "Id": 36,
+        "Name": "jazz"
+    },
+    {
+        "Id": 37,
+        "Name": "musical"
+    },
+    {
+        "Id": 38,
+        "Name": "ethnic"
+    },
+    {
+        "Id": 39,
+        "Name": "techno"
+    },
+    {
+        "Id": 40,
+        "Name": "healthy life"
+    },
+    {
+        "Id": 41,
+        "Name": "healthy eating"
+    },
+    {
+        "Id": 42,
+        "Name": "Lifestyle"
+    },
+    {
+        "Id": 43,
+        "Name": "how to..."
+    },
+    {
+        "Id": 44,
+        "Name": "fitness"
+    },
+    {
+        "Id": 45,
+        "Name": "life coach"
+    },
+    {
+        "Id": 46,
+        "Name": "religious"
+    },
+    {
+        "Id": 47,
+        "Name": "research"
+    },
+    {
+        "Id": 48,
+        "Name": "commercial"
+    },
+    {
+        "Id": 49,
+        "Name": "another"
+    }
+]

@@ -1,0 +1,106 @@
+[
+    {
+        "Id": 1,
+        "Name": "story"
+    },
+    {
+        "Id": 2,
+        "Name": "poem"
+    },
+    {
+        "Id": 3,
+        "Name": "novel"
+    },
+    {
+        "Id": 4,
+        "Name": "comic"
+    },
+    {
+        "Id": 5,
+        "Name": "essay"
+    },
+    {
+        "Id": 6,
+        "Name": "memoirs"
+    },
+    {
+        "Id": 7,
+        "Name": "feuilleton"
+    },
+    {
+        "Id": 8,
+        "Name": "pamphlet"
+    },
+    {
+        "Id": 9,
+        "Name": "travelogue"
+    },
+    {
+        "Id": 10,
+        "Name": "article"
+    },
+    {
+        "Id": 11,
+        "Name": "epic"
+    },
+    {
+        "Id": 12,
+        "Name": "ode"
+    },
+    {
+        "Id": 13,
+        "Name": "fairy tale"
+    },
+    {
+        "Id": 14,
+        "Name": "legend"
+    },
+    {
+        "Id": 15,
+        "Name": "anecdote"
+    },
+    {
+        "Id": 16,
+        "Name": "pun"
+    },
+    {
+        "Id": 17,
+        "Name": "joke"
+    },
+    {
+        "Id": 18,
+        "Name": "sonnet"
+    },
+    {
+        "Id": 19,
+        "Name": "epigram"
+    },
+    {
+        "Id": 20,
+        "Name": "textbook"
+    },
+    {
+        "Id": 21,
+        "Name": "dissertation"
+    },
+    {
+        "Id": 22,
+        "Name": "thesis"
+    },
+    {
+        "Id": 23,
+        "Name": "news"
+    },
+    {
+        "Id": 24,
+        "Name": "reportage"
+    },
+    {
+        "Id": 25,
+        "Name": "song"
+    },
+    {
+        "Id": 26,
+        "Name": "another kind of story"
+    }
+]

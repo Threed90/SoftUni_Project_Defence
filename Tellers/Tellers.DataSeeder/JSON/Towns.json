@@ -1,0 +1,22 @@
+[
+    {
+        "Name" : "Sliven",
+        "PostCode" : "8800",
+        "CountryId" : 2
+    },
+    {
+        "Name" : "Sofia",
+        "PostCode" : "1000",
+        "CountryId" : 2
+    },
+    {
+        "Name" : "Plovdiv",
+        "PostCode" : "4000",
+        "CountryId" : 2
+    },
+    {
+        "Name" : "Varna",
+        "PostCode" : "9000",
+        "CountryId" : 2
+    }
+]

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Tellers.DataModels;
-using Tellers.DataSeeder;
 
 namespace Tellers.DbContext
 {
@@ -54,8 +53,6 @@ namespace Tellers.DbContext
                 .HasMany(p => p.Followers)
                 .WithMany(p => p.Followings);
 
-            builder
-                .SeedData();
 
             //builder.Entity<WorkingExperience>()
             //    .HasNoKey();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Tellers.DbContext;
 
 namespace Tellers.DataSeeder.Interfaces
 {
@@ -8,24 +9,13 @@ namespace Tellers.DataSeeder.Interfaces
         /// Use this method to getting only the required data, that is important for the application functionality
         /// </summary>
         /// <returns></returns>
-        void SeedAllRequiredData(ModelBuilder builder);
-
-        /// <summary>
-        /// Use this method to getting only the required data, that is important for the application functionality from JSON file
-        /// </summary>
-        /// <returns></returns>
-        void SeedAllRequiredDataFromJSON(ModelBuilder builder, string json);
+        void SeedAllRequiredData(TellersDbContext context);
 
         /// <summary>
         /// Method for data seeding for test purpose
         /// </summary>
         /// <returns></returns>
-        void SeedAllNonRequiredData(ModelBuilder builder);
+        void SeedAllNonRequiredData(TellersDbContext context);
 
-        /// <summary>
-        /// Method for data seeding for test purpose from JSON file
-        /// </summary>
-        /// <returns></returns>
-        void SeedAllNonRequiredDataFromJSON(ModelBuilder builder, string json);
     }
 }
