@@ -1,0 +1,22 @@
+﻿[
+  {
+    "Id": "1cd70f35-ec97-42f0-90f8-492bec095967",
+    "Position": "Web developer",
+    "EmployerName": "Web site maker company",
+    "TownId": 1,
+    "From": "1999-12-10T00:00:00+00:00",
+    "To": "2005-12-08T00:00:00+00:00",
+    "BioId": "964244bf-d6c5-459d-ad76-6a7a1680ed93",
+    "ActivitiesAndResponces": "Making web sites, follow the team leader instructions, learning and improving skills"
+  },
+  {
+    "Id": "37e308c6-970b-4687-adec-f905c90268d5",
+    "Position": "Team Leader",
+    "EmployerName": "Web site maker company",
+    "TownId": 1,
+    "From": "2005-12-09T00:00:00+00:00",
+    "To": "2014-12-08T00:00:00+00:00",
+    "BioId": "964244bf-d6c5-459d-ad76-6a7a1680ed93",
+    "ActivitiesAndResponces": "Responsible for the team of programmer, handle project planning and distribution of tasks, responsible for staging and deployment, communicate with customers"
+  }
+]

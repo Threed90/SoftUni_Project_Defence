@@ -11,6 +11,7 @@ namespace Tellers.DataSeeder
     public class DataSeeder : IDataSeeder
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private string masterAdminProfileId = "";
 
         public void SeedAllNonRequiredData(TellersDbContext context)
         {
@@ -28,8 +29,43 @@ namespace Tellers.DataSeeder
                 context.Towns.AddRange(towns);
             }
 
+            var profiles = this.GetModels<Profile>("Profiles.json");
+
+            if (context.Profiles.Where(p => p.Id.ToString() != this.masterAdminProfileId).Any() == false)
+            {
+                context.Profiles.AddRange(profiles);
+            }
+
+            if (context.Users.Where(u => u.UserName != "masterAdmin").Any() == false)
+            {
+                this.CreateTestUsers(context, profiles.ToList());
+                this.SetRolesForTestUsers(context);
+            }
+
+            var bios = this.GetModels<Bio>("Bios.json");
+
+            if(context.Bios.Any() == false) 
+            { 
+                this.AddBioToProfiles(context, bios);
+            }
+
+            var workingExps = this.GetModels<WorkingExperience>("WorkingExp.json");
+
+            if(context.WorkingExperiences.Any() == false)
+            {
+                context.WorkingExperiences.AddRange(workingExps);
+            }
+
+            var educations = this.GetModels<Education>("Educations.json");
+            if(context.Educations.Any() == false)
+            {
+                context.Educations.AddRange(educations);
+            }
+
             context.SaveChanges();
         }
+
+        
 
         public void SeedAllRequiredData(TellersDbContext context)
         {
@@ -49,19 +85,125 @@ namespace Tellers.DataSeeder
 
             var roles = this.GetModels<IdentityRole<Guid>>("Roles.json");
 
-            if(context.Roles.Any() == false)
+            if (context.Roles.Any() == false)
             {
                 context.Roles.AddRange(roles);
             }
 
-            if(context.Users.FirstOrDefault(u => u.UserName == "masterAdmin") == null)
+            if (context.Users.FirstOrDefault(u => u.UserName == "masterAdmin") == null)
             {
                 this.CreateMasterAdminUserAndProfile(context);
                 this.AddMasterAdminToHisRole(context);
             }
         }
 
-        
+
+        private void AddBioToProfiles(TellersDbContext context, IEnumerable<Bio> bios)
+        {
+            context.Bios.AddRange(bios);
+            context.SaveChanges();
+
+            foreach (var bio in bios)
+            {
+                var profile = context.Profiles.FirstOrDefault(p => p.Id == bio.ProfileId);
+
+                if(profile != null)
+                {
+                    profile.AdditionalInfoId = bio.Id;
+                }
+            }
+            
+            context.SaveChanges();
+        }
+
+        private void SetRolesForTestUsers(TellersDbContext context)
+        {
+            var testUsers = context.Users.Where(u => u.UserName != "masterAdmin");
+
+            var userRoles = new List<IdentityUserRole<Guid>>();
+
+            foreach (var user in testUsers)
+            {
+                userRoles.Add(new IdentityUserRole<Guid>()
+                {
+                    UserId = user.Id,
+                    RoleId = new Guid("99e4a88f-e972-41ae-909f-256545b0dd4b")
+                });
+            }
+
+            context.UserRoles.AddRange(userRoles);
+
+            context.SaveChanges();
+        }
+
+        private void CreateTestUsers(TellersDbContext context, List<Profile> profiles)
+        {
+            var hasher = new PasswordHasher<ApplicationUser>();
+
+            List<ApplicationUser> users = new()
+            {
+                new ApplicationUser()
+                {
+                    Email = "testUserOne@mail.com",
+                    UserName = "testUserOne",
+                    NormalizedEmail = "TESTUSERONE@MAIL.COM",
+                    NormalizedUserName = "TESTUSERONE",
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    CreatedOn= DateTime.Now,
+                    SecurityStamp= Guid.NewGuid().ToString(),
+                    UserProfileId = profiles[0].Id,
+                    
+                },
+                new ApplicationUser()
+                {
+                    Email = "testUserTwo@mail.com",
+                    UserName = "testUserTwo",
+                    NormalizedEmail = "TESTUSERTWO@MAIL.COM",
+                    NormalizedUserName = "TESTUSERTWO",
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    CreatedOn= DateTime.Now,
+                    SecurityStamp= Guid.NewGuid().ToString(),
+                    UserProfileId = profiles[1].Id
+                },
+                new ApplicationUser()
+                {
+                    Email = "testUserThree@mail.com",
+                    UserName = "testUserThree",
+                    NormalizedEmail = "TESTUSERTHREE@MAIL.COM",
+                    NormalizedUserName = "TESTUSERTHREE",
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    CreatedOn= DateTime.Now,
+                    SecurityStamp= Guid.NewGuid().ToString(),
+                    UserProfileId = profiles[2].Id,
+                    
+                }
+            };
+
+            foreach (var user in users)
+            {
+                user.PasswordHash = hasher.HashPassword(user, user.UserName);
+            }
+
+            context.Users.AddRange(users);
+            context.SaveChanges();
+
+            var dbUsers = context.Users.Where(u => u.UserName != "masterAdmin");
+
+            var dbProfiles = context.Profiles.Where(p => p.Id.ToString() != this.masterAdminProfileId);
+
+            foreach (var user in dbUsers)
+            {
+                var profile = dbProfiles.FirstOrDefault(p => p.Id == user.UserProfileId);
+
+                if(profile != null)
+                {
+                    profile.UserId= user.Id;
+                }
+            }
+            context.SaveChanges();
+
+        }
+
 
         private IEnumerable<TEntity> GetModels<TEntity>(string fileName)
         {
@@ -81,13 +223,13 @@ namespace Tellers.DataSeeder
                 NormalizedEmail = "MASTERADMIN@TELLERS.COM",
                 NormalizedUserName = "MASTERADMIN",
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
-                CreatedOn= DateTime.Now,
-                SecurityStamp= Guid.NewGuid().ToString(),
+                CreatedOn = DateTime.Now,
+                SecurityStamp = Guid.NewGuid().ToString(),
             };
 
             var passwordHash = hasher.HashPassword(user, "masterAdmin");
 
-            user.PasswordHash= passwordHash;
+            user.PasswordHash = passwordHash;
             context.Users.Add(user);
             context.SaveChanges();
 
@@ -100,8 +242,9 @@ namespace Tellers.DataSeeder
             context.Profiles.Add(profile);
             context.SaveChanges();
 
-            var adminProfile = context.Profiles.FirstOrDefault(p => p.UserId== adminUser.Id);
+            var adminProfile = context.Profiles.FirstOrDefault(p => p.UserId == adminUser.Id);
 
+            this.masterAdminProfileId = adminProfile.Id.ToString();
             adminUser.UserProfileId = adminProfile.Id;
             context.SaveChanges();
         }
@@ -121,3 +264,4 @@ namespace Tellers.DataSeeder
         }
     }
 }
+

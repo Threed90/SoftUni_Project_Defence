@@ -1,0 +1,12 @@
+﻿[
+  {
+    "Id": "dc0b42d8-49e4-4d20-b542-b3127bd65b67",
+    "QualificationName": "Computer Science",
+    "EducationInstitutionName": "Technical university - Sofia",
+    "TownId": 2,
+    "From": "1995-09-25T00:00:00+00:00",
+    "To": "1999-06-15T00:00:00+00:00",
+    "BioId": "964244bf-d6c5-459d-ad76-6a7a1680ed93",
+    "AdditionalDescription": "I studied mathematics, computer science, probability theory and statistics, as well as applied, functional and procedural programming in languages such as C++ and C, Java and many more."
+  }
+]

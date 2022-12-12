@@ -115,7 +115,7 @@
             public const int EmployerNameMaxLength = 50;
 
             public const int ActivitiesAndResponcesMinLength = 20;
-            public const int ActivitiesAndResponcesMaxLength = 150;
+            public const int ActivitiesAndResponcesMaxLength = 250;
         }
     }
 }

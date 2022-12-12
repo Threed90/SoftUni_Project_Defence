@@ -11,6 +11,7 @@ namespace Tellers.DataSeeder
     {
         private string menuType;
         private string previousMenuType;
+        private bool isRequiredDataSeeded = false;
         public SeederMenu()
         {
             this.menuType = "main";
@@ -25,8 +26,13 @@ namespace Tellers.DataSeeder
              .AppendLine("     This is a helper for data seeding into database");
 
             string note = "NOTE: You need to reset database to perform data seeding again.";
+            string warning = "   WARNING: First seed required data, then non required.";
+            string warningTwo = "WARNING: Seeder is using auto migration - data losing possible";
+
             sb
              .AppendLine(note)
+             .AppendLine(warning)
+             .AppendLine(warningTwo)
              .AppendLine(new string('*', note.Length))
              .AppendLine()
              .AppendLine(this.GetMenuContent());
@@ -56,9 +62,10 @@ namespace Tellers.DataSeeder
                 menuType = "sub";
                 message = this.GetMenuContent();
                 isClosed = false;
+                isRequiredDataSeeded = true;
                 executionState = 1;
             }
-            else if (menuType == "main" && (key.Key == ConsoleKey.NumPad2 || key.Key == ConsoleKey.D2))
+            else if (menuType == "main" && (key.Key == ConsoleKey.NumPad2 || key.Key == ConsoleKey.D2) && isRequiredDataSeeded)
             {
                 Console.Clear();
                 menuType = "sub";
@@ -121,7 +128,7 @@ namespace Tellers.DataSeeder
                 case "invalid":
                     sb
                         .AppendLine()
-                        .AppendLine("Invalid key!!!")
+                        .AppendLine("Invalid key or trying to seed non required data before required data...")
                         .AppendLine("Please follow the menu instructions.")
                         .AppendLine();
                     break;
