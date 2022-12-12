@@ -31,6 +31,9 @@
     <None Update="JSON\Genres.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="JSON\Roles.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="JSON\StoryTypes.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

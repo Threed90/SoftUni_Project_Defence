@@ -64,7 +64,7 @@
         public static class Genre
         {
             public const int NameMinLength = 4;
-            public const int NameMaxLength = 20;
+            public const int NameMaxLength = 30;
         }
 
         public static class Revue

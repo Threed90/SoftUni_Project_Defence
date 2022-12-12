@@ -1,0 +1,26 @@
+﻿[
+  {
+    "Id": "99e4a88f-e972-41ae-909f-256545b0dd4b",
+    "Name": "TellerUser",
+    "NormalizedName": "TELLERUSER",
+    "ConcurrencyStamp": "58bb7286-d693-4db1-be5d-ae8caa18978a"
+  },
+  {
+    "Id": "5ba80651-2c74-40e4-87c7-bb7d024f005a",
+    "Name": "TellerModerator",
+    "NormalizedName": "TELLERMODERATOR",
+    "ConcurrencyStamp": "f8aedec3-606f-4b9e-86d2-8e67f51a254d"
+  },
+  {
+    "Id": "3ebe3009-02ec-4801-a149-5fe746d34df2",
+    "Name": "TellerAdmin",
+    "NormalizedName": "TELLERADMIN",
+    "ConcurrencyStamp": "0d508c2c-f5cf-44b7-acf2-58e8833cd2f6"
+  },
+  {
+    "Id": "a7555f4b-ede3-4251-8dff-da73986217d5",
+    "Name": "TellerMasterAdmin",
+    "NormalizedName": "TELLERMASTERADMIN",
+    "ConcurrencyStamp": "b109c62e-0fdb-4092-9a15-e884f05c7856"
+  }
+]

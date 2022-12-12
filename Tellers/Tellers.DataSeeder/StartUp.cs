@@ -18,8 +18,11 @@ namespace Tellers.DataSeeder
             var builder = new DbContextOptionsBuilder<TellersDbContext>()
                 .UseSqlServer(connection);
 
-            new TellersDbContext(builder.Options)
-                .SeedData();
+            var db = new TellersDbContext(builder.Options);
+
+            db.Database.Migrate();
+
+            db.SeedData();
         }
     }
 }
