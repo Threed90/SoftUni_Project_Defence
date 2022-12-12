@@ -30,10 +30,7 @@
         //[Required]
         [MaxLength(Models.Profile.LastNameMaxLength)]
         public string? LastName { get; set; } = null!;
-
-        [MaxLength(Models.Profile.PicturePathMaxLength)]
-        public string? PicturePath { get; set; }
-
+                
         [MaxLength(Models.Profile.PictureUrlMaxLength)]
         public string? PictureUrl { get; set; }
 
