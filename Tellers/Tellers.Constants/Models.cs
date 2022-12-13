@@ -87,7 +87,7 @@
             public const int PdfFileUrlMaxLength = 2048;
 
             public const int StorySummaryMinLength = 10;
-            public const int StorySummaryMaxLength = 100;
+            public const int StorySummaryMaxLength = 1000;
 
         }
 

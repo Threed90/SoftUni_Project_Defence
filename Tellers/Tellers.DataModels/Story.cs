@@ -21,8 +21,7 @@
         [MaxLength(Models.Story.PdfFileUrlMaxLength)]
         public string PdfFileUrl { get; set; }
 
-        [Required]
-        public string BookCoverPicture { get; set; } = null!;
+        public string? BookCoverPicture { get; set; } = null!;
 
         [Required]
         [MaxLength(Models.Story.StorySummaryMaxLength)]

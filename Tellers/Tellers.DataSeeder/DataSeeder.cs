@@ -62,6 +62,12 @@ namespace Tellers.DataSeeder
                 context.Educations.AddRange(educations);
             }
 
+            var stories = this.GetModels<Story>("Stories.json");
+            if(context.Stories.Any() == false)
+            {
+                context.Stories.AddRange(stories);
+            }
+
             context.SaveChanges();
         }
 
