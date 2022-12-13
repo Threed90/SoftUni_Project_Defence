@@ -38,6 +38,8 @@
         public Guid? CreatorId { get; set; }
         public Profile? Creator { get; set; }
 
+        public string? ExternalAuthorName { get; set; }  
+
         public ICollection<Revue> Revues { get; set; }
         public ICollection<Profile> Authors { get; set; }
         public ICollection<Profile> Readers { get; set; }
