@@ -1,4 +1,5 @@
-﻿@using Tellers.ViewModels.Story;
+﻿@using System.Security.Claims;
+@using Tellers.ViewModels.Story;
 @model StoryDetailsViewModel
 
 <div class="container align-content-center" style="margin-top: 10rem">
@@ -12,19 +13,33 @@
 
 
                     <a href="#" class="text-white font-weight-bold">
-                        @((Model.CreatorFirstName == null ? string.Empty :
+                        @if(string.IsNullOrEmpty(Model.ExternalAuthorName) == false)
+                        {
+                            @Model.ExternalAuthorName;
+                        }
+                        else if(User.IsInRole(RoleNames.MasterAdminRoleName) ||
+                                User.IsInRole(RoleNames.AdminRoleName) ||
+                                User.IsInRole(RoleNames.ModeratorRoleName))
+                        {
+                            @("Tellers team");
+                        }
+                        else
+                        {
+                            @((Model.CreatorFirstName == null ? string.Empty :
                             Model.CreatorFirstName +
                             (Model.CreatorMiddleName == null ? string.Empty : $" {Model.CreatorMiddleName}") +
                             (Model.CreatorLastName == null ? string.Empty : $" {Model.CreatorLastName}") +
                             (Model.CreatorPseudonym == null ? string.Empty : $" - {Model.CreatorPseudonym}")) == string.Empty
                             ?
-                            "Anonymous author"
+                            (Model.CreatorUsername == string.Empty ? "Unknown post creator." : Model.CreatorUsername)
                             :
                             (Model.CreatorFirstName == null ? string.Empty :
                             Model.CreatorFirstName +
                             (Model.CreatorMiddleName == null ? string.Empty : $" {Model.CreatorMiddleName}") +
                             (Model.CreatorLastName == null ? string.Empty : $" {Model.CreatorLastName}") +
                             (Model.CreatorPseudonym == null ? string.Empty : $" - {Model.CreatorPseudonym}")))
+                        }
+                        
                     </a>
                 </p>
             </div>
@@ -34,6 +49,9 @@
         <div class="ratio ratio-16x9 viewPDF" style="margin-top: 0.5em;">
         </div>
     </main>
+
+    <partial name="_ReadRevuesPartial.cshtml" model="@Model.Revues"/>
+    
 </div>
 
 @section Scripts{
@@ -58,4 +76,6 @@
             }
         }
     </script>
+    
 }
+

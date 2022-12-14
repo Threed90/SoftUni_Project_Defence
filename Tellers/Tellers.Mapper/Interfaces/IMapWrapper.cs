@@ -35,11 +35,9 @@ namespace Tellers.Mapper.Interfaces
         /// <summary>
         /// Using Automapper Profile for complex map configurations to creating map between two objects. It is self chaning method. Request using of ApplyAllMaps() method to safe all of mapping configurations.
         /// </summary>
-        /// <param name="profile"></param>
         /// <returns></returns>
-        public IMapWrapper AddProfile(Profile profile);
+        public IMapWrapper AddProfile<TSource>();
 
-        public IMapWrapper SetProfiles<TSource>();
 
         /// <summary>
         /// Applying all configuration to inner AutoMapper

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Tellers.ViewModels.Revues;
 
 namespace Tellers.ViewModels.Story
 {
@@ -13,11 +9,16 @@ namespace Tellers.ViewModels.Story
         public string Month { get; set; } = null!;
         public int Day { get; set; }
         public int Year { get; set; }
+
+        public string? CreatorUsername { get; set; }
         public string? CreatorFirstName { get; set; }
         public string? CreatorMiddleName { get; set; }
         public string? CreatorLastName { get; set; }
         public string? CreatorPseudonym { get; set; }
         public string? BookCoverPicture { get; set; }
+        public string? ExternalAuthorName { get; set; }
         public string PdfFileUrl { get; set; } = null!;
+
+        public List<ReadRevueViewModel> Revues { get; set; }
     }
 }

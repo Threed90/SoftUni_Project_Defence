@@ -50,8 +50,11 @@ namespace Tellers.Mapper
                     cfg.CreateMap(type.source, type.destination);
                 }
 
-                if (profiles.Count > 0)
-                    cfg.AddProfiles(profiles.Where(p => profileNames.Contains(p.GetType().Name)));
+                foreach (var profile in profiles)
+                {
+                    cfg.AddProfile(profiles.FirstOrDefault(p => profileNames.Contains(p.GetType().Name)));
+                }
+                    
 
             });
 
@@ -100,18 +103,13 @@ namespace Tellers.Mapper
             return mapper.Map<TSource, TDestination>(source);
         }
 
-        public IMapWrapper AddProfile(Profile profile)
+        public IMapWrapper AddProfile<TSource>()
         {
+            var profileName = typeof(TSource).Name + "Profile";
+            profileNames.Add(profileName);
+            var @namespace = "Tellers.Mapper.Profiles.";
+            var profile = (Profile)Activator.CreateInstance(Type.GetType(@namespace + profileName));
             profiles.Add(profile);
-
-            return this;
-        }
-
-        public IMapWrapper SetProfiles<TSource>()
-        {
-            profileNames.Add(typeof(TSource).Name + "Profile");
-
-            profiles.Add(new StoryProfile());
 
             return this;
         }
