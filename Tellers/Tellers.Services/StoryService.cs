@@ -7,12 +7,12 @@ using Tellers.ViewModels.Story;
 
 namespace Tellers.Services
 {
-    public class StoryServer : IStoryServer
+    public class StoryService : IStoryService
     {
         private readonly TellersDbContext data;
         private readonly IMapWrapper mapper;
 
-        public StoryServer(
+        public StoryService(
             TellersDbContext data, 
             IMapWrapper mapper)
         {
@@ -63,9 +63,17 @@ namespace Tellers.Services
                             .ToListAsync());
         }
 
+        public async Task<StoryDetailsViewModel> GetStoryDetails(string storyId)
+        {
+            return this.mapper.GetModel<StoryDetailsViewModel, Story>
+                        (await this.data.Stories.Include(s => s.Creator).FirstOrDefaultAsync(s => s.Id.ToString() == storyId));
+        }
+
         private IMapWrapper SetMappingConfiguration(IMapWrapper mapper)
         {
             return mapper.CreateMap<StoryCardViewModel, Story>()
+                .CreateMap<StoryDetailsViewModel, Story>()
+                .SetProfiles<Story>()
                 .ApplyAllMaps();
         }
     }

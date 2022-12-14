@@ -8,10 +8,10 @@ namespace Tellers.App.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> logger;
-        private readonly IStoryServer storyServer;
+        private readonly IStoryService storyServer;
         public HomeController(
             ILogger<HomeController> logger,
-            IStoryServer storyServer)
+            IStoryService storyServer)
         {
             this.logger = logger;
             this.storyServer = storyServer;

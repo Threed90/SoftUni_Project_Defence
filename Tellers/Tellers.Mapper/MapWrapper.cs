@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tellers.Mapper.Exceptions;
 using Tellers.Mapper.Interfaces;
+using Tellers.Mapper.Profiles;
 
 namespace Tellers.Mapper
 {
@@ -22,9 +23,11 @@ namespace Tellers.Mapper
 
     {
         private IMapper mapper = null!;
-        private readonly List<(Type destination, Type source, string? destinationPropertyName, string? sourcePropertyName)> mapTypes;
+        private readonly List<(Type destination, Type source)> mapTypes;
+        private readonly List<Profile> profiles;
         private IConfigurationProvider config = null!;
         private bool isConfigurationSettled;
+        private List<string> profileNames;
 
         /// <summary>
         /// The constructor have to create needed configuration, based on the given collection of profiles.
@@ -34,6 +37,8 @@ namespace Tellers.Mapper
         {
             this.mapTypes = new();
             this.isConfigurationSettled = false;
+            this.profiles = new List<Profile>();
+            this.profileNames = new List<string>();
         }
 
         public IMapWrapper ApplyAllMaps()
@@ -42,21 +47,15 @@ namespace Tellers.Mapper
             {
                 foreach (var type in mapTypes)
                 {
-
-                    if (type.destinationPropertyName != null && type.sourcePropertyName != null)
-                    {
-                        cfg.CreateMap(type.source, type.destination)
-                            .ForMember(type.destinationPropertyName, opt => opt.MapFrom(type.sourcePropertyName));
-                    }
-                    else
-                    {
-                        cfg.CreateMap(type.source, type.destination);
-                    }
-
+                    cfg.CreateMap(type.source, type.destination);
                 }
+
+                if (profiles.Count > 0)
+                    cfg.AddProfiles(profiles.Where(p => profileNames.Contains(p.GetType().Name)));
+
             });
 
-            if(mapTypes.Count == 0)
+            if (mapTypes.Count == 0 && profiles.Count == 0)
             {
                 throw new MissingMapCreationsException();
             }
@@ -75,28 +74,12 @@ namespace Tellers.Mapper
         /// <param name="destinationProperty"></param>
         /// <param name="sourceProperty"></param>
         /// <returns></returns>
-        public IMapWrapper CreateMap<TDestination, TSource>(Expression<Func<TDestination>>? destinationProperty = null, Expression<Func<TSource>>? sourceProperty = null)
+        public IMapWrapper CreateMap<TDestination, TSource>()
             where TDestination : class
             where TSource : class
         {
-            string? destination = null;
-            string? source = null;
 
-            if (destinationProperty != null &&
-                sourceProperty != null)
-            {
-                var memberExpressionDestination = (MemberExpression)destinationProperty.Body;
-                var instanceExpressionDestination = memberExpressionDestination.Expression;
-                var parameterDestination = Expression.Parameter(typeof(TDestination));
-                destination = parameterDestination.Name;
-
-                var memberExpressionSource = (MemberExpression)sourceProperty.Body;
-                var instanceExpressionSource = memberExpressionSource.Expression;
-                var parameterSource = Expression.Parameter(typeof(TDestination));
-                source = parameterSource.Name;
-            }
-
-            this.mapTypes.Add((typeof(TDestination), typeof(TSource), destination, source));
+            this.mapTypes.Add((typeof(TDestination), typeof(TSource)));
 
             return this;
         }
@@ -108,18 +91,31 @@ namespace Tellers.Mapper
         /// <typeparam name="TSource">View model generic abstraction</typeparam>
         /// <param name="destination"></param>
         /// <returns></returns>
-        public TDestination GetModel<TDestination, TSource>(TSource destination)
+        public TDestination GetModel<TDestination, TSource>(TSource source)
             where TDestination : class
             where TSource : class
         {
             this.CheckAgainsNoMaps();
 
-            return mapper.Map<TSource, TDestination>(destination);
+            return mapper.Map<TSource, TDestination>(source);
         }
 
-        //public IQueryable<TDestination> Map<TDestination, TSource>(this IQueryable<TSource> query)
-        //    where TDestination : class
-        //    where TSource : class
+        public IMapWrapper AddProfile(Profile profile)
+        {
+            profiles.Add(profile);
+
+            return this;
+        }
+
+        public IMapWrapper SetProfiles<TSource>()
+        {
+            profileNames.Add(typeof(TSource).Name + "Profile");
+
+            profiles.Add(new StoryProfile());
+
+            return this;
+        }
+
 
         public IEnumerable<TDestination> GetModels<TDestination, TSource>(IEnumerable<TSource> destination)
             where TDestination : class
@@ -142,6 +138,8 @@ namespace Tellers.Mapper
 
         }
 
+
+
         /// <summary>
         /// Inner method for passing the configuration to other methods.
         /// </summary>
@@ -157,10 +155,12 @@ namespace Tellers.Mapper
         /// <exception cref="NoAppliedMappingsException"></exception>
         private void CheckAgainsNoMaps()
         {
-            if(this.isConfigurationSettled == false)
+            if (this.isConfigurationSettled == false)
             {
                 throw new NoAppliedMappingsException();
             }
         }
+
+        
     }
 }

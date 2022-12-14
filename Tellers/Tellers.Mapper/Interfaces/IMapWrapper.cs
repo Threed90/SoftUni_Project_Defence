@@ -14,9 +14,9 @@ namespace Tellers.Mapper.Interfaces
         /// </summary>
         /// <typeparam name="TDestination"></typeparam>
         /// <typeparam name="TSource"></typeparam>
-        /// <param name="destination"></param>
+        /// <param name="source"></param>
         /// <returns></returns>
-        public TDestination GetModel<TDestination, TSource>(TSource destination)
+        public TDestination GetModel<TDestination, TSource>(TSource source)
             where TDestination : class
             where TSource : class;
 
@@ -28,9 +28,18 @@ namespace Tellers.Mapper.Interfaces
         /// <param name="destinationProperty"></param>
         /// <param name="sourceProperty"></param>
         /// <returns></returns>
-        public IMapWrapper CreateMap<TDestination, TSource>(Expression<Func<TDestination>>? destinationProperty = null, Expression<Func<TSource>>? sourceProperty = null)
+        public IMapWrapper CreateMap<TDestination, TSource>()
             where TDestination : class
             where TSource : class;
+
+        /// <summary>
+        /// Using Automapper Profile for complex map configurations to creating map between two objects. It is self chaning method. Request using of ApplyAllMaps() method to safe all of mapping configurations.
+        /// </summary>
+        /// <param name="profile"></param>
+        /// <returns></returns>
+        public IMapWrapper AddProfile(Profile profile);
+
+        public IMapWrapper SetProfiles<TSource>();
 
         /// <summary>
         /// Applying all configuration to inner AutoMapper

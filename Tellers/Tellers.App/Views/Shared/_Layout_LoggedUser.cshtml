@@ -6,7 +6,7 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-
+    @await RenderSectionAsync("Style", required: false)
 </head>
 <body>
     <header>
@@ -89,12 +89,9 @@
             </div>
         </nav>
     </header>
-
-    <div class="container">
-        <main role="main" class="pb-3">
+    
+    
             @RenderBody()
-        </main>
-    </div>
 
     <partial name="FooterPartial" />
 

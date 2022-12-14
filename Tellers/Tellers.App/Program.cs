@@ -41,7 +41,7 @@ builder.Services.ConfigureApplicationCookie(opt =>
 });
 
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IStoryServer, StoryServer>();
+builder.Services.AddScoped<IStoryService, StoryService>();
 builder.Services.AddScoped<IMapWrapper, MapWrapper>();
 
 var app = builder.Build();

@@ -42,7 +42,7 @@ else
                                             <p class="card-text"></p>
                                             @if (User?.Identity?.IsAuthenticated ?? false)
                                             {
-                                                <a href="#!" class="btn btn-primary">Details</a>
+                                                <a asp-controller="Story" asp-action="Read" asp-route-storyId="@Model.ViewModel[j].Id" class="btn btn-primary">Read it</a>
                                             }
                                         </div>
                                     </div>

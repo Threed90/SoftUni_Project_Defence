@@ -1,0 +1,61 @@
+﻿@using Tellers.ViewModels.Story;
+@model StoryDetailsViewModel
+
+<div class="container align-content-center" style="margin-top: 10rem">
+    <main role="main" class="pb-3 embed-responsive">
+        <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark d-inline-flex col-12">
+            <div class="col-md-6 px-0 ">
+                <h1 class="display-4 font-italic">@Model.Title</h1>
+                <p class="lead my-3">@Model.StorySummary</p>
+                <p class="lead mb-0 blog-post-meta" style="margin-top: 5em">
+                    @Model.Month @Model.Day, @Model.Year by
+
+
+                    <a href="#" class="text-white font-weight-bold">
+                        @((Model.CreatorFirstName == null ? string.Empty :
+                            Model.CreatorFirstName +
+                            (Model.CreatorMiddleName == null ? string.Empty : $" {Model.CreatorMiddleName}") +
+                            (Model.CreatorLastName == null ? string.Empty : $" {Model.CreatorLastName}") +
+                            (Model.CreatorPseudonym == null ? string.Empty : $" - {Model.CreatorPseudonym}")) == string.Empty
+                            ?
+                            "Anonymous author"
+                            :
+                            (Model.CreatorFirstName == null ? string.Empty :
+                            Model.CreatorFirstName +
+                            (Model.CreatorMiddleName == null ? string.Empty : $" {Model.CreatorMiddleName}") +
+                            (Model.CreatorLastName == null ? string.Empty : $" {Model.CreatorLastName}") +
+                            (Model.CreatorPseudonym == null ? string.Empty : $" - {Model.CreatorPseudonym}")))
+                    </a>
+                </p>
+            </div>
+            <img src="@(Model.BookCoverPicture ?? "/images/no-book-cover-available.jpg")" class="img-fluid col-md-6 overflow-hidden" alt="book cover">
+        </div>
+        <label id="pdfUrl" hidden>@Model.PdfFileUrl</label>
+        <div class="ratio ratio-16x9 viewPDF" style="margin-top: 0.5em;">
+        </div>
+    </main>
+</div>
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js" integrity="sha512-MoP2OErV7Mtk4VL893VYBFq8yJHWQtqJxTyIAsCVKzILrvHyKQpAwJf9noILczN6psvXUxTr19T5h+ndywCoVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+
+        let label = document.getElementById("pdfUrl");
+        let url = label.textContent;
+
+        let urlEmbeding = `https://docs.google.com/gview?url=${url}&embedded=true`;
+        if (url.includes('drive.google.com')) {
+            urlEmbeding = url;
+        }
+
+        if (PDFObject.supportsPDFs) {
+            PDFObject.embed(urlEmbeding + "#toolbar=0&pagemode=none", ".viewPDF",)
+        } else {
+            let result = confirm("This browser does not support PDFObject. Do you want to stay and read story summury?");
+
+            if (!result) {
+                window.location.href = "/";
+            }
+        }
+    </script>
+}
