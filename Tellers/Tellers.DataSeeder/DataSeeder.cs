@@ -68,6 +68,12 @@ namespace Tellers.DataSeeder
                 context.Stories.AddRange(stories);
             }
 
+            var revues = this.GetModels<Revue>("Revues.json");
+            if(context.Revues.Any() == false)
+            {
+                context.Revues.AddRange(revues);
+            }
+
             context.SaveChanges();
         }
 

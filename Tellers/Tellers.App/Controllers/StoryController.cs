@@ -11,6 +11,7 @@ namespace Tellers.App.Controllers
         {
             this.storyService = storyService;
         }
+
         public async Task<IActionResult> Read(string storyId)
          => this.View(await storyService.GetStoryDetails(storyId));
     }

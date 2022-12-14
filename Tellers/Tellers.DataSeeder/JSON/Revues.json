@@ -1,1 +1,30 @@
-﻿
+﻿[
+  {
+    "Text": "Great and remembering story!!!",
+    "Rating": 5,
+    "CreatedOn": "2022-12-15T00:00:00+00:00",
+    "StoryId": "a573ad17-43f6-49e5-89b5-edf65096e458",
+    "ProfileId": "375e8d0b-a951-4665-a0f5-14a5d5a9c54e"
+  },
+  {
+    "Text": "Вкусно, но и практична рецепта :)",
+    "Rating": 5,
+    "CreatedOn": "2022-12-15T00:00:00+00:00",
+    "StoryId": "a7f2c7d7-8bcd-4186-80c5-dab9d00d567c",
+    "ProfileId": "375e8d0b-a951-4665-a0f5-14a5d5a9c54e"
+  },
+  {
+    "Text": "Лично на мен не ми хареса",
+    "Rating": 2,
+    "CreatedOn": "2022-12-10T00:00:00+00:00",
+    "StoryId": "a7f2c7d7-8bcd-4186-80c5-dab9d00d567c",
+    "ProfileId": "ab03bd01-4f0f-40a3-b0a5-29e7c834096f"
+  },
+  {
+    "Text": "Мммм, става, но може и по-добре...",
+    "Rating": 3,
+    "CreatedOn": "2021-05-22T00:00:00+00:00",
+    "StoryId": "dd02aa80-054b-4b58-8b47-a974c7143df3",
+    "ProfileId": "ab03bd01-4f0f-40a3-b0a5-29e7c834096f"
+  }
+]

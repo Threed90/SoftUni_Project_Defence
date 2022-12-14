@@ -50,11 +50,7 @@ namespace Tellers.Mapper
                     cfg.CreateMap(type.source, type.destination);
                 }
 
-                foreach (var profile in profiles)
-                {
-                    cfg.AddProfile(profiles.FirstOrDefault(p => profileNames.Contains(p.GetType().Name)));
-                }
-                    
+                cfg.AddProfiles(profiles);  
 
             });
 

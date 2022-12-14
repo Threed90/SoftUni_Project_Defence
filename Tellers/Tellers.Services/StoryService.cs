@@ -66,15 +66,21 @@ namespace Tellers.Services
         public async Task<StoryDetailsViewModel> GetStoryDetails(string storyId)
         {
             return this.mapper.GetModel<StoryDetailsViewModel, Story>
-                        (await this.data.Stories.Include(s => s.Creator).Include(s => s.Revues).FirstOrDefaultAsync(s => s.Id.ToString() == storyId));
+                        (await this.data.Stories
+                        .Include(s => s.Creator)
+                        .Include(s => s.Revues)
+                        .ThenInclude(r => r.Profile)
+                        .ThenInclude(p => p.User)
+                        .FirstOrDefaultAsync(s => s.Id.ToString() == storyId));
         }
 
         private IMapWrapper SetMappingConfiguration(IMapWrapper mapper)
         {
-            return mapper.CreateMap<StoryCardViewModel, Story>()
+            return mapper
+                .CreateMap<StoryCardViewModel, Story>()
                 //.CreateMap<StoryDetailsViewModel, Story>()
-                .AddProfile<Story>()
                 .AddProfile<Revue>()
+                .AddProfile<Story>()
                 .ApplyAllMaps();
         }
     }

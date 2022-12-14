@@ -1,4 +1,4 @@
-﻿<section style="background-color: #d94125;">
+﻿<section style="background-color: #e7effd;">
     <div class="container my-5 py-5 text-dark">
         <div class="row d-flex justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-6">
@@ -10,23 +10,13 @@
                                  height="65" />
                             <div class="w-100">
                                 <h5>Add a revue</h5>
-                                <ul class="rating mb-3" data-bs-toggle="rating">
-                                    <li>
-                                        <i class="far fa-star fa-sm text-danger" title="Bad"></i>
-                                    </li>
-                                    <li>
-                                        <i class="far fa-star fa-sm text-danger" title="Poor"></i>
-                                    </li>
-                                    <li>
-                                        <i class="far fa-star fa-sm text-danger" title="OK"></i>
-                                    </li>
-                                    <li>
-                                        <i class="far fa-star fa-sm text-danger" title="Good"></i>
-                                    </li>
-                                    <li>
-                                        <i class="far fa-star fa-sm text-danger" title="Excellent"></i>
-                                    </li>
-                                </ul>
+                                <span class="fa fa-star oneStar"></span>
+                                <span class="fa fa-star twoStar"></span>
+                                <span class="fa fa-star threeStar"></span>
+                                <span class="fa fa-star fourStar"></span>
+                                <span class="fa fa-star fiveStar"></span>
+                                <label id="ratingStar" hidden>@*@revue.Rating*@</label>
+
                                 <div class="form-outline">
                                     <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
                                     <label class="form-label" for="textAreaExample">What is your view?</label>
@@ -45,3 +35,17 @@
         </div>
     </div>
 </section>
+
+@section Scripts{
+
+    @*functionality for rating are in site.js*@
+    <script type="text/javascript">
+        addRating();
+        </script>
+
+}
+
+
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+}

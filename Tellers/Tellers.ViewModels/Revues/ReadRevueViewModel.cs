@@ -2,6 +2,7 @@
 {
     public class ReadRevueViewModel
     {
+        public int Id { get; set; }
         public string Text { get; set; } = null!;
         public double Rating { get; set; }
 
