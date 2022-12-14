@@ -9,6 +9,8 @@
         public string Text { get; set; } = null!;
         public double Rating { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
         public Guid StoryId { get; set; }
         public Story Story { get; set; } = null!;
 

@@ -45,7 +45,7 @@
             </div>
             <img src="@(Model.BookCoverPicture ?? "/images/no-book-cover-available.jpg")" class="img-fluid col-md-6 overflow-hidden" alt="book cover">
         </div>
-        <label id="pdfUrl" hidden>@Model.PdfFileUrl</label>
+        
         <div class="ratio ratio-16x9 viewPDF" style="margin-top: 0.5em;">
         </div>
     </main>
@@ -53,7 +53,7 @@
     <partial name="_ReadRevuesPartial.cshtml" model="@Model.Revues"/>
     
 </div>
-
+<label id="pdfUrl" hidden>@Model.PdfFileUrl</label>
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js" integrity="sha512-MoP2OErV7Mtk4VL893VYBFq8yJHWQtqJxTyIAsCVKzILrvHyKQpAwJf9noILczN6psvXUxTr19T5h+ndywCoVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript">
