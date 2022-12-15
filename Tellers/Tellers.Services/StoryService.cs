@@ -11,15 +11,18 @@ namespace Tellers.Services
     {
         private readonly TellersDbContext data;
         private readonly IMapWrapper mapper;
+        private readonly IProfileService profileService;
 
         public StoryService(
-            TellersDbContext data, 
-            IMapWrapper mapper)
+            TellersDbContext data,
+            IMapWrapper mapper,
+            IProfileService profileService)
         {
             this.data = data;
             this.mapper = SetMappingConfiguration(mapper);
+            this.profileService = profileService;
         }
-        
+
         /// <summary>
         /// Service method that returns all stories as no tracking set and returns need view model via map wrapper.
         /// </summary>
@@ -63,9 +66,9 @@ namespace Tellers.Services
                             .ToListAsync());
         }
 
-        public async Task<StoryDetailsViewModel> GetStoryDetails(string storyId, int page)
+        public async Task<StoryDetailsViewModel> GetStoryDetails(string storyId, int page, bool isMarked)
         {
-            var storyDetail =  this.mapper.GetModel<StoryDetailsViewModel, Story>
+            var storyDetail = this.mapper.GetModel<StoryDetailsViewModel, Story>
                         (await this.data.Stories
                         .Include(s => s.Creator)
                         .ThenInclude(c => c.User)
@@ -83,10 +86,55 @@ namespace Tellers.Services
             storyDetail.Revues = storyDetail.Revues.Skip(skip).Take(take).ToList();
 
             storyDetail.Page = page;
+            storyDetail.IsMarkedAsReaded = isMarked;
+
             return storyDetail;
         }
 
-        
+        public async Task<bool> MarkAsReaded(string storyId, string userId)
+        {
+            var profile = await this.data.Profiles
+                .Include(p => p.MyReads)
+                .FirstOrDefaultAsync(p => p.User.Id.ToString() == userId);
+
+            var story = await this.data.Stories
+                .FirstOrDefaultAsync(s => s.Id.ToString() == storyId);
+
+            if (story == null && profile == null)
+            {
+                //nonsence but just a secure meger
+                return false;
+            }
+                if (profile?.MyReads.Any(s => s.Id == story?.Id) ?? false)
+            {
+                profile.MyReads.Remove(story);
+                await data.SaveChangesAsync();
+                return false;
+            }
+            else
+            {
+                profile.MyReads.Add(story);
+                await data.SaveChangesAsync();
+                return true;
+            }
+        }
+
+        public async Task<bool> IsReadedStory(string storyId, string userId)
+        {
+            var profile = await this.data.Profiles
+                .Include(p => p.MyReads)
+                .FirstOrDefaultAsync(p => p.User.Id.ToString() == userId);
+
+            var story = await this.data.Stories
+                .FirstOrDefaultAsync(s => s.Id.ToString() == storyId);
+
+            if (profile?.MyReads.Any(s => s.Id == story?.Id) ?? false)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         private IMapWrapper SetMappingConfiguration(IMapWrapper mapper)
         {

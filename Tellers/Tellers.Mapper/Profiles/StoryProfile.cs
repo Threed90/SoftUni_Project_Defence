@@ -25,6 +25,7 @@ namespace Tellers.Mapper.Profiles
                 .ForMember(sd => sd.Day, s => s.MapFrom(date => date.CreatedOn.Day))
                 .ForMember(sd => sd.TotalRevues, s => s.MapFrom(s => s.Revues.Count()))
                 .ForMember(sd => sd.Page, s => s.Ignore())
+                .ForMember(sd => sd.IsMarkedAsReaded, s => s.Ignore())
                 .ForMember(sd => sd.Revues, s => s.MapFrom(r => r.Revues.OrderByDescending(r => r.CreatedOn).ToList()));
                 
         }

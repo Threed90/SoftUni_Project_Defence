@@ -29,6 +29,8 @@ namespace Tellers.ViewModels.Story
 
         public int Page { get; set; }
 
+        public bool IsMarkedAsReaded { get; set; }
+
         public List<string> Genres { get; set; }
         public List<ReadRevueViewModel> Revues { get; set; }
 

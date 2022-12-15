@@ -94,10 +94,18 @@
                     }
                     @if (User.Identity.Name != Model.CreatorUsername)
                     {
-                        <button class="btn btn-outline-info btn-lg px-4 gap-3" asp-action="MarkAsReaded" asp-controller="Story" asp-route-storyId="@Model.StoryId" style="background-color: none">
-                            @*user*@
-                            Mark as readed
-                        </button>
+                        if (Model.IsMarkedAsReaded)
+                        {
+                            <button class="btn btn-info btn-lg px-4 gap-3" asp-action="MarkAsReaded" asp-controller="Story" asp-route-storyId="@Model.StoryId" style="background-color: none">
+                                Readed
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-outline-info btn-lg px-4 gap-3" asp-action="MarkAsReaded" asp-controller="Story" asp-route-storyId="@Model.StoryId" style="background-color: none">
+                                Mark as readed
+                            </button>
+                        }
                     }
 
                     @if (User.Identity.Name == Model.CreatorUsername)

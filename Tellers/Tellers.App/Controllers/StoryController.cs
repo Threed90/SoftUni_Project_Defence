@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using Tellers.Services.Interfaces;
 
 namespace Tellers.App.Controllers
@@ -12,9 +14,21 @@ namespace Tellers.App.Controllers
             this.storyService = storyService;
         }
 
-        public async Task<IActionResult> Read(string storyId, int page = 1)
-         => this.View(await storyService.GetStoryDetails(storyId, page));
+        [Authorize]
+        public async Task<IActionResult> Read(string storyId, int page = 1, bool isMarked = false)
+        {
+            isMarked = await this.storyService.IsReadedStory(storyId, User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-        //public IActionResult MarkAsReaded()
+            return this.View(await storyService.GetStoryDetails(storyId, page, isMarked));
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> MarkAsReaded(string storyId)
+        {
+            var isMarked = await this.storyService.MarkAsReaded(storyId, User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return RedirectToAction(nameof(Read), new { storyId = storyId, page = 1, isMarked});
+        }
     }
 }
