@@ -14,6 +14,7 @@ namespace Tellers.Mapper.Profiles
         public RevueProfile()
         {
             this.CreateMap<Revue, ReadRevueViewModel>()
+                .ForMember(rd => rd.CreatorId, r => r.MapFrom(rc => (rc.Profile == null ? null : rc.Profile.Id.ToString())))
                 .ForMember(rd => rd.CreatorFirstName, r => r.MapFrom(rc => (rc.Profile == null ? null : rc.Profile.FirstName)))
                 .ForMember(rd => rd.CreatorMiddleName, r => r.MapFrom(rc => (rc.Profile == null ? null : rc.Profile.MiddleName)))
                 .ForMember(rd => rd.CreatorLastName, r => r.MapFrom(rc => (rc.Profile == null ? null : rc.Profile.LastName)))

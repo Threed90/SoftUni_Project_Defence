@@ -11,7 +11,7 @@
                 <p class="lead mb-0 blog-post-meta" style="margin-top: 5em">
 
                     <a asp-action="Info" asp-controller="Profile" asp-route-profileId="@Model.CreatorId">
-                        <img class="rounded-circle shadow-1-strong me-3" 
+                        <img class="rounded-circle shadow-1-strong me-3"
                              src="@(string.IsNullOrWhiteSpace(Model.CreatorPictureUrl) == false ? Model.CreatorPictureUrl : "/images/profilePicDefault.png")" alt="avatar" width="65"
                              height="65" />
                     </a>
@@ -53,8 +53,14 @@
         <div class="ratio ratio-16x9 viewPDF" style="margin-top: 0.5em;">
         </div>
     </main>
+    <section style="background-color: #e7effd;">
 
-    <partial name="_ReadRevuesPartial.cshtml" model="@Model.Revues" />
+        <partial name="_ReadRevuesPartial.cshtml" model="@Model.Revues" />
+
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center" style="margin-top: 5em; padding-left: 4em">
+            <a type="button" class="btn btn-outline-success btn-lg px-4 gap-3" asp-controller="Revue" asp-action="Create" asp-route-storyId="@Model.StoryId">Аdd a Revue</a>
+        </div>
+    </section>
 
 </div>
 <label id="pdfUrl" hidden>@Model.PdfFileUrl</label>
@@ -82,25 +88,31 @@
     </script>
     <script type="text/javascript">
         'use strict'
-        //let starts = document.querySelectorAll(".fa.fa-star");
+        let elementsNumber = document.querySelectorAll(".starRatingLable").length;
 
-        let rating = Number(document.getElementById("ratingStar").textContent);
+        for(let i = 1; i <= elementsNumber; i++){
+            let rating = Number(document.getElementById(`ratingStar${i}`).textContent);
 
-        if (rating >= 1) {
-            document.querySelector(".fa.fa-star.oneStar").classList.add("checked");
+            if (rating >= 1) {
+                document.querySelector(`.fa.fa-star.oneStar${i}`).classList.add("checked");
+            }
+            if (rating >= 2) {
+                document.querySelector(`.fa.fa-star.twoStar${i}`).classList.add("checked");
+            }
+            if (rating >= 3) {
+                document.querySelector(`.fa.fa-star.threeStar${i}`).classList.add("checked");
+            }
+            if (rating >= 4) {
+                document.querySelector(`.fa.fa-star.fourStar${i}`).classList.add("checked");
+            }
+            if (rating >= 5) {
+                document.querySelector(`.fa.fa-star.fiveStar${i}`).classList.add("checked");
+            }
         }
-        if (rating >= 2) {
-            document.querySelector(".fa.fa-star.twoStar").classList.add("checked");
-        }
-        if (rating >= 3) {
-            document.querySelector(".fa.fa-star.threeStar").classList.add("checked");
-        }
-        if (rating >= 4) {
-            document.querySelector(".fa.fa-star.fourStar").classList.add("checked");
-        }
-        if (rating >= 5) {
-            document.querySelector(".fa.fa-star.fiveStar").classList.add("checked");
-        }
+            
+        
+
+        
     </script>
 
 }

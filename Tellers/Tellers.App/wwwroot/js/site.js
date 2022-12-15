@@ -94,25 +94,25 @@ function addRating() {
             let parent = e.currentTarget.parentNode;
 
             if (e.currentTarget.classList.contains("oneStar")) {
-                resultLabel.textContent = 1;
+                resultLabel.value = 1;
                 parent.querySelector("span.fa.fa-star.oneStar").classList.add("checked", "voted");
             }
 
             if (e.currentTarget.classList.contains("twoStar")) {
-                resultLabel.textContent = 2;
+                resultLabel.value = 2;
                 parent.querySelector("span.fa.fa-star.oneStar").classList.add("checked", "voted");
                 parent.querySelector("span.fa.fa-star.twoStar").classList.add("checked", "voted");
             }
 
             if (e.currentTarget.classList.contains("threeStar")) {
-                resultLabel.textContent = 3;
+                resultLabel.value = 3;
                 parent.querySelector("span.fa.fa-star.oneStar").classList.add("checked", "voted");
                 parent.querySelector("span.fa.fa-star.twoStar").classList.add("checked", "voted");
                 parent.querySelector("span.fa.fa-star.threeStar").classList.add("checked", "voted");
             }
 
             if (e.currentTarget.classList.contains("fourStar")) {
-                resultLabel.textContent = 4;
+                resultLabel.value = 4;
                 parent.querySelector("span.fa.fa-star.oneStar").classList.add("checked", "voted");
                 parent.querySelector("span.fa.fa-star.twoStar").classList.add("checked", "voted");
                 parent.querySelector("span.fa.fa-star.threeStar").classList.add("checked", "voted");
@@ -120,7 +120,7 @@ function addRating() {
             }
 
             if (e.currentTarget.classList.contains("fiveStar")) {
-                resultLabel.textContent = 5;
+                resultLabel.value = 5;
                 parent.querySelector("span.fa.fa-star.oneStar").classList.add("checked", "voted");
                 parent.querySelector("span.fa.fa-star.twoStar").classList.add("checked", "voted");
                 parent.querySelector("span.fa.fa-star.threeStar").classList.add("checked", "voted");

@@ -4,6 +4,7 @@ namespace Tellers.ViewModels.Story
 {
     public class StoryDetailsViewModel
     {
+        public string StoryId { get; set; }
         public string Title { get; set; } = null!;
         public string StorySummary { get; set; } = null!;
         public string Month { get; set; } = null!;

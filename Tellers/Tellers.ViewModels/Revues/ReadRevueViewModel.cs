@@ -9,6 +9,7 @@
         public string? CreatorPictureUrl { get; set; }
 
         public string? CreatorUsername { get; set; }
+        public string? CreatorId { get; set; }
         public string? CreatorFirstName { get; set; }
         public string? CreatorMiddleName { get; set; }
         public string? CreatorLastName { get; set; }
