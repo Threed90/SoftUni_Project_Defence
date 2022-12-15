@@ -6,96 +6,99 @@
 @inject IUserService userService
 
 
-    <div class="container my-5 py-5 text-dark">
+<div class="container my-5 py-5 text-dark">
 
-        @if (Model.Count() == 0 || Model == null)
-        {
-        <p>No revues yet.</p>
+    @if (Model.Count() == 0 || Model == null)
+    {
+        <p class="display-6 font-italic justify-content-center text-center" id="revues">No revues yet...</p>
     }
     else
     {
+        
         int i = 1;
         @foreach (var revue in Model)
-            {
-                <div class="row d-flex justify-content-center" style="margin-top: 3em">
-                    <div class="col-md-11 col-lg-9 col-xl-7">
-                        <div class="d-flex flex-start">
-                            <a asp-action="Info" asp-controller="Profile" asp-route-profileId="@revue.CreatorId">
-                                <img class="rounded-circle shadow-1-strong me-3"
-                             src="@(string.IsNullOrWhiteSpace(revue.CreatorPictureUrl) == false ? revue.CreatorPictureUrl : "/images/profilePicDefault.png")" alt="avatar" width="65"
-                             height="65" />
-                            </a>
-                            <div class="card w-100">
-                                <div class="card-body p-4">
-                                    <div class="">
-                                        <h5>
-                                            <a asp-action="" asp-controller="">
+        {
+            <div class="row d-flex justify-content-center" style="margin-top: 3em">
+                <div class="col-md-11 col-lg-9 col-xl-7">
+                    <div class="d-flex flex-start">
+                        <a asp-action="Info" asp-controller="Profile" asp-route-profileId="@revue.CreatorId">
+                            <img class="rounded-circle shadow-1-strong me-3"
+                         src="@(string.IsNullOrWhiteSpace(revue.CreatorPictureUrl) == false ? revue.CreatorPictureUrl : "/images/profilePicDefault.png")" alt="avatar" width="65"
+                         height="65" />
+                        </a>
+                        <div class="card w-100">
+                            <div class="card-body p-4">
+                                <div class="">
+                                    <h5>
+                                        <a asp-action="" asp-controller="">
                                             @if (await userService.HasRole(revue.CreatorUserId, RoleNames.MasterAdminRoleName) ||
                                            await userService.HasRole(revue.CreatorUserId, RoleNames.AdminRoleName) ||
-                                            await userService.HasRole(revue.CreatorUserId, RoleNames.ModeratorRoleName))
-                                                {
-                                                    @("Tellers team")
-                                                }
-                                                else
-                                                {
-                                                    @((revue.CreatorFirstName == null ? string.Empty :
-                                                        revue.CreatorFirstName +
-                                                        (revue.CreatorMiddleName == null ? string.Empty : $" {revue.CreatorMiddleName}") +
-                                                        (revue.CreatorLastName == null ? string.Empty : $" {revue.CreatorLastName}") +
-                                                        (revue.CreatorPseudonym == null ? string.Empty : $" - {revue.CreatorPseudonym}")) == string.Empty
-                                                        ?
-                                                        (revue.CreatorUsername == string.Empty ? "Unknown post creator." : revue.CreatorUsername)
-                                                        :
-                                                        (revue.CreatorFirstName == null ? string.Empty :
-                                                        revue.CreatorFirstName +
-                                                        (revue.CreatorMiddleName == null ? string.Empty : $" {revue.CreatorMiddleName}") +
-                                                        (revue.CreatorLastName == null ? string.Empty : $" {revue.CreatorLastName}") +
-                                                        (revue.CreatorPseudonym == null ? string.Empty : $" - {revue.CreatorPseudonym}")))
-                                                }
-                                            </a>
-                                        </h5>
-                                        <span class="fa fa-star oneStar@(i)"></span>
-                                        <span class="fa fa-star twoStar@(i)"></span>
-                                        <span class="fa fa-star threeStar@(i)"></span>
-                                        <span class="fa fa-star fourStar@(i)"></span>
-                                        <span class="fa fa-star fiveStar@(i)"></span>
-                                        <label id="ratingStar@(i++)" class="starRatingLable"hidden>@revue.Rating</label>
+                                           await userService.HasRole(revue.CreatorUserId, RoleNames.ModeratorRoleName))
+                                            {
+                                                @("Tellers team")
+                                            }
+                                            else
+                                            {
+                                                @((revue.CreatorFirstName == null ? string.Empty :
+                                                    revue.CreatorFirstName +
+                                                    (revue.CreatorMiddleName == null ? string.Empty : $" {revue.CreatorMiddleName}") +
+                                                    (revue.CreatorLastName == null ? string.Empty : $" {revue.CreatorLastName}") +
+                                                    (revue.CreatorPseudonym == null ? string.Empty : $" - {revue.CreatorPseudonym}")) == string.Empty
+                                                    ?
+                                                    (revue.CreatorUsername == string.Empty ? "Unknown post creator." : revue.CreatorUsername)
+                                                    :
+                                                    (revue.CreatorFirstName == null ? string.Empty :
+                                                    revue.CreatorFirstName +
+                                                    (revue.CreatorMiddleName == null ? string.Empty : $" {revue.CreatorMiddleName}") +
+                                                    (revue.CreatorLastName == null ? string.Empty : $" {revue.CreatorLastName}") +
+                                                    (revue.CreatorPseudonym == null ? string.Empty : $" - {revue.CreatorPseudonym}")))
+                                            }
+                                        </a>
+                                    </h5>
+                                    <span class="fa fa-star oneStar@(i)"></span>
+                                    <span class="fa fa-star twoStar@(i)"></span>
+                                    <span class="fa fa-star threeStar@(i)"></span>
+                                    <span class="fa fa-star fourStar@(i)"></span>
+                                    <span class="fa fa-star fiveStar@(i)"></span>
+                                    <label id="ratingStar@(i++)" class="starRatingLable" hidden>@revue.Rating</label>
                                     <p class="small">@($"{revue.CreatedOn.ToString("dd")}-{revue.CreatedOn.ToString("MMMM")}-{revue.CreatedOn.ToString("yyyy")}")</p>
-                                        <p>
-                                            @revue.Text
-                                        </p>
+                                    <p>
+                                        @revue.Text
+                                    </p>
 
-                                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                                            @if (User.IsInRole(RoleNames.MasterAdminRoleName) ||
-                                           User.IsInRole(RoleNames.AdminRoleName) ||
-                                           User.IsInRole(RoleNames.ModeratorRoleName) ||
-                                           User.Identity.Name == revue.CreatorUsername)
-                                            {
-                                                <form method="post" style="margin-top: 3rem">
-                                                <button class="btn btn-outline-success btn-lg px-4 gap-3" asp-action="Delete" asp-controller="Revue" asp-route-revueId="@revue.Id" asp-route-storyId="@revue.StoryId" style="background-color: none">
-                                                        Delete
-                                                    </button>
-                                                </form>
-                                            }
-                                            @if (User.Identity.Name == revue.CreatorUsername)
-                                            {
+                                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                                        @if (User.IsInRole(RoleNames.MasterAdminRoleName) ||
+                                       User.IsInRole(RoleNames.AdminRoleName) ||
+                                       User.IsInRole(RoleNames.ModeratorRoleName) ||
+                                       User.Identity.Name == revue.CreatorUsername)
+                                        {
+                                            <form method="post" style="margin-top: 3rem">
+                                                <button class="btn btn-outline-success btn-lg px-4 gap-3" asp-action="Delete" asp-controller="Revue" asp-route-revueId="@revue.Id" asp-route-storyId="@revue.StoryId" asp-fragment="revues" style="background-color: none">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        }
+                                        @if (User.Identity.Name == revue.CreatorUsername)
+                                        {
                                             <a class="btn btn-outline-warning btn-lg px-4" type="button" asp-action="Edit" asp-controller="Revue" asp-route-revueId="@revue.Id" asp-route-storyId="@revue.StoryId" asp-route-userId="@revue.CreatorUserId" style="background-color: none; margin-top: 3rem">
-                                                        Edit
-                                                    </a>
-                                            }
-                                        </div>
-                                        <div class="d-inline-flex">
-                                        </div>
+                                                Edit
+                                            </a>
+                                        }
+                                    </div>
+                                    <div class="d-inline-flex">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            }
+            </div>
         }
 
-    </div>
-    
+            
+    }
+
+</div>
+
 
 

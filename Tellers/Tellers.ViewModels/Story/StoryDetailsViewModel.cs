@@ -23,6 +23,13 @@ namespace Tellers.ViewModels.Story
         public string? ExternalAuthorName { get; set; }
         public string PdfFileUrl { get; set; } = null!;
 
+        public string StoryType { get; set; }
+
+        public int TotalRevues { get; set; }    
+
+        public int Page { get; set; }
+
+        public List<string> Genres { get; set; }
         public List<ReadRevueViewModel> Revues { get; set; }
 
         public List<string> AuthorNames { get; set; }

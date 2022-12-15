@@ -37,6 +37,9 @@
     <None Update="JSON\Genres.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="JSON\GenresStories.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="JSON\Profiles.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

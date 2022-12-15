@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using Tellers.DataModels;
+using Tellers.DataSeeder.DataSeedModels;
 using Tellers.DataSeeder.Interfaces;
 using Tellers.DbContext;
 
@@ -72,6 +73,25 @@ namespace Tellers.DataSeeder
             if(context.Revues.Any() == false)
             {
                 context.Revues.AddRange(revues);
+            }
+
+            var genresStories = this.GetModels<GenresStoriesDataSeedModel>("GenresStories.json");
+
+            foreach (var genreStory in genresStories)
+            {
+                var story = context.Stories.Include(s => s.Genres).FirstOrDefault(s => s.Id.ToString() == genreStory.StoriesId);
+
+                if (story != null && !story.Genres.Any(g => g.Id == genreStory.GenresId))
+                {
+                    var genre = context.Genres.FirstOrDefault(g => g.Id == genreStory.GenresId);
+
+                    if(genre != null)
+                    {
+                        story.Genres.Add(genre);
+                        context.SaveChanges();
+                    }
+                    
+                }
             }
 
             context.SaveChanges();

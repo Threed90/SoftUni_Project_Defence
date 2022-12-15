@@ -12,7 +12,9 @@ namespace Tellers.App.Controllers
             this.storyService = storyService;
         }
 
-        public async Task<IActionResult> Read(string storyId)
-         => this.View(await storyService.GetStoryDetails(storyId));
+        public async Task<IActionResult> Read(string storyId, int page = 1)
+         => this.View(await storyService.GetStoryDetails(storyId, page));
+
+        //public IActionResult MarkAsReaded()
     }
 }

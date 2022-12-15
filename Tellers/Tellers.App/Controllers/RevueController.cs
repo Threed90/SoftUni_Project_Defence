@@ -9,6 +9,7 @@ namespace Tellers.App.Controllers
 {
     public class RevueController : Controller
     {
+        private const string fragment = "revues";
         private readonly IRevueService revueService;
         private readonly IProfileService profileService;
 
@@ -43,7 +44,10 @@ namespace Tellers.App.Controllers
             }
             await revueService.CreateRevue(model.StoryId, User.FindFirstValue(ClaimTypes.NameIdentifier), model.Text, model.Rating);
 
-            return RedirectToAction(nameof(StoryController.Read), nameof(StoryController).ReplaceControllerSuffix(), new { storyId = storyId });
+            var redirectResult =  RedirectToAction(nameof(StoryController.Read), nameof(StoryController).ReplaceControllerSuffix(), new { storyId = storyId });
+
+            redirectResult.Fragment = fragment;
+            return redirectResult;
         }
 
         [HttpGet]
@@ -91,7 +95,9 @@ namespace Tellers.App.Controllers
 
             await this.revueService.EditRevue(revueId, model.Text, model.Rating);
 
-            return RedirectToAction(nameof(StoryController.Read), nameof(StoryController).ReplaceControllerSuffix(), new { storyId = storyId });
+            var redirectResult = RedirectToAction(nameof(StoryController.Read), nameof(StoryController).ReplaceControllerSuffix(), new { storyId = storyId });
+            redirectResult.Fragment = fragment;
+            return redirectResult;
         }
 
         [HttpPost]

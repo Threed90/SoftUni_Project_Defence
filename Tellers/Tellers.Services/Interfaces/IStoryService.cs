@@ -7,7 +7,7 @@ namespace Tellers.Services.Interfaces
         Task<IEnumerable<StoryCardViewModel>> All();
         Task<IEnumerable<StoryCardViewModel>> GetNewestStories();
         Task<IEnumerable<StoryCardViewModel>> GetTopStories();
-        Task<StoryDetailsViewModel> GetStoryDetails(string storyId);
+        Task<StoryDetailsViewModel> GetStoryDetails(string storyId, int page);
 
     }
 }

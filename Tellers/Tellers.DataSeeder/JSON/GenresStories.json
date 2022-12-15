@@ -1,0 +1,42 @@
+﻿[
+  {
+    "GenresId": 1,
+    "StoriesId": "47912541-f9e2-43ae-81b4-5af4391a90c0"
+  },
+  {
+    "GenresId": 2,
+    "StoriesId": "47912541-f9e2-43ae-81b4-5af4391a90c0"
+  },
+  {
+    "GenresId": 3,
+    "StoriesId": "0c02b814-8261-4e08-8f2c-21b0940c9d7b"
+  },
+  {
+    "GenresId": 4,
+    "StoriesId": "b9d07ef6-28cb-4afb-89af-9f3644856e46"
+  },
+  {
+    "GenresId": 1,
+    "StoriesId": "0c02b814-8261-4e08-8f2c-21b0940c9d7b"
+  },
+  {
+    "GenresId": 23,
+    "StoriesId": "47912541-f9e2-43ae-81b4-5af4391a90c0"
+  },
+  {
+    "GenresId": 49,
+    "StoriesId": "0c02b814-8261-4e08-8f2c-21b0940c9d7b"
+  },
+  {
+    "GenresId": 20,
+    "StoriesId": "b9d07ef6-28cb-4afb-89af-9f3644856e46"
+  },
+  {
+    "GenresId": 15,
+    "StoriesId": "0c02b814-8261-4e08-8f2c-21b0940c9d7b"
+  },
+  {
+    "GenresId": 16,
+    "StoriesId": "0c02b814-8261-4e08-8f2c-21b0940c9d7b"
+  }
+]

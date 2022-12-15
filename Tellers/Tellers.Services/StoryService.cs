@@ -63,9 +63,9 @@ namespace Tellers.Services
                             .ToListAsync());
         }
 
-        public async Task<StoryDetailsViewModel> GetStoryDetails(string storyId)
+        public async Task<StoryDetailsViewModel> GetStoryDetails(string storyId, int page)
         {
-            return this.mapper.GetModel<StoryDetailsViewModel, Story>
+            var storyDetail =  this.mapper.GetModel<StoryDetailsViewModel, Story>
                         (await this.data.Stories
                         .Include(s => s.Creator)
                         .ThenInclude(c => c.User)
@@ -73,8 +73,20 @@ namespace Tellers.Services
                         .ThenInclude(r => r.Profile)
                         .ThenInclude(p => p.User)
                         .Include(s => s.Authors)
+                        .Include(s => s.StoryType)
+                        .Include(s => s.Genres)
                         .FirstOrDefaultAsync(s => s.Id.ToString() == storyId));
+
+            var skip = (page - 1) * 5;
+            var take = (page) * 5;
+
+            storyDetail.Revues = storyDetail.Revues.Skip(skip).Take(take).ToList();
+
+            storyDetail.Page = page;
+            return storyDetail;
         }
+
+        
 
         private IMapWrapper SetMappingConfiguration(IMapWrapper mapper)
         {

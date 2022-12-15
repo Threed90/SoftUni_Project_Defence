@@ -39,8 +39,16 @@
                             (Model.CreatorLastName == null ? string.Empty : $" {Model.CreatorLastName}") +
                             (Model.CreatorPseudonym == null ? string.Empty : $" - {Model.CreatorPseudonym}")))
                     }
-                    </h3>
-                        
+                </h3>
+                <span class="badge rounded-pill bg-success">Story type: @Model.StoryType</span>
+
+                @if (Model.Genres.Count() > 0)
+                {
+                    @foreach (var genre in Model.Genres)
+                    {
+                        <span class="badge rounded-pill bg-warning text-black">@genre</span>
+                    }
+                }
                 <p class="lead my-3">@Model.StorySummary</p>
                 <p class="lead mb-0 blog-post-meta" style="margin-top: 5em">
 
@@ -49,27 +57,27 @@
                              src="@(string.IsNullOrWhiteSpace(Model.CreatorPictureUrl) == false ? Model.CreatorPictureUrl : "/images/profilePicDefault.png")" alt="avatar" width="65"
                              height="65" />
                     </a>
-                      
+
                     by
-                @((Model.CreatorFirstName == null ? string.Empty :
-                    Model.CreatorFirstName +
-                    (Model.CreatorMiddleName == null ? string.Empty : $" {Model.CreatorMiddleName}") +
-                    (Model.CreatorLastName == null ? string.Empty : $" {Model.CreatorLastName}") +
-                    (Model.CreatorPseudonym == null ? string.Empty : $" - {Model.CreatorPseudonym}")) == string.Empty
-                    ?
-                    (Model.CreatorUsername == null ? "Unknown post creator." : Model.CreatorUsername)
-                    :
-                    (Model.CreatorFirstName == null ? string.Empty :
-                    Model.CreatorFirstName +
-                    (Model.CreatorMiddleName == null ? string.Empty : $" {Model.CreatorMiddleName}") +
-                    (Model.CreatorLastName == null ? string.Empty : $" {Model.CreatorLastName}") +
-                    (Model.CreatorPseudonym == null ? string.Empty : $" - {Model.CreatorPseudonym}")))
-                    
-                        
+                    @((Model.CreatorFirstName == null ? string.Empty :
+                        Model.CreatorFirstName +
+                        (Model.CreatorMiddleName == null ? string.Empty : $" {Model.CreatorMiddleName}") +
+                        (Model.CreatorLastName == null ? string.Empty : $" {Model.CreatorLastName}") +
+                        (Model.CreatorPseudonym == null ? string.Empty : $" - {Model.CreatorPseudonym}")) == string.Empty
+                        ?
+                        (Model.CreatorUsername == null ? "Unknown post creator." : Model.CreatorUsername)
+                        :
+                        (Model.CreatorFirstName == null ? string.Empty :
+                        Model.CreatorFirstName +
+                        (Model.CreatorMiddleName == null ? string.Empty : $" {Model.CreatorMiddleName}") +
+                        (Model.CreatorLastName == null ? string.Empty : $" {Model.CreatorLastName}") +
+                        (Model.CreatorPseudonym == null ? string.Empty : $" - {Model.CreatorPseudonym}")))
+
+
                 </p>
-                posted on: @Model.Day-@Model.Month-@Model.Year 
-                
-                    
+                posted on: @Model.Day-@Model.Month-@Model.Year
+
+
 
                 <form method="post" style="margin-top: 3rem">
 
@@ -82,15 +90,16 @@
                         <button class="btn btn-outline-danger btn-lg px-4 gap-3" asp-action="Delete" asp-controller="Story" asp-route-storyId="@Model.StoryId" style="background-color: none">
                             Delete
                         </button>
-                        
+
                     }
-                    @if(User.Identity.Name != Model.CreatorUsername)
+                    @if (User.Identity.Name != Model.CreatorUsername)
                     {
-                        <button class="btn btn-outline-info btn-lg px-4 gap-3" asp-action="MarkAsReaded" asp-controller="Story" asp-route-storyId="@Model.StoryId" asp-route-revueId="@Model.StoryId" style="background-color: none">
+                        <button class="btn btn-outline-info btn-lg px-4 gap-3" asp-action="MarkAsReaded" asp-controller="Story" asp-route-storyId="@Model.StoryId" style="background-color: none">
+                            @*user*@
                             Mark as readed
                         </button>
                     }
-                    
+
                     @if (User.Identity.Name == Model.CreatorUsername)
                     {
 
@@ -106,13 +115,58 @@
         <div class="ratio ratio-16x9 viewPDF" style="margin-top: 0.5em;">
         </div>
     </main>
-    <section style="background-color: #e7effd;">
+    <section style="background-color: #e7effd; padding-bottom: 3em; padding-top: 2em">
 
+        <nav aria-label="...">
+            <ul class="pagination pagination-sm justify-content-center">
+                @for (int i = 1; i <= (int)Math.Ceiling(Model.TotalRevues / 5.0); i++)
+                {
+                    @if(i == Model.Page)
+                    {
+                        <li class="page-item active" aria-current="page">
+                        <a class="page-link" asp-action="Read" asp-controller="Story" asp-route-storyId="@Model.StoryId" asp-route-page="@i" asp-fragment="revues">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item" aria-current="page">
+                            <a class="page-link" asp-action="Read" asp-controller="Story" asp-route-storyId="@Model.StoryId" asp-route-page="@i" asp-fragment="revues">@i</a>
+                        </li>
+                    }
+
+                }
+            </ul>
+        </nav>
+
+        <h3 class="display-6 font-italic justify-content-center text-center fw-bold" id="revues">Revues:</h3>
+        
         <partial name="_ReadRevuesPartial.cshtml" model="@Model.Revues" />
 
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center" style="margin-top: 5em; padding-left: 4em">
+        <nav aria-label="...">
+            <ul class="pagination pagination-sm justify-content-center">
+                @for (int i = 1; i <= (int)Math.Ceiling(Model.TotalRevues / 5.0); i++)
+                {
+                    @if (i == Model.Page)
+                    {
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" asp-action="Read" asp-controller="Story" asp-route-storyId="@Model.StoryId" asp-route-page="@i">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item" aria-current="page">
+                            <a class="page-link" asp-action="Read" asp-controller="Story" asp-route-storyId="@Model.StoryId" asp-route-page="@i">@i</a>
+                        </li>
+                    }
+
+                }
+            </ul>
+        </nav>
+
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center" style="margin-top: 5em; margin-bottom: 3em">
             <a type="button" class="btn btn-outline-success btn-lg px-4 gap-3" asp-controller="Revue" asp-action="Create" asp-route-storyId="@Model.StoryId">Аdd a Revue</a>
         </div>
+        <div></div>
     </section>
 
 </div>

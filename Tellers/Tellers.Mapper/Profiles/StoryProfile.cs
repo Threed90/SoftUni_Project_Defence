@@ -1,12 +1,5 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using Tellers.DataModels;
-using Tellers.ViewModels.Revues;
 using Tellers.ViewModels.Story;
 
 namespace Tellers.Mapper.Profiles
@@ -25,10 +18,14 @@ namespace Tellers.Mapper.Profiles
                 .ForMember(sd => sd.CreatorLastName, s => s.MapFrom(l => (l.Creator == null ? null : l.Creator.LastName)))
                 .ForMember(sd => sd.CreatorPseudonym, s => s.MapFrom(p => (p.Creator == null ? null : p.Creator.Pseudonym)))
                 .ForMember(sd => sd.CreatorUsername, s => s.MapFrom(u => (u.Creator == null ? null : u.Creator.User.UserName)))
+                .ForMember(sd => sd.StoryType, s => s.MapFrom(u => u.StoryType.Name))
+                .ForMember(sd => sd.Genres, s => s.MapFrom(u => u.Genres.Select(s => s.Name)))
                 .ForMember(sd => sd.Year, s => s.MapFrom(date => date.CreatedOn.Year))
                 .ForMember(sd => sd.Month, s => s.MapFrom(date => date.CreatedOn.ToString("MMMM", CultureInfo.GetCultureInfo("us-US"))))
                 .ForMember(sd => sd.Day, s => s.MapFrom(date => date.CreatedOn.Day))
-                .ForMember(sd => sd.Revues, s => s.MapFrom(r => r.Revues.ToList()));
+                .ForMember(sd => sd.TotalRevues, s => s.MapFrom(s => s.Revues.Count()))
+                .ForMember(sd => sd.Page, s => s.Ignore())
+                .ForMember(sd => sd.Revues, s => s.MapFrom(r => r.Revues.OrderByDescending(r => r.CreatedOn).ToList()));
                 
         }
     }
