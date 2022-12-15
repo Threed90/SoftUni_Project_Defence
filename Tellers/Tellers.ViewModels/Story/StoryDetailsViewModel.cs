@@ -6,6 +6,7 @@ namespace Tellers.ViewModels.Story
     {
         public string StoryId { get; set; }
         public string Title { get; set; } = null!;
+        public string CreatorUserId { get; set; } = null!;
         public string StorySummary { get; set; } = null!;
         public string Month { get; set; } = null!;
         public int Day { get; set; }
@@ -23,5 +24,7 @@ namespace Tellers.ViewModels.Story
         public string PdfFileUrl { get; set; } = null!;
 
         public List<ReadRevueViewModel> Revues { get; set; }
+
+        public List<string> AuthorNames { get; set; }
     }
 }

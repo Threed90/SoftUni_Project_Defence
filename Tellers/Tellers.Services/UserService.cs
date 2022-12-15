@@ -110,12 +110,18 @@
             return GetInfoBox(true, string.Empty);
         }
 
-
         public async Task<IInfoBox> Logout()
         {
             await signInManager.SignOutAsync();
 
             return GetInfoBox(true, string.Empty);
+        }
+
+        public async Task<bool> HasRole(string userId, string role)
+        {
+           var user = await  userManager.FindByIdAsync(userId);
+
+            return await userManager.IsInRoleAsync(user, RoleNames.MasterAdminRoleName);
         }
 
         //private methods:
@@ -126,5 +132,7 @@
              IsSucceeded = isSucceeded,
              Message = message
          };
+
+        
     }
 }

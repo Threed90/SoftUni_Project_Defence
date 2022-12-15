@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace Tellers.ViewModels.Revues
+﻿namespace Tellers.ViewModels.Revues
 {
     public class CreateRevueViewModel
     {
-        public string CreatorPictureUrl { get; set; }
+        //does not need validation it is getting element from db just for vizualization
+        public string? CreatorPictureUrl { get; set; }
+
+        [Required]
+        [MinLength(Models.Revue.TextMinLength)]
+        [MaxLength(Models.Revue.TextMaxLength)]
         public string Text { get; set; }
+
+        //it is getted from url, does not need validations
         public string StoryId { get; set; }
+
+        [Required]
+        [Range(Models.Revue.RatingMinValue, Models.Revue.RatingMaxValue)]
         public double Rating { get; set; }
     }
 }

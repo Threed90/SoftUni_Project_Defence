@@ -1,6 +1,6 @@
 ﻿@using System.Security.Claims;
 @using Tellers.ViewModels.Revues;
-@model CreateRevueViewModel
+@model EditRevueViewModel
 
 <section style="background-color: #e7effd;">
     <div class="container my-5 py-5 text-dark">
@@ -10,14 +10,16 @@
                     <div class="card-body p-4">
                         <div class="d-flex flex-start w-100">
                             <a asp-action="Info" asp-controller="Profile" asp-route-profileId="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
-
+                                @if(true){
+                                    
+                                }
                                 <img class="rounded-circle shadow-1-strong me-3"
                                      src="@(string.IsNullOrWhiteSpace(Model.CreatorPictureUrl) == false ? Model.CreatorPictureUrl : "/images/profilePicDefault.png")" alt="avatar" width="65"
                                      height="65" />
                             </a>
                             <form method="post" class="w-100">
                                 <div class="w-100">
-                                    <h5>Add a revue</h5>
+                                    <h5>Edit the revue</h5>
                                     <span class="fa fa-star oneStar"></span>
                                     <span class="fa fa-star twoStar"></span>
                                     <span class="fa fa-star threeStar"></span>
@@ -32,8 +34,8 @@
                                     </div>
                                     <div class="d-flex justify-content-between mt-3">
 
-                                        <button class="btn btn-success" asp-action="Create" asp-controller="Revue" asp-route-storyId="@Model.StoryId">
-                                            Post a revue
+                                        <button class="btn btn-success" asp-action="Edit" asp-controller="Revue" asp-route-storyId="@Model.StoryId" asp-route-userId="@Model.UserId" asp-route-revueId="@Model.Id">
+                                            Edit the revue
                                         </button>
 
                                         <button class="btn btn-danger" asp-action="Read" asp-controller="Story" asp-route-storyId="@Model.StoryId">

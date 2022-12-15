@@ -20,6 +20,7 @@ namespace Tellers.Mapper.Profiles
                 .ForMember(sd => sd.StoryId, s => s.MapFrom(f => (f.Creator == null ? null : f.Id.ToString())))
                 .ForMember(sd => sd.CreatorFirstName, s => s.MapFrom(f => (f.Creator == null ? null : f.Creator.FirstName)))
                 .ForMember(sd => sd.CreatorId, s => s.MapFrom(f => (f.Creator == null ? null : f.Creator.Id.ToString())))
+                .ForMember(sd => sd.CreatorUserId, s => s.MapFrom(f => (f.Creator == null ? null : f.Creator.User.Id.ToString())))
                 .ForMember(sd => sd.CreatorMiddleName, s => s.MapFrom(m => (m.Creator == null ? null : m.Creator.MiddleName)))
                 .ForMember(sd => sd.CreatorLastName, s => s.MapFrom(l => (l.Creator == null ? null : l.Creator.LastName)))
                 .ForMember(sd => sd.CreatorPseudonym, s => s.MapFrom(p => (p.Creator == null ? null : p.Creator.Pseudonym)))

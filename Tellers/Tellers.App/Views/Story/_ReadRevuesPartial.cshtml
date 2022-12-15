@@ -1,6 +1,9 @@
 ﻿@using System.Security.Claims;
+@using Tellers.DataModels;
+@using Tellers.Services.Interfaces;
 @using Tellers.ViewModels.Revues;
 @model IEnumerable<ReadRevueViewModel>
+@inject IUserService userService
 
 
     <div class="container my-5 py-5 text-dark">
@@ -27,7 +30,9 @@
                                     <div class="">
                                         <h5>
                                             <a asp-action="" asp-controller="">
-                                                @if (User.Identity.Name == revue.CreatorUsername)
+                                            @if (await userService.HasRole(revue.CreatorUserId, RoleNames.MasterAdminRoleName) ||
+                                           await userService.HasRole(revue.CreatorUserId, RoleNames.AdminRoleName) ||
+                                            await userService.HasRole(revue.CreatorUserId, RoleNames.ModeratorRoleName))
                                                 {
                                                     @("Tellers team")
                                                 }
@@ -48,15 +53,14 @@
                                                         (revue.CreatorPseudonym == null ? string.Empty : $" - {revue.CreatorPseudonym}")))
                                                 }
                                             </a>
-
                                         </h5>
                                         <span class="fa fa-star oneStar@(i)"></span>
                                         <span class="fa fa-star twoStar@(i)"></span>
                                         <span class="fa fa-star threeStar@(i)"></span>
                                         <span class="fa fa-star fourStar@(i)"></span>
-                                        <span ""class="fa fa-star fiveStar@(i)"></span>
+                                        <span class="fa fa-star fiveStar@(i)"></span>
                                         <label id="ratingStar@(i++)" class="starRatingLable"hidden>@revue.Rating</label>
-                                        <p class="small">3 hours ago</p>
+                                    <p class="small">@($"{revue.CreatedOn.ToString("dd")}-{revue.CreatedOn.ToString("MMMM")}-{revue.CreatedOn.ToString("yyyy")}")</p>
                                         <p>
                                             @revue.Text
                                         </p>
@@ -68,18 +72,16 @@
                                            User.Identity.Name == revue.CreatorUsername)
                                             {
                                                 <form method="post" style="margin-top: 3rem">
-                                                    <button class="btn btn-outline-success btn-lg px-4 gap-3" asp-action="Delete" asp-controller="Revue" asp-route-revueId="@revue.Id" style="background-color: none">
+                                                <button class="btn btn-outline-success btn-lg px-4 gap-3" asp-action="Delete" asp-controller="Revue" asp-route-revueId="@revue.Id" asp-route-storyId="@revue.StoryId" style="background-color: none">
                                                         Delete
                                                     </button>
                                                 </form>
                                             }
                                             @if (User.Identity.Name == revue.CreatorUsername)
                                             {
-                                                <form method="post" style="margin-top: 3rem">
-                                                    <button class="btn btn-outline-warning btn-lg px-4" asp-action="Edit" asp-controller="Revue" asp-route-revueId="@revue.Id" style="background-color: none">
+                                            <a class="btn btn-outline-warning btn-lg px-4" type="button" asp-action="Edit" asp-controller="Revue" asp-route-revueId="@revue.Id" asp-route-storyId="@revue.StoryId" asp-route-userId="@revue.CreatorUserId" style="background-color: none; margin-top: 3rem">
                                                         Edit
-                                                    </button>
-                                                </form>
+                                                    </a>
                                             }
                                         </div>
                                         <div class="d-inline-flex">

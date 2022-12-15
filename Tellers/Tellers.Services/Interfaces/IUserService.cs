@@ -10,5 +10,7 @@
             string username, 
             string password, 
             bool acceptAgreement);
+
+        Task<bool> HasRole(string userId, string role);
     }
 }

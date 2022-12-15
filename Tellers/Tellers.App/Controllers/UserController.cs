@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Tellers.Services.Interfaces;
+using Tellers.Utilities;
 using Tellers.ViewModels.User;
 
 namespace Tellers.App.Controllers
@@ -20,7 +21,7 @@ namespace Tellers.App.Controllers
         {
             if (User?.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", string.Empty));
+                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).ReplaceControllerSuffix());
             }
             var model = new LoginViewModel();
 
@@ -38,7 +39,7 @@ namespace Tellers.App.Controllers
 
             if (result.IsSucceeded)
             {
-                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", string.Empty));
+                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).ReplaceControllerSuffix());
             }
             else
             {
@@ -53,7 +54,7 @@ namespace Tellers.App.Controllers
         {
             if (User?.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", string.Empty));
+                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).ReplaceControllerSuffix());
             }
             var model = new RegisterViewModel();
             return View(model);
@@ -86,7 +87,7 @@ namespace Tellers.App.Controllers
         {
             var result = await userService.Logout();
 
-            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", string.Empty));
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).ReplaceControllerSuffix());
         }
     }
 }

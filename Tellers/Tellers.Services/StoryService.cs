@@ -68,9 +68,11 @@ namespace Tellers.Services
             return this.mapper.GetModel<StoryDetailsViewModel, Story>
                         (await this.data.Stories
                         .Include(s => s.Creator)
+                        .ThenInclude(c => c.User)
                         .Include(s => s.Revues)
                         .ThenInclude(r => r.Profile)
                         .ThenInclude(p => p.User)
+                        .Include(s => s.Authors)
                         .FirstOrDefaultAsync(s => s.Id.ToString() == storyId));
         }
 

@@ -73,7 +73,7 @@
             public const int TextMaxLength = 500;
 
             public const double RatingMinValue = 0;
-            public const double RatingMaxValue = 10;
+            public const double RatingMaxValue = 5;
         }
 
         public static class Story

@@ -45,6 +45,32 @@ namespace Tellers.Services
             await this.data.SaveChangesAsync();
         }
 
+        public async Task<EditRevueViewModel> GetRevueForEditing(int revueId)
+        {
+            return this.mapper.GetModel<EditRevueViewModel, Revue>(
+                    await this.data.Revues
+                        .FirstOrDefaultAsync(r => r.Id == revueId));
+        }
+
+        public async Task EditRevue(int revueId, string text, double rating)
+        {
+            var revue = await this.data.Revues.FirstOrDefaultAsync(r => r.Id == revueId);
+
+            revue.Text = text;
+            revue.Rating = rating;
+            await this.data.SaveChangesAsync();
+        }
+
+        public async Task DeleteRevue(int revueId)
+        {
+            var revue = await this.data.Revues.FirstOrDefaultAsync(r => r.Id == revueId);
+
+            if (revue != null)
+                this.data.Revues.Remove(revue);
+
+            await this.data.SaveChangesAsync();
+        }
+
         //public Task<CreateRevueViewModel> GetRevue(string storyId, string userId, string text, double rating)
         //{
         //    throw new NotImplementedException();

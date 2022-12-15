@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Tellers.Constants;
@@ -33,7 +34,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     })
     .AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<TellersDbContext>();
-builder.Services.AddControllersWithViews();
+
+builder.Services.AddControllersWithViews(opt =>
+{
+    opt.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
 
 builder.Services.ConfigureApplicationCookie(opt =>
 {

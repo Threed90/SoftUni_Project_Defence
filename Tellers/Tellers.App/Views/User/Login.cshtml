@@ -5,7 +5,7 @@
     <form class="col-2 offset-5" method="post">
         <img class="mb-4 rounded-circle" src="~/images/storyTelling.jpg" alt="" width="250">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-floating">
             <input asp-for="UserName" type="text" class="form-control" id="floatingInput" placeholder="Type your username...">
             <label for="floatingInput">User name</label>
