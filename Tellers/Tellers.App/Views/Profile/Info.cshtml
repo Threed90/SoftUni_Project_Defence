@@ -39,9 +39,9 @@
                                 Model.FirstName +
                                 (Model.LastName == null ? string.Empty : $" {Model.LastName}")))
                         </h5>
-                        <p class="text-muted mb-1">Pseudonym: @(string.IsNullOrWhiteSpace(Model.Pseudonym) ? "no pseudonym" : Model.Pseudonym)</p>
-                        <p class="text-muted mb-4">Residence Place: @(string.IsNullOrWhiteSpace(Model.ResidenceCityName) ? "unknow town" : Model.ResidenceCityName), @(string.IsNullOrWhiteSpace(Model.ResidenceCityCountryName) ? "unknow country" : Model.ResidenceCityCountryName), @(string.IsNullOrWhiteSpace(Model.ResidenceCityCountryIso) ? "" : Model.ResidenceCityCountryIso)</p>
-                        <p class="text-muted mb-4">Home Place: @(string.IsNullOrWhiteSpace(Model.HomeTownName) ? "unknow town" : Model.HomeTownName), @(string.IsNullOrWhiteSpace(Model.HomeTownCountryName) ? "unknow country" : Model.HomeTownCountryName), @(string.IsNullOrWhiteSpace(Model.HomeTownCountryIso) ? "" : Model.HomeTownCountryIso)</p>
+                        <p class="text-muted mb-1"><strong>Pseudonym:</strong> @(string.IsNullOrWhiteSpace(Model.Pseudonym) ? "no pseudonym" : Model.Pseudonym)</p>
+                        <p class="text-muted mb-4"><strong>Residence Place:</strong> @(string.IsNullOrWhiteSpace(Model.ResidenceCityName) ? "unknow town" : Model.ResidenceCityName), @(string.IsNullOrWhiteSpace(Model.ResidenceCityCountryName) ? "unknow country" : Model.ResidenceCityCountryName) @(string.IsNullOrWhiteSpace(Model.ResidenceCityCountryIso) ? "" : $", {Model.ResidenceCityCountryIso}")</p>
+                        <p class="text-muted mb-4"><strong>Home Place:</strong> @(string.IsNullOrWhiteSpace(Model.HomeTownName) ? "unknow town" : Model.HomeTownName), @(string.IsNullOrWhiteSpace(Model.HomeTownCountryName) ? "unknow country" : Model.HomeTownCountryName) @(string.IsNullOrWhiteSpace(Model.HomeTownCountryIso) ? "" : $", {Model.HomeTownCountryIso}")</p>
                         <div class="d-flex justify-content-center mb-2">
                             <form method="post" style="margin-top: 1rem">
 

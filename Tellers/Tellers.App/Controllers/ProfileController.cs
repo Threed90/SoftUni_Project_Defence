@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using System.Security.Claims;
 using Tellers.Services.Interfaces;
 using Tellers.ViewModels.Profiles;
 
@@ -18,7 +19,7 @@ namespace Tellers.App.Controllers
         [Authorize]
         public async Task<IActionResult> Info(string profileId)
         {
-            return View(await this.profileService.GetProfileInfo(profileId));
+            return View(await this.profileService.GetProfileInfo(profileId, User.FindFirstValue(ClaimTypes.NameIdentifier)));
         }
     }
 }

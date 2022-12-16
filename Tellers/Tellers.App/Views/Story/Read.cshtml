@@ -86,7 +86,6 @@
                     User.IsInRole(RoleNames.ModeratorRoleName) ||
                     User.Identity.Name == Model.CreatorUsername)
                     {
-
                         <button class="btn btn-outline-danger btn-lg px-4 gap-3" asp-action="Delete" asp-controller="Story" asp-route-storyId="@Model.StoryId" style="background-color: none">
                             Delete
                         </button>
@@ -110,7 +109,6 @@
 
                     @if (User.Identity.Name == Model.CreatorUsername)
                     {
-
                         <button class="btn btn-outline-success btn-lg px-4 gap-3" asp-action="Edit" asp-controller="Story" asp-route-storyId="@Model.StoryId" style="background-color: none">
                             Edit
                         </button>
@@ -157,13 +155,13 @@
                     @if (i == Model.Page)
                     {
                         <li class="page-item active" aria-current="page">
-                            <a class="page-link" asp-action="Read" asp-controller="Story" asp-route-storyId="@Model.StoryId" asp-route-page="@i">@i</a>
+                            <a class="page-link" asp-action="Read" asp-controller="Story" asp-route-storyId="@Model.StoryId" asp-route-page="@i" asp-fragment="revues">@i</a>
                         </li>
                     }
                     else
                     {
                         <li class="page-item" aria-current="page">
-                            <a class="page-link" asp-action="Read" asp-controller="Story" asp-route-storyId="@Model.StoryId" asp-route-page="@i">@i</a>
+                            <a class="page-link" asp-action="Read" asp-controller="Story" asp-route-storyId="@Model.StoryId" asp-route-page="@i" asp-fragment="revues">@i</a>
                         </li>
                     }
 

@@ -6,6 +6,6 @@ namespace Tellers.Services.Interfaces
     {
         Task<ProfileViewModel> GetProfile(string userId);
 
-        Task<ProfileInfoViewModel> GetProfileInfo(string profileId);
+        Task<ProfileInfoViewModel> GetProfileInfo(string profileId, string userId);
     }
 }

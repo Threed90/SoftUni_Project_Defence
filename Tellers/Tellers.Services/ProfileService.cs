@@ -24,8 +24,12 @@ namespace Tellers.Services
                 (await data.Profiles.FirstOrDefaultAsync(p => p.User.Id.ToString() == userId));
         }
 
-        public async Task<ProfileInfoViewModel> GetProfileInfo(string profileId)
+        public async Task<ProfileInfoViewModel> GetProfileInfo(string profileId, string userId)
         {
+            if (string.IsNullOrWhiteSpace(profileId))
+            {
+                profileId = await this.data.Users.Where(u => u.Id.ToString() == userId).Select(u => u.UserProfile.Id.ToString()).FirstOrDefaultAsync();
+            }
             return this.mapper.GetModel<ProfileInfoViewModel, ApplicationUser>(
                     await this.data.Users
                             .Include(u => u.UserProfile)
