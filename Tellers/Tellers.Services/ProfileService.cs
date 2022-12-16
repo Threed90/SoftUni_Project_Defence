@@ -24,9 +24,33 @@ namespace Tellers.Services
                 (await data.Profiles.FirstOrDefaultAsync(p => p.User.Id.ToString() == userId));
         }
 
+        public async Task<ProfileInfoViewModel> GetProfileInfo(string profileId)
+        {
+            return this.mapper.GetModel<ProfileInfoViewModel, ApplicationUser>(
+                    await this.data.Users
+                            .Include(u => u.UserProfile)
+                            .ThenInclude(p => p.AdditionalInfo)
+                            .ThenInclude(b => b.ResidenceCity)
+                            .ThenInclude(t => t.Country)
+                            .Include(u => u.UserProfile)
+                            .ThenInclude(p => p.AdditionalInfo)
+                            .ThenInclude(b => b.HomeTown)
+                            .ThenInclude(t => t.Country)
+                            .Include(u => u.UserProfile)
+                            .ThenInclude(p => p.AdditionalInfo)
+                            .ThenInclude(b => b.WorkingExpirianceLines)
+                            .Include(u => u.UserProfile)
+                            .ThenInclude(p => p.AdditionalInfo)
+                            .ThenInclude(b => b.EducationLines)
+                            .FirstOrDefaultAsync(u => u.UserProfile.Id.ToString() == profileId));
+
+        }
+
         private IMapWrapper SetMappingConfiguration(IMapWrapper mapper)
         {
             return mapper
+                .AddProfile<Education>()
+                .AddProfile<WorkingExperience>()    
                 .AddProfile<Profile>()
                 .ApplyAllMaps();
         }

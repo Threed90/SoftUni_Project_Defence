@@ -8,9 +8,9 @@
         [MaxLength(Models.Education.QualificationNameMaxLength)]
         public string QualificationName { get; set; } = null!;
 
-        [Required]
+        
         [MaxLength(Models.Education.EducationInstitutionNameMaxLength)]
-        public string EducationInstitutionName { get; set; } = null!;
+        public string? EducationInstitutionName { get; set; } = null!;
 
         public int? TownId { get; set; }
         public Town? Town { get; set; }

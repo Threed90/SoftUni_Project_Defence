@@ -9,7 +9,7 @@
             <div class="col">
                 <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">My friend</a></li>
                         <li class="breadcrumb-item"><a href="#">User</a></li>
                         <li class="breadcrumb-item active" aria-current="page">User Profile</li>
                     </ol>
@@ -21,6 +21,10 @@
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-body text-center">
+                        @if (true)
+                        {
+
+                        }
                         <img src="@(string.IsNullOrWhiteSpace(Model.PictureUrl) ? "/images/profilePicDefault.png" : Model.PictureUrl)" alt="avatar"
                              class="rounded-circle img-fluid" style="width: 150px;">
                         <h5 class="my-3">
@@ -28,26 +32,32 @@
                                 (Model.FirstName == null ? string.Empty :
                                 Model.FirstName +
                                 (Model.LastName == null ? string.Empty : $" {Model.LastName}")))
-                                ? 
-                                "Unknown name" 
-                                : 
+                                ?
+                                "Unknown name"
+                                :
                                 (Model.FirstName == null ? string.Empty :
                                 Model.FirstName +
                                 (Model.LastName == null ? string.Empty : $" {Model.LastName}")))
                         </h5>
                         <p class="text-muted mb-1">Pseudonym: @(string.IsNullOrWhiteSpace(Model.Pseudonym) ? "no pseudonym" : Model.Pseudonym)</p>
-                        <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                        <p class="text-muted mb-4">Residence Place: @(string.IsNullOrWhiteSpace(Model.ResidenceCityName) ? "unknow town" : Model.ResidenceCityName), @(string.IsNullOrWhiteSpace(Model.ResidenceCityCountryName) ? "unknow country" : Model.ResidenceCityCountryName), @(string.IsNullOrWhiteSpace(Model.ResidenceCityCountryIso) ? "" : Model.ResidenceCityCountryIso)</p>
+                        <p class="text-muted mb-4">Home Place: @(string.IsNullOrWhiteSpace(Model.HomeTownName) ? "unknow town" : Model.HomeTownName), @(string.IsNullOrWhiteSpace(Model.HomeTownCountryName) ? "unknow country" : Model.HomeTownCountryName), @(string.IsNullOrWhiteSpace(Model.HomeTownCountryIso) ? "" : Model.HomeTownCountryIso)</p>
                         <div class="d-flex justify-content-center mb-2">
                             <form method="post" style="margin-top: 1rem">
-                                <button type="button" class="btn btn-primary">Follow</button>
-                                 @if (Model.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+
+
+
+                                @if (Model.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
                                 {
+                                    <button type="button" class="btn btn-primary">Follow</button>
                                     <button type="button" class="btn btn-outline-primary ms-1">Request friendship</button>
                                 }
+
                                 @if (Model.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
                                 {
                                     <button type="button" class="btn btn-outline-warning ms-1">Edit profile</button>
                                 }
+
                             </form>
                         </div>
                     </div>
@@ -56,24 +66,24 @@
                     <div class="card-body p-0">
                         <ul class="list-group list-group-flush rounded-3">
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <i class="fas fa-globe fa-lg text-warning"></i>
-                                <p class="mb-0">https://mdbootstrap.com</p>
+                                <i class="fa fa-book fa-lg text-warning"></i>
+                                <p class="mb-0"><a class="btn btn-outline-warning" href="#">My stories</a></p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <i class="fab fa-github fa-lg" style="color: #333333;"></i>
-                                <p class="mb-0">mdbootstrap</p>
+                                <i class="fa fa-book fa-lg" style="color: #55acee;"></i>
+                                <p class="mb-0"><a class="btn btn-outline-primary" href="#">My reads</a></p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
-                                <p class="mb-0"></p>
+                                <i class="fas fa-users fa-lg" style="color: #333333;"></i>
+                                <p class="mb-0"><a class="btn btn-outline-dark" href="#">My friends</a></p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
-                                <p class="mb-0">mdbootstrap</p>
+                                <i class="fas fa-users fa-lg" style="color: #ac2bac;"></i>
+                                <p class="mb-0"><a class="btn btn-outline-primary" href="#">My follows</a></p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
-                                <p class="mb-0">mdbootstrap</p>
+                                <i class="fas fa-users fa-lg" style="color: lightgreen;"></i>
+                                <p class="mb-0"><a class="btn btn-outline-success" href="#">Followers</a></p>
                             </li>
                         </ul>
                     </div>
@@ -87,7 +97,11 @@
                                 <p class="mb-0">Full Name</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0">Johnatan Smith</p>
+                                <p class="text-muted mb-0">
+                                    @((string.IsNullOrWhiteSpace(Model.FirstName) ? string.Empty : Model.FirstName) +
+                                        (string.IsNullOrWhiteSpace(Model.MiddleName) ? string.Empty : $" {Model.MiddleName}") +
+                                        (string.IsNullOrWhiteSpace(Model.LastName) ? string.Empty : $" {Model.LastName}"))
+                                </p>
                             </div>
                         </div>
                         <hr>
@@ -96,34 +110,42 @@
                                 <p class="mb-0">Email</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0">example@example.com</p>
+                                <p class="text-muted mb-0">@(string.IsNullOrWhiteSpace(Model.Email) ? string.Empty : Model.Email)</p>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Phone</p>
+                                <p class="mb-0">User name:</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0">(097) 234-5678</p>
+                                <p class="text-muted mb-0">@Model.UserName</p>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Mobile</p>
+                                <p class="mb-0">Residence Place</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0">(098) 765-4321</p>
+                                <p class="text-muted mb-0">
+                                    @(string.IsNullOrWhiteSpace(Model.ResidenceCityName) ? "unknow town" : Model.ResidenceCityName),
+                                    @(string.IsNullOrWhiteSpace(Model.ResidenceCityCountryName) ? "unknow country" : Model.ResidenceCityCountryName),
+                                    @(string.IsNullOrWhiteSpace(Model.ResidenceCityCountryIso) ? "" : Model.ResidenceCityCountryIso)
+                                </p>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Address</p>
+                                <p class="mb-0">Home Place</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
+                                <p class="text-muted mb-0">
+                                    @(string.IsNullOrWhiteSpace(Model.HomeTownName) ? "unknow town" : Model.HomeTownName),
+                                    @(string.IsNullOrWhiteSpace(Model.HomeTownCountryName) ? "unknow country" : Model.HomeTownCountryName),
+                                    @(string.IsNullOrWhiteSpace(Model.HomeTownCountryIso) ? "" : Model.HomeTownCountryIso)
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -133,33 +155,73 @@
                         <div class="card mb-4 mb-md-0">
                             <div class="card-body">
                                 <p class="mb-4">
-                                    <span class="text-primary font-italic me-1">assigment</span> Project Status
+                                    Educations &#38; Qualifications
                                 </p>
-                                <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                                <div class="progress rounded" style="height: 5px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
-                                         aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                                <div class="progress rounded" style="height: 5px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
-                                         aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                                <div class="progress rounded" style="height: 5px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
-                                         aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
-                                <div class="progress rounded" style="height: 5px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
-                                         aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
-                                <div class="progress rounded mb-2" style="height: 5px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
-                                         aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
+                                @if (Model.Educations == null || Model.Educations.Count == 0)
+                                {
+                                    <p class="mb-1" style="font-size: .77rem;">No information.</p>
+                                }
+                                else
+                                {
+                                    @foreach (var education in Model.Educations)
+                                    {
+                                        <p class="mb-1" style="font-size: 0.9em;"><strong>Qualification:</strong> @education.QualificationName</p>
+                                        <p class="mb-1" style="font-size: 0.8em;">
+                                            <strong>
+                                                Institution:
+                                            </strong>
+                                            @(string.IsNullOrWhiteSpace(education.EducationInstitutionName)
+                                                ?
+                                                string.Empty
+                                                :
+                                                education.EducationInstitutionName)
+                                        </p>
+                                        <p class="mb-1" style="font-size: 0.8em;">
+                                            @if (education.From != null && education.To != null)
+                                            {
+                                                <u>From:</u> @(education.From.Value.ToString("dd MMMM yyyy") == null ? "" : education.From.Value.ToString("dd MMMM yyyy"))
+                                                <u>To:</u> @(education.To.Value.ToString("dd MMMM yyyy") == null ? "" : education.To.Value.ToString("dd MMMM yyyy"))
+                                            }
+                                            else if (education.From != null)
+                                            {
+                                                <u>From:</u> @(education.From.Value.ToString("dd MMMM yyyy") == null ? "" : education.From.Value.ToString("dd MMMM yyyy"))
+                                            }
+                                            else if (education.To != null)
+                                            {
+                                                <u>To:</u> @(education.To.Value.ToString("dd MMMM yyyy") == null ? "" : education.To.Value.ToString("dd MMMM yyyy"))
+                                            }
+                                            else
+                                            {
+                                                @:No date!
+                                            }
+                                        </p>
+                                        <p class="mb-1" style="font-size: 0.8em;">
+
+                                            @if (string.IsNullOrWhiteSpace(education.AdditionalDescription))
+                                            {
+                                                @string.Empty
+                                            }
+                                            else
+                                            {
+                                                <strong>Institution:</strong> @education.AdditionalDescription
+                                            }
+                                        </p>
+                                        @if(User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.UserId)
+                                        {
+                                            <form method="post" style="margin-top: 1rem">
+                                                    <button type="button" class="btn btn-warning">Edit</button>
+                                                    <button type="button" class="btn btn-outline-danger ms-1">Delete</button>
+                                            </form>
+                                        }
+                                        <hr>
+                                    }
+                                }
+                                @if (User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.UserId)
+                                {
+                                    <form method="post" style="margin-top: 1rem; padding-left: 8.5em">
+                                        <button type="button" class="btn btn-outline-success">Add education</button>
+                                    </form>
+                                }
                             </div>
                         </div>
                     </div>
@@ -167,33 +229,74 @@
                         <div class="card mb-4 mb-md-0">
                             <div class="card-body">
                                 <p class="mb-4">
-                                    <span class="text-primary font-italic me-1">assigment</span> Project Status
+                                    Working expiriance
                                 </p>
-                                <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                                <div class="progress rounded" style="height: 5px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
-                                         aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                                <div class="progress rounded" style="height: 5px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
-                                         aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                                <div class="progress rounded" style="height: 5px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
-                                         aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
-                                <div class="progress rounded" style="height: 5px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
-                                         aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
-                                <div class="progress rounded mb-2" style="height: 5px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
-                                         aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
+                                @if (Model.Educations == null || Model.Educations.Count == 0)
+                                {
+                                    <p class="mb-1" style="font-size: .77rem;">No information.</p>
+                                }
+                                else
+                                {
+                                    @foreach (var exp in Model.WorkingExpiriences)
+                                    {
+                                        <p class="mb-1" style="font-size: 0.9em;"><strong>Position:</strong> @exp.Position</p>
+                                        <p class="mb-1" style="font-size: 0.8em;">
+                                            <strong>
+                                                Employeer:
+                                            </strong>
+                                            @(string.IsNullOrWhiteSpace(exp.EmployerName)
+                                                ?
+                                                string.Empty
+                                                :
+                                                exp.EmployerName)
+                                        </p>
+                                        <p class="mb-1" style="font-size: 0.8em;">
+                                            @if (exp.From != null && exp.To != null)
+                                            {
+                                                <u>From:</u> @(exp.From.Value.ToString("dd MMMM yyyy") == null ? "" : exp.From.Value.ToString("dd MMMM yyyy"))
+                                                <u>To:</u> @(exp.To.Value.ToString("dd MMMM yyyy") == null ? "" : exp.To.Value.ToString("dd MMMM yyyy"))
+                                            }
+                                            else if (exp.From != null)
+                                            {
+                                                <u>From:</u> @(exp.From.Value.ToString("dd MMMM yyyy") == null ? "" : exp.From.Value.ToString("dd MMMM yyyy"))
+                                            }
+                                            else if (exp.To != null)
+                                            {
+                                                <u>To:</u> @(exp.To.Value.ToString("dd MMMM yyyy") == null ? "" : exp.To.Value.ToString("dd MMMM yyyy"))
+                                            }
+                                            else
+                                            {
+                                                @:No date!
+                                            }
+                                        </p>
+                                        <p class="mb-1" style="font-size: 0.8em;">
+
+                                            @if (string.IsNullOrWhiteSpace(exp.ActivitiesAndResponces))
+                                            {
+                                                @string.Empty
+                                            }
+                                            else
+                                            {
+                                                <strong>Institution:</strong> @exp.ActivitiesAndResponces
+                                            }
+                                        </p>
+                                        @if (User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.UserId)
+                                        {
+                                            <form method="post" style="margin-top: 1rem">
+                                                <button type="button" class="btn btn-warning">Edit</button>
+                                                <button type="button" class="btn btn-outline-danger ms-1">Delete</button>
+                                            </form>
+                                        }
+                                        <hr>
+                                    }
+                                }
+                                @if (User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.UserId)
+                                {
+                                    <form method="post" style="margin-top: 1rem; padding-left: 8.5em">
+                                        <button type="button" class="btn btn-outline-success">Add workplace</button>
+                                    </form>
+                                }
+                                
                             </div>
                         </div>
                     </div>
@@ -204,5 +307,6 @@
 </section>
 
 @section Styles{
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 }

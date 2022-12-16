@@ -8,9 +8,8 @@
         [MaxLength(Models.WorkingExperience.PositionMaxLength)]
         public string Position { get; set; } = null!;
 
-        [Required]
         [MaxLength(Models.WorkingExperience.EmployerNameMaxLength)]
-        public string EmployerName { get; set; } = null!;
+        public string? EmployerName { get; set; } = null!;
 
         public int? TownId { get; set; }
         public Town? Town { get; set; }

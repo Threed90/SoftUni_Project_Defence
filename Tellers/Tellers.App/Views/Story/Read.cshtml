@@ -52,7 +52,7 @@
                 <p class="lead my-3">@Model.StorySummary</p>
                 <p class="lead mb-0 blog-post-meta" style="margin-top: 5em">
 
-                    <a asp-action="Info" asp-controller="Profile" asp-route-profileId="@Model.CreatorId">
+                    <a asp-action="Info" asp-controller="Profile" asp-route-profileId="@Model.CreatorId" >
                         <img class="rounded-circle shadow-1-strong me-3"
                              src="@(string.IsNullOrWhiteSpace(Model.CreatorPictureUrl) == false ? Model.CreatorPictureUrl : "/images/profilePicDefault.png")" alt="avatar" width="65"
                              height="65" />

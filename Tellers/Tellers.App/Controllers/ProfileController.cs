@@ -1,18 +1,24 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using Tellers.Services.Interfaces;
 using Tellers.ViewModels.Profiles;
 
 namespace Tellers.App.Controllers
 {
     public class ProfileController : Controller
     {
-        [Authorize]
-        public IActionResult Info(string profileId)
+        private readonly IProfileService profileService;
+
+        public ProfileController(IProfileService profileService)
         {
-            return View(new ProfileInfoViewModel()
-            {
-                UserId= profileId, //has to be userId not profileId
-            });
+            this.profileService = profileService;
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Info(string profileId)
+        {
+            return View(await this.profileService.GetProfileInfo(profileId));
         }
     }
 }
