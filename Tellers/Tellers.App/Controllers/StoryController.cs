@@ -27,8 +27,14 @@ namespace Tellers.App.Controllers
         public async Task<IActionResult> Read(string storyId, int page = 1, bool isMarked = false)
         {
             isMarked = await this.storyService.IsReadedStory(storyId, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var details = await storyService.GetStoryDetails(storyId, page, isMarked);
 
-            return this.View(await storyService.GetStoryDetails(storyId, page, isMarked));
+            if(details == null)
+            {
+                return NotFound();
+            }
+
+            return this.View(details);
         }
 
         [HttpPost]

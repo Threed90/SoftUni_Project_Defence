@@ -88,11 +88,13 @@ namespace Tellers.Services
             var skip = (page - 1) * 5;
             var take = (page) * 5;
 
-            storyDetail.Revues = storyDetail.Revues.Skip(skip).Take(take).ToList();
+            if(storyDetail != null && storyDetail.Revues != null )
+            {
+                storyDetail.Revues = storyDetail.Revues.Skip(skip).Take(take).ToList();
 
-            storyDetail.Page = page;
-            storyDetail.IsMarkedAsReaded = isMarked;
-
+                storyDetail.Page = page;
+                storyDetail.IsMarkedAsReaded = isMarked;
+            }
             return storyDetail;
         }
 

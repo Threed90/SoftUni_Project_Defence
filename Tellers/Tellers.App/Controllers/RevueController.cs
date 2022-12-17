@@ -70,6 +70,11 @@ namespace Tellers.App.Controllers
 
             var profile = await this.profileService.GetProfile(userId);
 
+            if(profile == null)
+            {
+                return NotFound();
+            }
+
             model.CreatorPictureUrl = profile.PictureUrl;
             model.StoryId = storyId;
             model.UserId = userId;

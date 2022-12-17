@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -42,7 +43,7 @@ builder.Services.AddControllersWithViews(opt =>
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     opt.LoginPath = "/User/Login";
-    opt.AccessDeniedPath = "/Error/500";
+    //opt.AccessDeniedPath = "/Error/404";
 });
 
 builder.Services.AddScoped<IUserService, UserService>();
@@ -62,30 +63,38 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    //app.UseExceptionHandler("/Shared/Error");
+    //app.UseExceptionHandler("/Error/SomethingGetsWrong");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
-app.Use(async (context, next) =>
-{
-    await next();
-    if (context.Response.StatusCode == 404)
-    {
-        context.Request.Path = "/Error/404";
-        await next();
-    }
-    else if (context.Response.StatusCode == 500)
-    {
-        context.Request.Path = "/Error/500";
-        await next();
-    }
-    //else
-    //{
-    //    context.Request.Path = "/Error/SomethingGetsWrong";
-    //    await next();
-    //}
-});
+app.UseStatusCodePagesWithRedirects("/Error/{0}");
+
+//app.Use(async (context, next) =>
+//{
+//    try
+//    {
+//        await next();
+//    }
+//    catch (Exception)
+//    {
+
+//        context.Request.Path = "/Error/SomethingGetsWrong";
+//    }
+
+//    if (context.Response.StatusCode == 404)
+//    {
+//        context.Request.Path = "/Error/PageNotFound";
+//        await next();
+//    }
+
+//    if (context.Response.StatusCode == 500)
+//    {
+//        context.Request.Path = "/Error/AppError";
+//        await next();
+//    }
+//});
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -94,9 +103,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.UseEndpoints(endpoints =>
 {
