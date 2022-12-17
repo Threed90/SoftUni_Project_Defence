@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Host.Mef;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using Tellers.Constants;
 using Tellers.DataModels;
 using Tellers.DbContext;
@@ -47,17 +45,6 @@ builder.Services.ConfigureApplicationCookie(opt =>
     opt.AccessDeniedPath = "/Error/500";
 });
 
-//builder.Services.AddAuthorization(options =>
-//{
-
-//    options.AddPolicy( ,
-//        authBuilder =>
-//        {
-//            authBuilder.RequireRole("Administrators");
-//        });
-
-//});
-
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IStoryService, StoryService>();
 builder.Services.AddScoped<IRevueService, RevueService>();
@@ -88,12 +75,16 @@ app.Use(async (context, next) =>
         context.Request.Path = "/Error/404";
         await next();
     }
-
-    if (context.Response.StatusCode == 500)
+    else if (context.Response.StatusCode == 500)
     {
         context.Request.Path = "/Error/500";
         await next();
     }
+    //else
+    //{
+    //    context.Request.Path = "/Error/SomethingGetsWrong";
+    //    await next();
+    //}
 });
 app.UseHttpsRedirection();
 app.UseStaticFiles();

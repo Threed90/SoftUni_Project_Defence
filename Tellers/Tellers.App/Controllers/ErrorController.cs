@@ -31,5 +31,15 @@ namespace Tellers.App.Controllers
             }
             return View();
         }
+
+        public IActionResult SomethingGetsWrong()
+        {
+            string originalPath = "unknown";
+            if (HttpContext.Items.ContainsKey("originalPath"))
+            {
+                originalPath = HttpContext.Items["originalPath"] as string;
+            }
+            return View();
+        }
     }
 }

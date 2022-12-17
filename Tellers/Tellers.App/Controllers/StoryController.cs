@@ -37,17 +37,17 @@ namespace Tellers.App.Controllers
         {
             var isMarked = await this.storyService.MarkAsReaded(storyId, User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            return RedirectToAction(nameof(Read), new { storyId = storyId, page = 1, isMarked});
+            return RedirectToAction(nameof(Read), new { storyId = storyId, page = 1, isMarked });
         }
 
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Edit(string storyId)
         {
-            
+
             var model = await this.storyService.GetStory(storyId);
 
-            if(await this.storyService.IsStoryCreatorTheCurrentUser(storyId, User.FindFirstValue(ClaimTypes.NameIdentifier)) == false)
+            if (await this.storyService.IsStoryCreatorTheCurrentUser(storyId, User.FindFirstValue(ClaimTypes.NameIdentifier)) == false)
             {
                 return RedirectToAction(nameof(All));
             }
@@ -81,7 +81,7 @@ namespace Tellers.App.Controllers
         [Authorize]
         public async Task<IActionResult> Create(StoryFormViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(await this.storyService.AddAllGenresAndStoryTypes(model));
             }
@@ -91,14 +91,14 @@ namespace Tellers.App.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        
+
         [Authorize]
         public async Task<IActionResult> All(string type, string genre, StoryFilterBoxViewModel model)
         {
             return await GetResult(model, await this.storyService.GetAll(model.Genre, model.Type));
         }
 
-        
+
 
         [Authorize]
         public async Task<IActionResult> MyStories(string type, string genre, StoryFilterBoxViewModel model)
@@ -113,11 +113,18 @@ namespace Tellers.App.Controllers
             return await GetResult(model, await this.storyService.GetReaded(User.FindFirstValue(ClaimTypes.NameIdentifier), model.Genre, model.Type));
         }
 
+        [Authorize]
+        public async Task<IActionResult> Search(StoryFilterBoxViewModel model, string? search = null)
+        {
+            var result = await GetResult(model, await this.storyService.GetSearched(model.Search, model.Genre, model.Type));
+            return View();
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Delete(string storyId)
         {
-            if(await this.storyService.IsStoryCreatorTheCurrentUser(storyId, User.FindFirstValue(ClaimTypes.NameIdentifier)) == false)
+            if (await this.storyService.IsStoryCreatorTheCurrentUser(storyId, User.FindFirstValue(ClaimTypes.NameIdentifier)) == false)
             {
                 return RedirectToAction(nameof(All));
             }

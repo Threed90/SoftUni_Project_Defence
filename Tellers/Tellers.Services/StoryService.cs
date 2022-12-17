@@ -318,6 +318,14 @@ namespace Tellers.Services
 
             return this.mapper.GetModels<StoryFilterCardViewModel, Story>(profile.MyReads).ToList();
         }
+
+        public async Task<List<StoryFilterCardViewModel>> GetSearched(string search, string? genre = null, string? storyType = null)
+        {
+
+            var stories = (await this.GetAll(genre, storyType)).Where(s => s.Title.ToLower().Contains(search.ToLower()));
+
+            return stories?.ToList() ?? new List<StoryFilterCardViewModel>();
+        }
         private IMapWrapper SetMappingConfiguration(IMapWrapper mapper)
         {
             return mapper

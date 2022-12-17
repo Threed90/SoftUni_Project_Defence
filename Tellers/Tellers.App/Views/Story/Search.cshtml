@@ -1,1 +1,92 @@
-﻿
+﻿@using Tellers.ViewModels.Story;
+@model StoryFilterBoxViewModel
+
+<section style="background-color: #eee; margin-top: 3em">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                    <form method="get">
+                        <label>Story type filter:</label>
+                        <select class="form-select mb-3 text-secondary" aria-label=".form-select-lg example" asp-for="Type">
+                            <option selected>All</option>
+                            @foreach (var storyType in Model.StoryTypes)
+                            {
+                                <option value="@storyType.Name">@storyType.Name</option>
+                            }
+                        </select>
+                        <label>Genre filter:</label>
+                        <select class="form-select mb-3 text-secondary" aria-label=".form-select-lg example" asp-for="Genre">
+                            <option selected>All</option>
+                            @foreach (var genre in Model.Genres)
+                            {
+                                <option value="@genre.Name">@genre.Name</option>
+                            }
+                        </select>
+                        <button class="btn btn-outline-success" asp-action="Readed" asp-controller="Story" asp-route-type="@Model.Type" asp-route-genre="@Model.Genre">
+                            Filter
+                        </button>
+                    </form>
+                </nav>
+            </div>
+
+        </div>
+        <div class="container">
+            @{
+                int i = 0;
+                while (i < Model.Cards.Count())
+                {
+                    <div class="row">
+                        @for (int j = 0; j < 3 && i < Model.Cards.Count(); i++, j++)
+                        {
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <img src="@(string.IsNullOrWhiteSpace(Model.Cards[i].BookCoverPicture) ? "/images/profilePicDefault.png" : Model.Cards[i].BookCoverPicture)"
+                                 class="card-img-top"
+                                 alt="Waterfall" />
+                                    <div class="card-body">
+                                        <h5 class="card-title">@Model.Cards[i].Title</h5>
+                                        <p class="card-text">
+                                            @Model.Cards[i].Summary
+                                        </p>
+                                        @if (User?.Identity?.IsAuthenticated ?? false)
+                                        {
+                                            <a asp-controller="Story" asp-action="Read" asp-route-storyId="@Model.Cards[i].Id" class="btn btn-primary" style="margin-left: 8.5em">Read it</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+
+
+        </div>
+    </div>
+</section>
+
+@*<nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4" style="margin-top: 5rem">
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#">My friend</a></li>
+        <li class="breadcrumb-item"><a href="#">User</a></li>
+        <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+    </ol>
+</nav>
+
+<div class="card mb-3">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+    <img src="..." class="card-img-bottom" alt="...">
+</div>*@

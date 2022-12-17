@@ -19,5 +19,6 @@ namespace Tellers.ViewModels.Story
 
         public string? Genre { get; set; }
         public string? Type { get; set; }
+        public string? Search { get; set; }
     }
 }

@@ -48,7 +48,7 @@
                                     Account
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item text-dark" asp-action="Info" asp-controller="Profile" >My Profile</a></li>
+                                    <li><a class="dropdown-item text-dark" asp-action="Info" asp-controller="Profile">My Profile</a></li>
                                     <li><a class="dropdown-item" asp-action="MyStories" asp-controller="Story">My stories</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
@@ -64,14 +64,17 @@
                                 </ul>
                             </li>
                         </ul>
-                        <form class="d-flex mt-3" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-success" type="submit">Search</button>
+                        <form class="d-flex mt-3" role="search" id="searchForm" method="get">
+
+                            <input class="form-control me-2" name="searchText" type="search" placeholder="Search by title" aria-label="Search" id="searchText" />
+                            <button class="btn btn-primary" id="searchButton">
+                                Search
+                            </button>
                         </form>
 
                         @if ((User?.IsInRole(RoleNames.MasterAdminRoleName) ?? false) ||
-                             (User?.IsInRole(RoleNames.AdminRoleName) ?? false) ||
-                             (User?.IsInRole(RoleNames.ModeratorRoleName) ?? false) )
+                        (User?.IsInRole(RoleNames.AdminRoleName) ?? false) ||
+                        (User?.IsInRole(RoleNames.ModeratorRoleName) ?? false))
                         {
                             <form method="post" style="margin-top: 3rem">
                                 <button class="btn btn-primary" asp-area="Admin" asp-action="Index" asp-controller="Home">
@@ -89,15 +92,29 @@
             </div>
         </nav>
     </header>
-    
-    
-            @RenderBody()
+
+
+    @RenderBody()
 
     <partial name="FooterPartial" />
 
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script type="text/javascript">
+        let form = document.getElementById("searchForm");
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            let formData = new FormData(e.currentTarget);
+
+            let { searchText } = Object.fromEntries(formData);
+
+            window.location.href = `/Story/Search?search=${searchText}`;
+        })
+    </script>
 </body>
 </html>

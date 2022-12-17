@@ -11,5 +11,7 @@ namespace Tellers.ViewModels.Story
     {
         public IViewModelInfoBox<List<StoryCardViewModel>> newestStories { get; set; } = null!;
         public IViewModelInfoBox<List<StoryCardViewModel>> topStories { get; set; } = null!;
+
+        public StoryFilterBoxViewModel Box { get; set; } = null!;
     }
 }
