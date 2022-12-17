@@ -14,6 +14,6 @@ namespace Tellers.ViewModels.Story
 
         public StoryTypeViewModel StoryType { get; set; }
 
-        
+        public string CreatorUserId { get; set; }
     }
 }

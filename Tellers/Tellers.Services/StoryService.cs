@@ -35,6 +35,8 @@ namespace Tellers.Services
                 (data.Stories
                       .Include(s => s.Genres)
                       .Include(s => s.StoryType)
+                      .Include(s => s.Creator)
+                      .ThenInclude(c => c.User)
                       .AsNoTracking());
         }
 
@@ -105,7 +107,7 @@ namespace Tellers.Services
 
             if (story == null && profile == null)
             {
-                //nonsence but just a secure meger
+                //nonsence but just a secure meager
                 return false;
             }
             if (profile?.MyReads.Any(s => s.Id == story?.Id) ?? false)
@@ -296,6 +298,25 @@ namespace Tellers.Services
             }
 
             return resultSet;
+        }
+
+        public async Task<List<StoryFilterCardViewModel>> GetMine(string userId, string? genre = null, string? storyType = null)
+        {
+            var stories = await this.GetAll(genre, storyType);  
+
+            return stories.Where(s => s.CreatorUserId == userId).ToList();
+        }
+
+        public async Task<List<StoryFilterCardViewModel>> GetReaded(string userId, string? genre = null, string? storyType = null)
+        {
+
+            var profile = await this.data.Profiles
+                .Include(p => p.MyReads)
+                .ThenInclude(r => r.Creator)
+                .ThenInclude(c => c.User)
+                .FirstOrDefaultAsync(p => p.User.Id.ToString() == userId);
+
+            return this.mapper.GetModels<StoryFilterCardViewModel, Story>(profile.MyReads).ToList();
         }
         private IMapWrapper SetMappingConfiguration(IMapWrapper mapper)
         {

@@ -109,6 +109,42 @@ namespace Tellers.App.Controllers
             return View(outputModel);
         }
 
+        [Authorize]
+        public async Task<IActionResult> MyStories(string type, string genre, StoryFilterBoxViewModel model)
+        {
+            var genres = await this.genreService.GetAll();
+            var types = await this.storyTypeService.GetAll();
+
+            var outputModel = new StoryFilterBoxViewModel()
+            {
+                Cards = await this.storyService.GetMine(User.FindFirstValue(ClaimTypes.NameIdentifier), model.Genre, model.Type),
+                Genres = genres.ToList(),
+                StoryTypes = types.ToList(),
+                Genre = model.Genre,
+                Type = model.Type
+            };
+
+            return View(outputModel);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Readed(string type, string genre, StoryFilterBoxViewModel model)
+        {
+            var genres = await this.genreService.GetAll();
+            var types = await this.storyTypeService.GetAll();
+
+            var outputModel = new StoryFilterBoxViewModel()
+            {
+                Cards = await this.storyService.GetReaded(User.FindFirstValue(ClaimTypes.NameIdentifier), model.Genre, model.Type),
+                Genres = genres.ToList(),
+                StoryTypes = types.ToList(),
+                Genre = model.Genre,
+                Type = model.Type
+            };
+
+            return View(outputModel);
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Delete(string storyId)

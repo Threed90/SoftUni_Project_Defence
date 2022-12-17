@@ -38,7 +38,7 @@
                                 <a class="nav-link" asp-action="All" asp-controller="Story">All stories</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Readed stories</a>
+                                <a class="nav-link" asp-action="Readed" asp-controller="Story">Readed stories</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-action="Create" asp-controller="Story">Share your story</a>
@@ -49,7 +49,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item text-dark" asp-action="Info" asp-controller="Profile" >My Profile</a></li>
-                                    <li><a class="dropdown-item" href="#">My stories</a></li>
+                                    <li><a class="dropdown-item" asp-action="MyStories" asp-controller="Story">My stories</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>

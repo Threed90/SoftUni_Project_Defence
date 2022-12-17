@@ -17,6 +17,8 @@ namespace Tellers.Services.Interfaces
         Task<bool> IsStoryCreatorTheCurrentUser(string storyId, string userId);
         Task DeleteStory(string storyId);
         Task<List<StoryFilterCardViewModel>> GetAll(string? genre = null, string? storyType = null);
+        Task<List<StoryFilterCardViewModel>> GetMine(string userId, string? genre = null, string? storyType = null);
+        Task<List<StoryFilterCardViewModel>> GetReaded(string userId, string? genre = null, string? storyType = null);
 
     }
 }
