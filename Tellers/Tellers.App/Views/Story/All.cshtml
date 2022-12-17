@@ -51,7 +51,7 @@
                                         </p>
                                         @if (User?.Identity?.IsAuthenticated ?? false)
                                         {
-                                            <a asp-controller="Story" asp-action="Read" asp-route-storyId="@Model.Cards[i].Id" class="btn btn-primary">Read it</a>
+                                            <a asp-controller="Story" asp-action="Read" asp-route-storyId="@Model.Cards[i].Id" class="btn btn-primary" style="margin-left: 8.5em">Read it</a>
                                         }
                                     </div>
                                 </div>

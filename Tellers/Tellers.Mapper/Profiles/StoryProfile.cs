@@ -43,7 +43,8 @@ namespace Tellers.Mapper.Profiles
 
             this.CreateMap<Story, StoryFilterCardViewModel>()
                 .ForMember(sf => sf.Genres, y => y.MapFrom(s => s.Genres))
-                .ForMember(sf => sf.StoryType, y => y.MapFrom(s => s.StoryType));
+                .ForMember(sf => sf.StoryType, y => y.MapFrom(s => s.StoryType))
+                .ForMember(sf => sf.Summary, y => y.MapFrom(s => s.StorySummary));
                 
         }
     }
