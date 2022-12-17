@@ -40,6 +40,10 @@ namespace Tellers.Mapper.Profiles
                 .ForMember(sv => sv.GenresNames, y => y.MapFrom(s => string.Join(", ", s.Genres.Select(g => g.Name))))
                 .ForMember(sv => sv.Genres, y => y.Ignore())
                 .ForMember(sv => sv.StoryTypes, y => y.Ignore());
+
+            this.CreateMap<Story, StoryFilterCardViewModel>()
+                .ForMember(sf => sf.Genres, y => y.MapFrom(s => s.Genres))
+                .ForMember(sf => sf.StoryType, y => y.MapFrom(s => s.StoryType));
                 
         }
     }

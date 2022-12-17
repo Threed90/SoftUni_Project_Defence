@@ -29,12 +29,13 @@ namespace Tellers.Services
         /// Service method that returns all stories as no tracking set and returns need view model via map wrapper.
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<StoryCardViewModel>> All()
+        public IEnumerable<StoryFilterCardViewModel> All()
         {
-            return this.mapper.GetModels<StoryCardViewModel, Story>
-                (await data.Stories
-                      .AsNoTracking()
-                      .ToListAsync());
+            return this.mapper.GetModels<StoryFilterCardViewModel, Story>
+                (data.Stories
+                      .Include(s => s.Genres)
+                      .Include(s => s.StoryType)
+                      .AsNoTracking());
         }
 
         public async Task<IEnumerable<StoryCardViewModel>> GetNewestStories()
@@ -107,7 +108,7 @@ namespace Tellers.Services
                 //nonsence but just a secure meger
                 return false;
             }
-                if (profile?.MyReads.Any(s => s.Id == story?.Id) ?? false)
+            if (profile?.MyReads.Any(s => s.Id == story?.Id) ?? false)
             {
                 profile.MyReads.Remove(story);
                 await data.SaveChangesAsync();
@@ -151,7 +152,7 @@ namespace Tellers.Services
                                     .AsNoTracking()
                                     .OrderBy(g => g.Name)
                                     .ToListAsync());
-            if(model != null)
+            if (model != null)
             {
                 model.Genres = genres.ToList();
                 model.StoryTypes = storyTypes.ToList();
@@ -184,7 +185,7 @@ namespace Tellers.Services
 
             story.Creator = profile;
 
-            if(model.GenresNames != null)
+            if (model.GenresNames != null)
             {
                 var genresNames = model.GenresNames.Split(", ", StringSplitOptions.RemoveEmptyEntries).ToList();
 
@@ -196,13 +197,13 @@ namespace Tellers.Services
                 }
             }
 
-            if(model.ExternalAuthor == null)
+            if (model.ExternalAuthor == null)
             {
                 story.Authors.Add(profile);
             }
 
             await this.data.Stories.AddAsync(story);
-            await this.data.SaveChangesAsync();            
+            await this.data.SaveChangesAsync();
         }
 
         public async Task<StoryEditFormViewModel> GetStory(string storyId)
@@ -233,7 +234,7 @@ namespace Tellers.Services
 
             foreach (var genreName in model.GenresNames.Split(", ", StringSplitOptions.RemoveEmptyEntries))
             {
-                if(!story.Genres.Any(g => g.Name == genreName))
+                if (!story.Genres.Any(g => g.Name == genreName))
                 {
                     var genre = await this.data.Genres.FirstOrDefaultAsync(g => g.Name == genreName);
 
@@ -257,19 +258,51 @@ namespace Tellers.Services
 
         public async Task DeleteStory(string storyId)
         {
-            var story = await this.data.Stories.FirstOrDefaultAsync(s => s.Id.ToString() == storyId); 
+            var story = await this.data.Stories.FirstOrDefaultAsync(s => s.Id.ToString() == storyId);
 
             this.data.Stories.Remove(story);
 
             await this.data.SaveChangesAsync();
         }
 
+        public async Task<List<StoryFilterCardViewModel>> GetAll(string? genre = null, string? storyType = null)
+        {
+
+            var genres = this.mapper.GetModels<GenreViewModel, Genre>(this.data.Genres.AsNoTracking());
+            var storyTypes = this.mapper.GetModels<StoryTypeViewModel, StoryType>(this.data.StoryTypes.AsNoTracking());
+            List<StoryFilterCardViewModel> resultSet;
+
+            if ((genre == null || genre == "All") && (storyType == null || storyType == "All"))
+            {
+                resultSet = this.All().ToList();
+            }
+            else if (genre != null && storyType != null && genre != "All" && storyType != "All")
+            {
+                resultSet = this.All()
+                        .Where(s => s.Genres.Select(g => g.Name).Contains(genre) && s.StoryType.Name == storyType)
+                        .ToList();
+            }
+            else if (genre != null && genre != "All")
+            {
+                resultSet = this.All()
+                        .Where(s => s.Genres.Select(g => g.Name).Contains(genre))
+                        .ToList();
+            }
+            else
+            {
+                resultSet = this.All()
+                        .Where(s => s.StoryType.Name == storyType)
+                        .ToList();
+            }
+
+            return resultSet;
+        }
         private IMapWrapper SetMappingConfiguration(IMapWrapper mapper)
         {
             return mapper
-                .CreateMap<StoryCardViewModel, Story>()
                 .CreateMap<GenreViewModel, Genre>()
                 .CreateMap<StoryTypeViewModel, StoryType>()
+                .CreateMap<StoryCardViewModel, Story>()
                 .AddProfile<Revue>()
                 .AddProfile<Story>()
                 .ApplyAllMaps();

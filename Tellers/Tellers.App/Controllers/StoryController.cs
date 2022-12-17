@@ -8,11 +8,18 @@ namespace Tellers.App.Controllers
 {
     public class StoryController : Controller
     {
-        private IStoryService storyService;
+        private readonly IStoryService storyService;
+        private readonly IGenreService genreService;
+        private readonly IStoryTypeService storyTypeService;
 
-        public StoryController(IStoryService storyService)
+        public StoryController(
+            IStoryService storyService,
+            IGenreService genreService,
+            IStoryTypeService storyTypeService)
         {
             this.storyService = storyService;
+            this.genreService = genreService;
+            this.storyTypeService = storyTypeService;
         }
 
         [Authorize]
@@ -36,7 +43,6 @@ namespace Tellers.App.Controllers
         [Authorize]
         public async Task<IActionResult> Edit(string storyId)
         {
-            //check story.CreatorId == currentUserId if not redirect
             
             var model = await this.storyService.GetStory(storyId);
 
@@ -84,12 +90,42 @@ namespace Tellers.App.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> All()
-        {
+        //[HttpGet]
+        //[Authorize]
+        //public async Task<IActionResult> All(string type, string genre, StoryFilterBoxViewModel model)
+        //{
+        //    var genres = await this.genreService.GetAll();
+        //    var types = await this.storyTypeService.GetAll();
 
-            return View();
+        //    var outputModel = new StoryFilterBoxViewModel()
+        //    {
+        //        Cards = await this.storyService.GetAll(type, genre),
+        //        Genres = genres.ToList(),
+        //        StoryTypes = types.ToList(),
+        //        Genre = genre,
+        //        Type= type,
+        //    };
+
+        //    return View(outputModel);
+        //}
+
+        
+        [Authorize]
+        public async Task<IActionResult> All(string type, string genre, StoryFilterBoxViewModel model)
+        {
+            var genres = await this.genreService.GetAll();
+            var types = await this.storyTypeService.GetAll();
+
+            var outputModel = new StoryFilterBoxViewModel()
+            {
+                Cards = await this.storyService.GetAll(model.Genre, model.Type),
+                Genres = genres.ToList(),
+                StoryTypes = types.ToList(),
+                Genre = model.Genre,
+                Type = model.Type
+            };
+
+            return View(outputModel);
         }
 
         [HttpPost]

@@ -49,6 +49,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IStoryService, StoryService>();
 builder.Services.AddScoped<IRevueService, RevueService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IStoryTypeService, StoryTypeService>();
 builder.Services.AddScoped<IMapWrapper, MapWrapper>();
 
 var app = builder.Build();

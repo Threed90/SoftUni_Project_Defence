@@ -8,14 +8,12 @@ using Tellers.ViewModels.StoryTypes;
 
 namespace Tellers.ViewModels.Story
 {
-    public class StoryCardViewModel
+    public class StoryFilterCardViewModel : StoryCardViewModel
     {
-        public Guid Id { get; set; }
-        public string Title { get; set; } = null!;
+        public List<GenreViewModel> Genres { get; set; }
 
-        public string BookCoverPicture { get; set; } = null!;
+        public StoryTypeViewModel StoryType { get; set; }
 
-        public string Summary { get; set; } = null!;
-
+        
     }
 }
