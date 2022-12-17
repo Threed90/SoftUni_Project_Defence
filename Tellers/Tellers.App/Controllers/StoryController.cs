@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Security.Claims;
 using Tellers.Services.Interfaces;
 using Tellers.ViewModels.Story;
@@ -94,55 +95,22 @@ namespace Tellers.App.Controllers
         [Authorize]
         public async Task<IActionResult> All(string type, string genre, StoryFilterBoxViewModel model)
         {
-            var genres = await this.genreService.GetAll();
-            var types = await this.storyTypeService.GetAll();
-
-            var outputModel = new StoryFilterBoxViewModel()
-            {
-                Cards = await this.storyService.GetAll(model.Genre, model.Type),
-                Genres = genres.ToList(),
-                StoryTypes = types.ToList(),
-                Genre = model.Genre,
-                Type = model.Type
-            };
-
-            return View(outputModel);
+            return await GetResult(model, await this.storyService.GetAll(model.Genre, model.Type));
         }
+
+        
 
         [Authorize]
         public async Task<IActionResult> MyStories(string type, string genre, StoryFilterBoxViewModel model)
         {
-            var genres = await this.genreService.GetAll();
-            var types = await this.storyTypeService.GetAll();
-
-            var outputModel = new StoryFilterBoxViewModel()
-            {
-                Cards = await this.storyService.GetMine(User.FindFirstValue(ClaimTypes.NameIdentifier), model.Genre, model.Type),
-                Genres = genres.ToList(),
-                StoryTypes = types.ToList(),
-                Genre = model.Genre,
-                Type = model.Type
-            };
-
-            return View(outputModel);
+            return await GetResult(model, await this.storyService.GetMine(User.FindFirstValue(ClaimTypes.NameIdentifier), model.Genre, model.Type));
         }
 
         [Authorize]
         public async Task<IActionResult> Readed(string type, string genre, StoryFilterBoxViewModel model)
         {
-            var genres = await this.genreService.GetAll();
-            var types = await this.storyTypeService.GetAll();
 
-            var outputModel = new StoryFilterBoxViewModel()
-            {
-                Cards = await this.storyService.GetReaded(User.FindFirstValue(ClaimTypes.NameIdentifier), model.Genre, model.Type),
-                Genres = genres.ToList(),
-                StoryTypes = types.ToList(),
-                Genre = model.Genre,
-                Type = model.Type
-            };
-
-            return View(outputModel);
+            return await GetResult(model, await this.storyService.GetReaded(User.FindFirstValue(ClaimTypes.NameIdentifier), model.Genre, model.Type));
         }
 
         [HttpPost]
@@ -157,6 +125,23 @@ namespace Tellers.App.Controllers
             await this.storyService.DeleteStory(storyId);
 
             return RedirectToAction(nameof(All));
+        }
+
+        private async Task<IActionResult> GetResult(StoryFilterBoxViewModel model, List<StoryFilterCardViewModel> stories)
+        {
+            var genres = await this.genreService.GetAll();
+            var types = await this.storyTypeService.GetAll();
+
+            var outputModel = new StoryFilterBoxViewModel()
+            {
+                Cards = stories,
+                Genres = genres.ToList(),
+                StoryTypes = types.ToList(),
+                Genre = model.Genre,
+                Type = model.Type
+            };
+
+            return View(outputModel);
         }
     }
 }

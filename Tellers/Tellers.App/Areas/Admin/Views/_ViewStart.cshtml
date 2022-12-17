@@ -1,0 +1,7 @@
+﻿@if (User?.Identity?.IsAuthenticated ?? false &&
+   (User.IsInRole(RoleNames.MasterAdminRoleName) ||
+  User.IsInRole(RoleNames.AdminRoleName) ||
+  User.IsInRole(RoleNames.ModeratorRoleName)))
+{
+    Layout = "AdminLayout";
+}

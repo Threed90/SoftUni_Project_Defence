@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Host.Mef;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Tellers.Constants;
@@ -43,7 +44,19 @@ builder.Services.AddControllersWithViews(opt =>
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     opt.LoginPath = "/User/Login";
+    opt.AccessDeniedPath = "/Error/500";
 });
+
+//builder.Services.AddAuthorization(options =>
+//{
+
+//    options.AddPolicy( ,
+//        authBuilder =>
+//        {
+//            authBuilder.RequireRole("Administrators");
+//        });
+
+//});
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IStoryService, StoryService>();
@@ -62,11 +75,26 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
+    //app.UseExceptionHandler("/Shared/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
+app.Use(async (context, next) =>
+{
+    await next();
+    if (context.Response.StatusCode == 404)
+    {
+        context.Request.Path = "/Error/404";
+        await next();
+    }
+
+    if (context.Response.StatusCode == 500)
+    {
+        context.Request.Path = "/Error/500";
+        await next();
+    }
+});
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -75,9 +103,23 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}"
+        );
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+    
+});
+
 app.MapRazorPages();
 
 app.Run();
