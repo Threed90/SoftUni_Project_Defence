@@ -44,7 +44,7 @@ namespace Tellers.App.Controllers
             }
             await revueService.CreateRevue(model.StoryId, User.FindFirstValue(ClaimTypes.NameIdentifier), model.Text, model.Rating);
 
-            var redirectResult =  RedirectToAction(nameof(StoryController.Read), nameof(StoryController).ReplaceControllerSuffix(), new { storyId = storyId });
+            var redirectResult = RedirectToAction(nameof(StoryController.Read), nameof(StoryController).ReplaceControllerSuffix(), new { storyId = storyId });
 
             redirectResult.Fragment = fragment;
             return redirectResult;
@@ -54,14 +54,16 @@ namespace Tellers.App.Controllers
         [Authorize]
         public async Task<IActionResult> Edit(int revueId, string storyId, string userId)
         {
-            if (User.FindFirstValue(ClaimTypes.NameIdentifier) != userId)
+            var revueCreatorId = await this.revueService.GetRevueCreatorId(revueId);
+
+            if (User.FindFirstValue(ClaimTypes.NameIdentifier) != revueCreatorId && User.FindFirstValue(ClaimTypes.NameIdentifier) != userId)
             {
                 return RedirectToAction(nameof(StoryController.Read), nameof(StoryController).ReplaceControllerSuffix(), new { storyId = storyId });
             }
 
             var model = await this.revueService.GetRevueForEditing(revueId);
 
-            if(model == null)
+            if (model == null)
             {
                 return NotFound();
             }
@@ -69,8 +71,8 @@ namespace Tellers.App.Controllers
             var profile = await this.profileService.GetProfile(userId);
 
             model.CreatorPictureUrl = profile.PictureUrl;
-            model.StoryId= storyId;
-            model.UserId= userId;
+            model.StoryId = storyId;
+            model.UserId = userId;
             model.Id = revueId;
 
             return View(model);
@@ -80,7 +82,9 @@ namespace Tellers.App.Controllers
         [Authorize]
         public async Task<IActionResult> Edit(string storyId, string userId, int revueId, EditRevueViewModel model)
         {
-            if (User.FindFirstValue(ClaimTypes.NameIdentifier) != userId)
+            var revueCreatorId = await this.revueService.GetRevueCreatorId(revueId);
+
+            if (User.FindFirstValue(ClaimTypes.NameIdentifier) != revueCreatorId && User.FindFirstValue(ClaimTypes.NameIdentifier) != userId)
             {
                 return RedirectToAction(nameof(StoryController.Read), nameof(StoryController).ReplaceControllerSuffix(), new { storyId = storyId });
             }
@@ -88,7 +92,7 @@ namespace Tellers.App.Controllers
             if (!ModelState.IsValid)
             {
                 var profile = await profileService.GetProfile(userId);
-                model.CreatorPictureUrl= profile.PictureUrl;
+                model.CreatorPictureUrl = profile.PictureUrl;
                 model.Id = revueId;
                 return View(model);
             }
@@ -104,7 +108,13 @@ namespace Tellers.App.Controllers
         [Authorize]
         public async Task<IActionResult> Delete(string storyId, int revueId)
         {
+            var revueCreatorId = await this.revueService.GetRevueCreatorId(revueId);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            if (userId != revueCreatorId)
+            {
+                return RedirectToAction(nameof(StoryController.Read), nameof(StoryController).ReplaceControllerSuffix(), new { storyId = storyId });
+            }
             await this.revueService.DeleteRevue(revueId);
 
             return RedirectToAction(nameof(StoryController.Read), nameof(StoryController).ReplaceControllerSuffix(), new { storyId = storyId });

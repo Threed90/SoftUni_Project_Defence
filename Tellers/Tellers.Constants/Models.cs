@@ -81,13 +81,15 @@
             public const int TitleMinLength = 2;
             public const int TitleMaxLength = 100;
 
-            public const int StoryTextMinLength = 50;
+            //public const int StoryTextMinLength = 50;
 
             public const int PdfFileMinLength = 10;
             public const int PdfFileUrlMaxLength = 2048;
 
             public const int StorySummaryMinLength = 10;
             public const int StorySummaryMaxLength = 1000;
+
+            public const int ExternalAuthorMaxLength = 100;
 
         }
 

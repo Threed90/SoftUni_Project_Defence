@@ -3,7 +3,9 @@ using Tellers.DataModels;
 using Tellers.DbContext;
 using Tellers.Mapper.Interfaces;
 using Tellers.Services.Interfaces;
+using Tellers.ViewModels.Genres;
 using Tellers.ViewModels.Story;
+using Tellers.ViewModels.StoryTypes;
 
 namespace Tellers.Services
 {
@@ -136,11 +138,138 @@ namespace Tellers.Services
             return false;
         }
 
+        public async Task<T> AddAllGenresAndStoryTypes<T>(T? model = null) where T : StoryFormViewModel
+        {
+            var genres = this.mapper.GetModels<GenreViewModel, Genre>(
+                            await this.data.Genres
+                                    .AsNoTracking()
+                                    .OrderBy(g => g.Name)
+                                    .ToListAsync());
+
+            var storyTypes = this.mapper.GetModels<StoryTypeViewModel, StoryType>(
+                                await this.data.StoryTypes
+                                    .AsNoTracking()
+                                    .OrderBy(g => g.Name)
+                                    .ToListAsync());
+            if(model != null)
+            {
+                model.Genres = genres.ToList();
+                model.StoryTypes = storyTypes.ToList();
+
+                return model;
+            }
+
+            T instance = (T)Activator.CreateInstance(typeof(T));
+
+            instance.Genres = genres.ToList();
+            instance.StoryTypes = storyTypes.ToList();
+
+            return instance;
+        }
+
+        public async Task CreateStory(StoryFormViewModel model, string userId)
+        {
+            var story = new Story()
+            {
+                PdfFileUrl = model.BookPdf,
+                BookCoverPicture = model.BookCover,
+                ExternalAuthorName = model.ExternalAuthor,
+                StorySummary = model.StorySummery,
+                StoryTypeId = int.Parse(model.StoryType),
+                Title = model.Title,
+                CreatedOn = DateTime.Now,
+            };
+
+            var profile = await this.data.Profiles.FirstOrDefaultAsync(p => p.UserId.ToString() == userId);
+
+            story.Creator = profile;
+
+            if(model.GenresNames != null)
+            {
+                var genresNames = model.GenresNames.Split(", ", StringSplitOptions.RemoveEmptyEntries).ToList();
+
+                var genres = await this.data.Genres.Where(g => genresNames.Contains(g.Name)).ToListAsync();
+
+                foreach (var gr in genres)
+                {
+                    story.Genres.Add(gr);
+                }
+            }
+
+            if(model.ExternalAuthor == null)
+            {
+                story.Authors.Add(profile);
+            }
+
+            await this.data.Stories.AddAsync(story);
+            await this.data.SaveChangesAsync();            
+        }
+
+        public async Task<StoryEditFormViewModel> GetStory(string storyId)
+        {
+            var story = await this.data.Stories
+                .Include(s => s.Creator)
+                .ThenInclude(c => c.User)
+                .Include(s => s.Genres)
+                .Include(s => s.StoryType)
+                .FirstOrDefaultAsync(s => s.Id.ToString() == storyId);
+
+            return this.mapper.GetModel<StoryEditFormViewModel, Story>(story);
+        }
+
+        public async Task Edit(StoryEditFormViewModel model)
+        {
+            var story = await this.data.Stories
+                .Include(s => s.Genres)
+                .Include(s => s.StoryType)
+                .FirstOrDefaultAsync(s => s.Id.ToString() == model.StoryId);
+
+            story.Title = model.Title;
+            story.StorySummary = model.StorySummery;
+            story.BookCoverPicture = model.BookCover;
+            story.PdfFileUrl = model.BookPdf;
+            story.StoryType.Id = int.Parse(model.StoryType);
+            story.ExternalAuthorName = model.ExternalAuthor;
+
+            foreach (var genreName in model.GenresNames.Split(", ", StringSplitOptions.RemoveEmptyEntries))
+            {
+                if(!story.Genres.Any(g => g.Name == genreName))
+                {
+                    var genre = await this.data.Genres.FirstOrDefaultAsync(g => g.Name == genreName);
+
+                    story.Genres.Add(genre);
+                    await this.data.SaveChangesAsync();
+                }
+            }
+
+            await this.data.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsStoryCreatorTheCurrentUser(string storyId, string userId)
+        {
+            var creatorId = await this.data.Stories
+                .Where(s => s.Id.ToString().ToLower() == storyId)
+                .Select(s => s.Creator.UserId.ToString().ToLower())
+                .FirstOrDefaultAsync();
+
+            return (userId == creatorId);
+        }
+
+        public async Task DeleteStory(string storyId)
+        {
+            var story = await this.data.Stories.FirstOrDefaultAsync(s => s.Id.ToString() == storyId); 
+
+            this.data.Stories.Remove(story);
+
+            await this.data.SaveChangesAsync();
+        }
+
         private IMapWrapper SetMappingConfiguration(IMapWrapper mapper)
         {
             return mapper
                 .CreateMap<StoryCardViewModel, Story>()
-                //.CreateMap<StoryDetailsViewModel, Story>()
+                .CreateMap<GenreViewModel, Genre>()
+                .CreateMap<StoryTypeViewModel, StoryType>()
                 .AddProfile<Revue>()
                 .AddProfile<Story>()
                 .ApplyAllMaps();

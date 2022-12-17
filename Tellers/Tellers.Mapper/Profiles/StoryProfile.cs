@@ -27,6 +27,19 @@ namespace Tellers.Mapper.Profiles
                 .ForMember(sd => sd.Page, s => s.Ignore())
                 .ForMember(sd => sd.IsMarkedAsReaded, s => s.Ignore())
                 .ForMember(sd => sd.Revues, s => s.MapFrom(r => r.Revues.OrderByDescending(r => r.CreatedOn).ToList()));
+
+            this.CreateMap<Story, StoryEditFormViewModel>()
+                .ForMember(sv => sv.BookPdf, y => y.MapFrom(s => s.PdfFileUrl))
+                .ForMember(sv => sv.StorySummery, y => y.MapFrom(s => s.StorySummary))
+                .ForMember(sv => sv.StoryId, y => y.MapFrom(s => s.Id.ToString()))
+                .ForMember(sv => sv.BookCover, y => y.MapFrom(s => s.BookCoverPicture))
+                .ForMember(sv => sv.ExternalAuthor, y => y.MapFrom(s => s.ExternalAuthorName))
+                .ForMember(sv => sv.Title, y => y.MapFrom(s => s.Title))
+                .ForMember(sv => sv.StoryCreatorUserId, y => y.MapFrom(s => s.Creator.User.Id))
+                .ForMember(sv => sv.StoryType, y => y.MapFrom(s => s.StoryType.Id.ToString()))
+                .ForMember(sv => sv.GenresNames, y => y.MapFrom(s => string.Join(", ", s.Genres.Select(g => g.Name))))
+                .ForMember(sv => sv.Genres, y => y.Ignore())
+                .ForMember(sv => sv.StoryTypes, y => y.Ignore());
                 
         }
     }

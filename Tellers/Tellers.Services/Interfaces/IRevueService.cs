@@ -14,5 +14,6 @@ namespace Tellers.Services.Interfaces
         Task<EditRevueViewModel> GetRevueForEditing(int revueId);
         Task EditRevue(int revueId, string text, double rating);
         Task DeleteRevue(int revueId);
+        Task<string> GetRevueCreatorId(int revueId);
     }
 }

@@ -10,5 +10,12 @@ namespace Tellers.Services.Interfaces
         Task<StoryDetailsViewModel> GetStoryDetails(string storyId, int page, bool isMarked);
         Task<bool> MarkAsReaded(string storyId, string userId);
         Task<bool> IsReadedStory(string storyId, string userId);
+        Task<T> AddAllGenresAndStoryTypes<T>(T? model = null) where T : StoryFormViewModel;
+        Task CreateStory(StoryFormViewModel model, string userId);
+        Task<StoryEditFormViewModel> GetStory(string storyId);
+        Task Edit(StoryEditFormViewModel model);
+        Task<bool> IsStoryCreatorTheCurrentUser(string storyId, string userId);
+        Task DeleteStory(string storyId);
+
     }
 }

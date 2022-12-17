@@ -109,11 +109,12 @@
 
                     @if (User.Identity.Name == Model.CreatorUsername)
                     {
-                        <button class="btn btn-outline-success btn-lg px-4 gap-3" asp-action="Edit" asp-controller="Story" asp-route-storyId="@Model.StoryId" style="background-color: none">
+                        <a class="btn btn-outline-success btn-lg px-4 gap-3" asp-action="Edit" asp-controller="Story" asp-route-storyId="@Model.StoryId" style="background-color: none">
                             Edit
-                        </button>
+                        </a>
                     }
                 </form>
+                
             </div>
             <img src="@(Model.BookCoverPicture ?? "/images/no-book-cover-available.jpg")" class="img-fluid col-md-6 overflow-hidden" alt="book cover">
         </div>

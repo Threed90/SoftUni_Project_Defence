@@ -1,15 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tellers.DataModels;
 using Tellers.DbContext;
 using Tellers.Mapper.Interfaces;
 using Tellers.Services.Interfaces;
 using Tellers.ViewModels.Revues;
-using Tellers.ViewModels.Story;
 
 namespace Tellers.Services
 {
@@ -69,6 +63,11 @@ namespace Tellers.Services
                 this.data.Revues.Remove(revue);
 
             await this.data.SaveChangesAsync();
+        }
+
+        public async Task<string> GetRevueCreatorId(int revueId)
+        {
+            return this.data.Revues.Where(r => r.Id == revueId).Select(r => r.Profile.User.Id.ToString().ToLower()).FirstOrDefault();
         }
 
         //public Task<CreateRevueViewModel> GetRevue(string storyId, string userId, string text, double rating)
